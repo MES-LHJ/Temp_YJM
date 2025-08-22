@@ -19,7 +19,6 @@ namespace WindowsFormsApp1
             InitializeComponent();
             employId = empId;
 
-            
             delBtn.Click += Del_Button;//삭제 버튼
             cancelBtn.Click += Cancel_Button;//취소 버튼
         }
