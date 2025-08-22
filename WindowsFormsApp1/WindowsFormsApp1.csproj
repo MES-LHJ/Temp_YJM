@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0279A0AD-8719-4026-A003-27496ADB8FD2}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>WindowsFormsApp1</RootNamespace>
     <AssemblyName>WindowsFormsApp1</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -55,11 +55,11 @@
     <Compile Include="employee\EmployeeList.Designer.cs">
       <DependentUpon>EmployeeList.cs</DependentUpon>
     </Compile>
-    <Compile Include="employee\AddEmployee.cs">
+    <Compile Include="employee\InsertEmployee.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="employee\AddEmployee.Designer.cs">
-      <DependentUpon>AddEmployee.cs</DependentUpon>
+    <Compile Include="employee\InsertEmployee.Designer.cs">
+      <DependentUpon>InsertEmployee.cs</DependentUpon>
     </Compile>
     <Compile Include="employee\UpdateEmployee.cs">
       <SubType>Form</SubType>
@@ -85,11 +85,11 @@
     <Compile Include="department\DepartmentList.Designer.cs">
       <DependentUpon>DepartmentList.cs</DependentUpon>
     </Compile>
-    <Compile Include="department\AddDepartment.cs">
+    <Compile Include="department\InsertDepartment.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="department\AddDepartment.Designer.cs">
-      <DependentUpon>AddDepartment.cs</DependentUpon>
+    <Compile Include="department\InsertDepartment.Designer.cs">
+      <DependentUpon>InsertDepartment.cs</DependentUpon>
     </Compile>
     <Compile Include="department\UpdateDepartment.cs">
       <SubType>Form</SubType>
@@ -103,14 +103,20 @@
     <Compile Include="department\DelDepartment.Designer.cs">
       <DependentUpon>DelDepartment.cs</DependentUpon>
     </Compile>
+    <Compile Include="employee\UpdateLoginInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="employee\UpdateLoginInfo.Designer.cs">
+      <DependentUpon>UpdateLoginInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
     <EmbeddedResource Include="employee\EmployeeList.resx">
       <DependentUpon>EmployeeList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="employee\AddEmployee.resx">
-      <DependentUpon>AddEmployee.cs</DependentUpon>
+    <EmbeddedResource Include="employee\InsertEmployee.resx">
+      <DependentUpon>InsertEmployee.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="employee\UpdateEmployee.resx">
       <DependentUpon>UpdateEmployee.cs</DependentUpon>
@@ -124,14 +130,17 @@
     <EmbeddedResource Include="department\DepartmentList.resx">
       <DependentUpon>DepartmentList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="department\AddDepartment.resx">
-      <DependentUpon>AddDepartment.cs</DependentUpon>
+    <EmbeddedResource Include="department\InsertDepartment.resx">
+      <DependentUpon>InsertDepartment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="department\UpdateDepartment.resx">
       <DependentUpon>UpdateDepartment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="department\DelDepartment.resx">
       <DependentUpon>DelDepartment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="employee\UpdateLoginInfo.resx">
+      <DependentUpon>UpdateLoginInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

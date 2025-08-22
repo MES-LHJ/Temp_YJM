@@ -13,36 +13,17 @@ namespace WindowsFormsApp1
 {
     public partial class DelEmployee : Form
     {
-        private string employId;
-        public DelEmployee(string empId)
+        private int employId;
+        public DelEmployee(int empId)
         {
             InitializeComponent();
             employId = empId;
-     
+
+            
+            delBtn.Click += Del_Button;//삭제 버튼
+            cancelBtn.Click += Cancel_Button;//취소 버튼
         }
 
-        private void Form5_Load(object sender, EventArgs e)
-        {
-            using (SqlConnection conn = new SqlConnection(Server.connStr))
-            {
-                conn.Open();
-                string sql = "SELECT employeeId , employeeName FROM employee WHERE employeeId = '" + employId + "'";
-
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    empIdLabel.Text = "사원코드 : " + reader["employeeId"].ToString();
-                    empNameLabel.Text = "사원명 : " + reader["employeeName"].ToString();
-                }
-                else
-                {
-                    MessageBox.Show("사원 정보를 찾을 수 없습니다.");
-                    this.Close();
-                }
-            }
-
-        }
         private void Del_Button(object sender, EventArgs e)
         {
             Console.WriteLine(employId);
@@ -68,6 +49,28 @@ namespace WindowsFormsApp1
         {
             this.Close(); // 취소 버튼 클릭 시 폼 닫기
 
+        }
+
+        private void DelEmployee_Load_1(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = new SqlConnection(Server.connStr))
+            {
+                conn.Open();
+                string sql = "SELECT employeeCode , employeeName FROM employee WHERE employeeId = '" + employId + "'";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    empIdLabel.Text = "사원코드 : " + reader["employeeCode"].ToString();
+                    empNameLabel.Text = "사원명 : " + reader["employeeName"].ToString();
+                }
+                else
+                {
+                    MessageBox.Show("사원 정보를 찾을 수 없습니다.");
+                    this.Close();
+                }
+            }
         }
     }
 }

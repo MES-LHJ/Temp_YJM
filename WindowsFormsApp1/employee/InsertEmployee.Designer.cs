@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp1
 {
-    partial class AddEmployee
+    partial class InsertEmployee
     {
         /// <summary>
         /// Required designer variable.
@@ -34,9 +34,9 @@
             this.deptIdComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.deptNameBox = new System.Windows.Forms.TextBox();
-            this.empNameBox = new System.Windows.Forms.TextBox();
+            this.empCodeBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.empNameBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.loginIdBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -59,6 +59,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.womenCheckBox = new System.Windows.Forms.CheckBox();
             this.menCheckBox = new System.Windows.Forms.CheckBox();
+            this.deptIdBox = new System.Windows.Forms.TextBox();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -96,7 +97,6 @@
             this.deptIdComboBox.Name = "deptIdComboBox";
             this.deptIdComboBox.Size = new System.Drawing.Size(150, 20);
             this.deptIdComboBox.TabIndex = 3;
-            this.deptIdComboBox.SelectedIndexChanged += new System.EventHandler(this.DepName_Change);
             // 
             // label2
             // 
@@ -114,12 +114,12 @@
             this.deptNameBox.Size = new System.Drawing.Size(150, 21);
             this.deptNameBox.TabIndex = 5;
             // 
-            // empNameBox
+            // empCodeBox
             // 
-            this.empNameBox.Location = new System.Drawing.Point(14, 132);
-            this.empNameBox.Name = "empNameBox";
-            this.empNameBox.Size = new System.Drawing.Size(150, 21);
-            this.empNameBox.TabIndex = 7;
+            this.empCodeBox.Location = new System.Drawing.Point(14, 132);
+            this.empCodeBox.Name = "empCodeBox";
+            this.empCodeBox.Size = new System.Drawing.Size(150, 21);
+            this.empCodeBox.TabIndex = 7;
             // 
             // label3
             // 
@@ -131,12 +131,12 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "사원코드";
             // 
-            // textBox3
+            // empNameBox
             // 
-            this.textBox3.Location = new System.Drawing.Point(198, 132);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(150, 21);
-            this.textBox3.TabIndex = 9;
+            this.empNameBox.Location = new System.Drawing.Point(198, 132);
+            this.empNameBox.Name = "empNameBox";
+            this.empNameBox.Size = new System.Drawing.Size(150, 21);
+            this.empNameBox.TabIndex = 9;
             // 
             // label4
             // 
@@ -291,7 +291,6 @@
             this.addBtn.TabIndex = 26;
             this.addBtn.Text = "저장";
             this.addBtn.UseVisualStyleBackColor = false;
-            this.addBtn.Click += new System.EventHandler(this.Insert_Button);
             // 
             // cancleBtn
             // 
@@ -304,7 +303,6 @@
             this.cancleBtn.TabIndex = 27;
             this.cancleBtn.Text = "취소";
             this.cancleBtn.UseVisualStyleBackColor = false;
-            this.cancleBtn.Click += new System.EventHandler(this.Cancel_Button);
             // 
             // label13
             // 
@@ -324,7 +322,6 @@
             this.womenCheckBox.TabIndex = 57;
             this.womenCheckBox.Text = "여";
             this.womenCheckBox.UseVisualStyleBackColor = true;
-            this.womenCheckBox.CheckedChanged += new System.EventHandler(this.Check_Box);
             // 
             // menCheckBox
             // 
@@ -335,13 +332,20 @@
             this.menCheckBox.TabIndex = 56;
             this.menCheckBox.Text = "남";
             this.menCheckBox.UseVisualStyleBackColor = true;
-            this.menCheckBox.CheckedChanged += new System.EventHandler(this.Check_Box);
+            // 
+            // deptIdBox
+            // 
+            this.deptIdBox.Location = new System.Drawing.Point(391, 67);
+            this.deptIdBox.Name = "deptIdBox";
+            this.deptIdBox.Size = new System.Drawing.Size(70, 21);
+            this.deptIdBox.TabIndex = 59;
             // 
             // AddEmployee
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(572, 485);
+            this.Controls.Add(this.deptIdBox);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.womenCheckBox);
             this.Controls.Add(this.menCheckBox);
@@ -363,9 +367,9 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.loginIdBox);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.empNameBox);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.empCodeBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.deptNameBox);
             this.Controls.Add(this.label2);
@@ -374,7 +378,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "AddEmployee";
             this.Text = "Form2";
-            this.Load += new System.EventHandler(this.Form2_Load);
+            this.Load += new System.EventHandler(this.AddEmployee_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -390,9 +394,9 @@
         private System.Windows.Forms.ComboBox deptIdComboBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox deptNameBox;
-        private System.Windows.Forms.TextBox empNameBox;
+        private System.Windows.Forms.TextBox empCodeBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox empNameBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox loginIdBox;
         private System.Windows.Forms.Label label5;
@@ -415,5 +419,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.CheckBox womenCheckBox;
         private System.Windows.Forms.CheckBox menCheckBox;
+        private System.Windows.Forms.TextBox deptIdBox;
     }
 }

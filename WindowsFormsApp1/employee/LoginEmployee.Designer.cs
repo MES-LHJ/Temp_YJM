@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.LoginToolStrip = new System.Windows.Forms.ToolStripLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.loginIdBox = new System.Windows.Forms.TextBox();
@@ -43,18 +43,18 @@
             // 
             this.toolStrip1.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1});
+            this.LoginToolStrip});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(497, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(401, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripLabel1
+            // LoginToolStrip
             // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(67, 22);
-            this.toolStripLabel1.Text = "로그인정보";
+            this.LoginToolStrip.Name = "LoginToolStrip";
+            this.LoginToolStrip.Size = new System.Drawing.Size(43, 22);
+            this.LoginToolStrip.Text = "로그인";
             // 
             // label1
             // 
@@ -93,19 +93,18 @@
             // 
             this.loginBtn.BackColor = System.Drawing.Color.DodgerBlue;
             this.loginBtn.ForeColor = System.Drawing.Color.White;
-            this.loginBtn.Location = new System.Drawing.Point(235, 115);
+            this.loginBtn.Location = new System.Drawing.Point(84, 124);
             this.loginBtn.Name = "loginBtn";
             this.loginBtn.Size = new System.Drawing.Size(98, 26);
             this.loginBtn.TabIndex = 5;
-            this.loginBtn.Text = "저장";
+            this.loginBtn.Text = "로그인";
             this.loginBtn.UseVisualStyleBackColor = false;
-            this.loginBtn.Click += new System.EventHandler(this.Login_Button);
             // 
             // closeBtn
             // 
             this.closeBtn.BackColor = System.Drawing.Color.Silver;
             this.closeBtn.ForeColor = System.Drawing.Color.White;
-            this.closeBtn.Location = new System.Drawing.Point(351, 115);
+            this.closeBtn.Location = new System.Drawing.Point(200, 124);
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(98, 26);
             this.closeBtn.TabIndex = 6;
@@ -117,7 +116,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(497, 174);
+            this.ClientSize = new System.Drawing.Size(401, 174);
             this.Controls.Add(this.closeBtn);
             this.Controls.Add(this.loginBtn);
             this.Controls.Add(this.passwdBox);
@@ -127,6 +126,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "LoginEmployee";
             this.Text = "Form4";
+            this.Load += new System.EventHandler(this.LoginEmployee_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -137,7 +137,7 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripLabel LoginToolStrip;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox loginIdBox;

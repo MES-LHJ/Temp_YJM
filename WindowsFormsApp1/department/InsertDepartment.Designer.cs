@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp1
 {
-    partial class AddDepartment
+    partial class InsertDepartment
     {
         /// <summary>
         /// Required designer variable.
@@ -36,8 +36,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.deptCodeBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.cancelBtn = new System.Windows.Forms.Button();
+            this.insertBtn = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -109,40 +109,38 @@
             this.label3.TabIndex = 12;
             this.label3.Text = "부서코드";
             // 
-            // button2
+            // cancelBtn
             // 
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(257, 212);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(98, 26);
-            this.button2.TabIndex = 29;
-            this.button2.Text = "취소";
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.Cancel_Button);
+            this.cancelBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.cancelBtn.FlatAppearance.BorderSize = 0;
+            this.cancelBtn.ForeColor = System.Drawing.Color.White;
+            this.cancelBtn.Location = new System.Drawing.Point(257, 212);
+            this.cancelBtn.Name = "cancelBtn";
+            this.cancelBtn.Size = new System.Drawing.Size(98, 26);
+            this.cancelBtn.TabIndex = 29;
+            this.cancelBtn.Text = "취소";
+            this.cancelBtn.UseVisualStyleBackColor = false;
             // 
-            // button1
+            // insertBtn
             // 
-            this.button1.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(137, 212);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(98, 26);
-            this.button1.TabIndex = 28;
-            this.button1.Text = "저장";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.Insert_Button);
+            this.insertBtn.BackColor = System.Drawing.Color.DodgerBlue;
+            this.insertBtn.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.insertBtn.FlatAppearance.BorderSize = 0;
+            this.insertBtn.ForeColor = System.Drawing.Color.White;
+            this.insertBtn.Location = new System.Drawing.Point(137, 212);
+            this.insertBtn.Name = "insertBtn";
+            this.insertBtn.Size = new System.Drawing.Size(98, 26);
+            this.insertBtn.TabIndex = 28;
+            this.insertBtn.Text = "저장";
+            this.insertBtn.UseVisualStyleBackColor = false;
             // 
-            // AddDepartment
+            // InsertDepartment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(416, 312);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.cancelBtn);
+            this.Controls.Add(this.insertBtn);
             this.Controls.Add(this.memoBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.deptNameBox);
@@ -150,9 +148,9 @@
             this.Controls.Add(this.deptCodeBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.toolStrip1);
-            this.Name = "AddDepartment";
+            this.Name = "InsertDepartment";
             this.Text = "Form7";
-            this.Load += new System.EventHandler(this.Form7_Load);
+            this.Load += new System.EventHandler(this.InsertDepartment_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -170,7 +168,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox deptCodeBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button cancelBtn;
+        private System.Windows.Forms.Button insertBtn;
     }
 }

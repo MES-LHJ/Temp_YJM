@@ -35,13 +35,13 @@
             this.deptUpdateBtn = new System.Windows.Forms.ToolStripButton();
             this.deptDelBtn = new System.Windows.Forms.ToolStripButton();
             this.closeBtn = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.department = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.deptListView = new System.Windows.Forms.DataGridView();
+            this.departmentCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.departmentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.memo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.deptIdBox = new System.Windows.Forms.TextBox();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.deptListView)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -52,11 +52,10 @@
             this.deptInsertBtn,
             this.deptUpdateBtn,
             this.deptDelBtn,
-            this.closeBtn,
-            this.toolStripButton5});
+            this.closeBtn});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(682, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(629, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -75,7 +74,6 @@
             this.deptInsertBtn.Name = "deptInsertBtn";
             this.deptInsertBtn.Size = new System.Drawing.Size(35, 22);
             this.deptInsertBtn.Text = "추가";
-            this.deptInsertBtn.Click += new System.EventHandler(this.Insert_Button);
             // 
             // deptUpdateBtn
             // 
@@ -85,7 +83,6 @@
             this.deptUpdateBtn.Name = "deptUpdateBtn";
             this.deptUpdateBtn.Size = new System.Drawing.Size(35, 22);
             this.deptUpdateBtn.Text = "수정";
-            this.deptUpdateBtn.Click += new System.EventHandler(this.Update_Button);
             // 
             // deptDelBtn
             // 
@@ -95,7 +92,6 @@
             this.deptDelBtn.Name = "deptDelBtn";
             this.deptDelBtn.Size = new System.Drawing.Size(35, 22);
             this.deptDelBtn.Text = "삭제";
-            this.deptDelBtn.Click += new System.EventHandler(this.Del_Button);
             // 
             // closeBtn
             // 
@@ -105,39 +101,27 @@
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(35, 22);
             this.closeBtn.Text = "닫기";
-            this.closeBtn.Click += new System.EventHandler(this.Close_Btn);
             // 
-            // toolStripButton5
+            // deptListView
             // 
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(59, 22);
-            this.toolStripButton5.Text = "새로고침";
-            this.toolStripButton5.Click += new System.EventHandler(this.Form6_Load);
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.department,
+            this.deptListView.BackgroundColor = System.Drawing.Color.White;
+            this.deptListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.deptListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.departmentCode,
             this.departmentName,
             this.memo});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 25);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(682, 425);
-            this.dataGridView1.TabIndex = 1;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Cell_Click);
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.deptListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.deptListView.Location = new System.Drawing.Point(0, 25);
+            this.deptListView.Name = "deptListView";
+            this.deptListView.RowTemplate.Height = 23;
+            this.deptListView.Size = new System.Drawing.Size(629, 425);
+            this.deptListView.TabIndex = 1;
+            this.deptListView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.deptListView_CellContentClick);
             // 
-            // department
+            // departmentCode
             // 
-            this.department.HeaderText = "부서코드";
-            this.department.Name = "department";
+            this.departmentCode.HeaderText = "부서코드";
+            this.departmentCode.Name = "departmentCode";
             // 
             // departmentName
             // 
@@ -149,19 +133,26 @@
             this.memo.HeaderText = "메모";
             this.memo.Name = "memo";
             // 
+            // deptIdBox
+            // 
+            this.deptIdBox.Location = new System.Drawing.Point(364, 281);
+            this.deptIdBox.Name = "deptIdBox";
+            this.deptIdBox.Size = new System.Drawing.Size(83, 21);
+            this.deptIdBox.TabIndex = 2;
+            // 
             // DepartmentList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(682, 450);
-            this.Controls.Add(this.dataGridView1);
+            this.ClientSize = new System.Drawing.Size(629, 450);
+            this.Controls.Add(this.deptIdBox);
+            this.Controls.Add(this.deptListView);
             this.Controls.Add(this.toolStrip1);
             this.Name = "DepartmentList";
             this.Text = "Form6";
-            this.Load += new System.EventHandler(this.Form6_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.deptListView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -176,10 +167,10 @@
         private System.Windows.Forms.ToolStripButton deptUpdateBtn;
         private System.Windows.Forms.ToolStripButton deptDelBtn;
         private System.Windows.Forms.DataGridViewTextBoxColumn departmentId;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn department;
+        private System.Windows.Forms.DataGridView deptListView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn departmentCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn departmentName;
         private System.Windows.Forms.DataGridViewTextBoxColumn memo;
-        private System.Windows.Forms.ToolStripButton toolStripButton5;
+        private System.Windows.Forms.TextBox deptIdBox;
     }
 }

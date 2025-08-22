@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.closeBtn = new System.Windows.Forms.Button();
-            this.updatBtn = new System.Windows.Forms.Button();
+            this.updateBtn = new System.Windows.Forms.Button();
             this.memoBtn = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.deptNameBtn = new System.Windows.Forms.TextBox();
@@ -52,21 +52,19 @@
             this.closeBtn.TabIndex = 38;
             this.closeBtn.Text = "닫기";
             this.closeBtn.UseVisualStyleBackColor = false;
-            this.closeBtn.Click += new System.EventHandler(this.Close_Button);
             // 
-            // updatBtn
+            // updateBtn
             // 
-            this.updatBtn.BackColor = System.Drawing.Color.DodgerBlue;
-            this.updatBtn.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.updatBtn.FlatAppearance.BorderSize = 0;
-            this.updatBtn.ForeColor = System.Drawing.Color.White;
-            this.updatBtn.Location = new System.Drawing.Point(137, 213);
-            this.updatBtn.Name = "updatBtn";
-            this.updatBtn.Size = new System.Drawing.Size(98, 26);
-            this.updatBtn.TabIndex = 37;
-            this.updatBtn.Text = "저장";
-            this.updatBtn.UseVisualStyleBackColor = false;
-            this.updatBtn.Click += new System.EventHandler(this.Update_Button);
+            this.updateBtn.BackColor = System.Drawing.Color.DodgerBlue;
+            this.updateBtn.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.updateBtn.FlatAppearance.BorderSize = 0;
+            this.updateBtn.ForeColor = System.Drawing.Color.White;
+            this.updateBtn.Location = new System.Drawing.Point(137, 213);
+            this.updateBtn.Name = "updateBtn";
+            this.updateBtn.Size = new System.Drawing.Size(98, 26);
+            this.updateBtn.TabIndex = 37;
+            this.updateBtn.Text = "저장";
+            this.updateBtn.UseVisualStyleBackColor = false;
             // 
             // memoBtn
             // 
@@ -142,7 +140,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(427, 275);
             this.Controls.Add(this.closeBtn);
-            this.Controls.Add(this.updatBtn);
+            this.Controls.Add(this.updateBtn);
             this.Controls.Add(this.memoBtn);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.deptNameBtn);
@@ -152,7 +150,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "UpdateDepartment";
             this.Text = "Form8";
-            this.Load += new System.EventHandler(this.Form8_Load);
+            this.Load += new System.EventHandler(this.UpdateDepartment_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -163,7 +161,7 @@
         #endregion
 
         private System.Windows.Forms.Button closeBtn;
-        private System.Windows.Forms.Button updatBtn;
+        private System.Windows.Forms.Button updateBtn;
         private System.Windows.Forms.TextBox memoBtn;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox deptNameBtn;
