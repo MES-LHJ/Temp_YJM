@@ -31,7 +31,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.label1 = new System.Windows.Forms.Label();
-            this.deptIdComboBox = new System.Windows.Forms.ComboBox();
+            this.deptCodeComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.deptNameBox = new System.Windows.Forms.TextBox();
             this.empCodeBox = new System.Windows.Forms.TextBox();
@@ -59,7 +59,6 @@
             this.label13 = new System.Windows.Forms.Label();
             this.womenCheckBox = new System.Windows.Forms.CheckBox();
             this.menCheckBox = new System.Windows.Forms.CheckBox();
-            this.deptIdBox = new System.Windows.Forms.TextBox();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -90,13 +89,13 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "부서코드";
             // 
-            // deptIdComboBox
+            // deptCodeComboBox
             // 
-            this.deptIdComboBox.FormattingEnabled = true;
-            this.deptIdComboBox.Location = new System.Drawing.Point(14, 67);
-            this.deptIdComboBox.Name = "deptIdComboBox";
-            this.deptIdComboBox.Size = new System.Drawing.Size(150, 20);
-            this.deptIdComboBox.TabIndex = 3;
+            this.deptCodeComboBox.FormattingEnabled = true;
+            this.deptCodeComboBox.Location = new System.Drawing.Point(14, 67);
+            this.deptCodeComboBox.Name = "deptCodeComboBox";
+            this.deptCodeComboBox.Size = new System.Drawing.Size(150, 20);
+            this.deptCodeComboBox.TabIndex = 3;
             // 
             // label2
             // 
@@ -333,19 +332,11 @@
             this.menCheckBox.Text = "남";
             this.menCheckBox.UseVisualStyleBackColor = true;
             // 
-            // deptIdBox
-            // 
-            this.deptIdBox.Location = new System.Drawing.Point(391, 67);
-            this.deptIdBox.Name = "deptIdBox";
-            this.deptIdBox.Size = new System.Drawing.Size(70, 21);
-            this.deptIdBox.TabIndex = 59;
-            // 
-            // AddEmployee
+            // InsertEmployee
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(572, 485);
-            this.Controls.Add(this.deptIdBox);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.womenCheckBox);
             this.Controls.Add(this.menCheckBox);
@@ -373,10 +364,10 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.deptNameBox);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.deptIdComboBox);
+            this.Controls.Add(this.deptCodeComboBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.toolStrip1);
-            this.Name = "AddEmployee";
+            this.Name = "InsertEmployee";
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.AddEmployee_Load);
             this.toolStrip1.ResumeLayout(false);
@@ -391,7 +382,7 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox deptIdComboBox;
+        private System.Windows.Forms.ComboBox deptCodeComboBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox deptNameBox;
         private System.Windows.Forms.TextBox empCodeBox;
@@ -419,6 +410,5 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.CheckBox womenCheckBox;
         private System.Windows.Forms.CheckBox menCheckBox;
-        private System.Windows.Forms.TextBox deptIdBox;
     }
 }

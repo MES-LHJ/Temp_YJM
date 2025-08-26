@@ -55,7 +55,6 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.deptIdBox = new System.Windows.Forms.TextBox();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -229,7 +228,6 @@
             this.deptCodeComboBox.Name = "deptCodeComboBox";
             this.deptCodeComboBox.Size = new System.Drawing.Size(150, 20);
             this.deptCodeComboBox.TabIndex = 27;
-            //this.deptCodeComboBox.DropDown += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
             this.deptCodeComboBox.SelectedIndexChanged += new System.EventHandler(this.DepName_Change);
             // 
             // label1
@@ -295,19 +293,11 @@
             this.label5.TabIndex = 55;
             this.label5.Text = "성별";
             // 
-            // deptIdBox
-            // 
-            this.deptIdBox.Location = new System.Drawing.Point(391, 56);
-            this.deptIdBox.Name = "deptIdBox";
-            this.deptIdBox.Size = new System.Drawing.Size(53, 21);
-            this.deptIdBox.TabIndex = 56;
-            // 
             // UpdateEmployee
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(586, 531);
-            this.Controls.Add(this.deptIdBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.checkBox2);
@@ -373,6 +363,5 @@
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox deptIdBox;
     }
 }

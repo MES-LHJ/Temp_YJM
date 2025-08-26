@@ -39,7 +39,6 @@
             this.departmentCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.departmentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.memo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.deptIdBox = new System.Windows.Forms.TextBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.deptListView)).BeginInit();
             this.SuspendLayout();
@@ -116,7 +115,6 @@
             this.deptListView.RowTemplate.Height = 23;
             this.deptListView.Size = new System.Drawing.Size(629, 425);
             this.deptListView.TabIndex = 1;
-            this.deptListView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.deptListView_CellContentClick);
             // 
             // departmentCode
             // 
@@ -133,19 +131,11 @@
             this.memo.HeaderText = "메모";
             this.memo.Name = "memo";
             // 
-            // deptIdBox
-            // 
-            this.deptIdBox.Location = new System.Drawing.Point(364, 281);
-            this.deptIdBox.Name = "deptIdBox";
-            this.deptIdBox.Size = new System.Drawing.Size(83, 21);
-            this.deptIdBox.TabIndex = 2;
-            // 
             // DepartmentList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(629, 450);
-            this.Controls.Add(this.deptIdBox);
             this.Controls.Add(this.deptListView);
             this.Controls.Add(this.toolStrip1);
             this.Name = "DepartmentList";
@@ -171,6 +161,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn departmentCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn departmentName;
         private System.Windows.Forms.DataGridViewTextBoxColumn memo;
-        private System.Windows.Forms.TextBox deptIdBox;
     }
 }

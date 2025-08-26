@@ -9,11 +9,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.employee.Model;
 
 namespace WindowsFormsApp1
 {
     public partial class LoginEmployee : Form
+
     {
+        EmployeeRepository empRepo = new EmployeeRepository();
         public LoginEmployee()
         {
             InitializeComponent();
@@ -36,41 +39,27 @@ namespace WindowsFormsApp1
                 return;
             }
 
-            using (SqlConnection conn = new SqlConnection(Server.connStr))
+            var checkLogin = empRepo.CheckLogin(loginId, passwd);
+            //Console.WriteLine(checkLogin);
+            //Console.WriteLine(loginId);
+            //Console.WriteLine(passwd);
+            if (checkLogin == 1)
             {
-                conn.Open();
-                string sql = "SELECT employeeId, employeeName FROM employee WHERE loginId = @loginId AND passwd= @passwd ";
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@loginId", loginId);
-                    cmd.Parameters.AddWithValue("@passwd", passwd);
-
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        MessageBox.Show("로그인에 성공하였습니다.");
-                        this.DialogResult = DialogResult.OK;
-                        this.Close();
-                    }
-                    else
-                    {
-                        MessageBox.Show("일치하는 회원 정보가 없습니다.");
-                        return;
-                    }
-                    EmployeeList employList = new EmployeeList();
-                    
-                }
+                MessageBox.Show("로그인에 성공하였습니다.");
+                this.DialogResult = DialogResult.OK;
             }
+            else
+            {
+                MessageBox.Show("로그인에 실패하였습니다.");
+                return;
+            }
+
+            
         }
 
         private void Close_Btn(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void LoginEmployee_Load(object sender, EventArgs e)
-        {
-
         }
 
     }
