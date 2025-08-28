@@ -14,12 +14,15 @@ namespace WindowsFormsApp1.employee.Model
 {
     public class EmployeeRepository
     {
+        private static readonly EmployeeRepository _instance = new EmployeeRepository();
+        private EmployeeRepository() { }
+        public static EmployeeRepository empRepo => _instance;
 
         public List<EmployeeDto> GetEmpList()//사원 리스트 가져오기
         {
             var list = new List<EmployeeDto>();
             string employeeInfoSql = "SELECT b.departmentCode, b.departmentName, a.employeeCode, a.employeeName, a.loginId, a.passwd, a.employeeRank," +
-               "a.employeeType, a.phone, a.email, a.messId, a.memo, a.employeeId FROM employee a JOIN department b on a.departmentId = b.departmentId " +
+               "a.employeeType, a.phone, a.email, a.messId, a.memo, a.employeeId, c.imgId FROM employee a JOIN department b on a.departmentId = b.departmentId JOIN img c ON a.imgId =c.imgId  " +
                "Order by employeeId";
             using (SqlConnection conn = new SqlConnection(Server.connStr))
             {
@@ -43,7 +46,8 @@ namespace WindowsFormsApp1.employee.Model
                         email = reader["email"].ToString(),
                         messId = reader["messId"].ToString(),
                         memo = reader["memo"].ToString(),
-                        employeeId = Convert.ToInt32(reader["employeeId"])
+                        employeeId = Convert.ToInt32(reader["employeeId"]),
+                        imgId = Convert.ToInt32(reader["imgId"])
                     });
                 }
             }
@@ -159,36 +163,55 @@ namespace WindowsFormsApp1.employee.Model
             }
             return 0;
         }
+        public int InsertImgFolder(string imgName)
+        {
+            string imgInserSql = "INSERT INTO img (imgName) VALUES (@imgName); SELECT SCOPE_IDENTITY();";
+            using(SqlConnection Conn  = new SqlConnection(Server.connStr))
+            {
+                Conn.Open();
+                SqlCommand cmd = new SqlCommand(imgInserSql, Conn);
+            
+                cmd.Parameters.AddWithValue("@imgName", (object)imgName ?? DBNull.Value);
+                int newId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                return newId;
+            }
+        }
 
         public void InsertEmpInfo(EmployeeDto empDto)//사원정보 추가
         {
-            string insertEmpsql = "INSERT INTO employee (departmentId, employeeCode, employeeName, loginId, passwd, employeeRank, employeeType, phone, email, messId, memo, gender) " +
-                         "VALUES (@departmentId, @employeeCode, @employeeName, @loginId, @passwd, @employeeRank, @employeeType, @phone, @email, @messId, @memo, @gender)";
-
+            
+            string insertEmpsql = "INSERT INTO employee (departmentId, employeeCode, employeeName, loginId, passwd, employeeRank, employeeType, phone, email, messId, memo, gender,imgId) " +
+                         "VALUES (@departmentId, @employeeCode, @employeeName, @loginId, @passwd, @employeeRank, @employeeType, @phone, @email, @messId, @memo, @gender,@imgId)";
+           
             using (SqlConnection conn = new SqlConnection(Server.connStr))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(insertEmpsql, conn);
-                cmd.Parameters.AddWithValue("@departmentId", empDto.departmentId);
-                cmd.Parameters.AddWithValue("@employeeCode", empDto.employeeCode);
-                cmd.Parameters.AddWithValue("@employeeName", empDto.employeeName);
-                cmd.Parameters.AddWithValue("@loginId", empDto.loginId);
-                cmd.Parameters.AddWithValue("@passwd", empDto.passwd);
-                cmd.Parameters.AddWithValue("@employeeRank", empDto.employeeRank);
-                cmd.Parameters.AddWithValue("@employeeType", empDto.employeeType);
-                cmd.Parameters.AddWithValue("@phone", empDto.phone);
-                cmd.Parameters.AddWithValue("@email", empDto.email);
-                cmd.Parameters.AddWithValue("@messId", empDto.messId);
-                cmd.Parameters.AddWithValue("@memo", empDto.memo);
-                cmd.Parameters.AddWithValue("@gender", empDto.gender);
-                cmd.ExecuteNonQuery();
+   
+                SqlCommand cmd2 = new SqlCommand(insertEmpsql, conn);
+                cmd2.Parameters.AddWithValue("@departmentId", empDto.departmentId);
+                cmd2.Parameters.AddWithValue("@employeeCode", empDto.employeeCode);
+                cmd2.Parameters.AddWithValue("@employeeName", empDto.employeeName);
+                cmd2.Parameters.AddWithValue("@loginId", empDto.loginId);
+                cmd2.Parameters.AddWithValue("@passwd", empDto.passwd);
+                cmd2.Parameters.AddWithValue("@employeeRank", empDto.employeeRank);
+                cmd2.Parameters.AddWithValue("@employeeType", empDto.employeeType);
+                cmd2.Parameters.AddWithValue("@phone", empDto.phone);
+                cmd2.Parameters.AddWithValue("@email", empDto.email);
+                cmd2.Parameters.AddWithValue("@messId", empDto.messId);
+                cmd2.Parameters.AddWithValue("@memo", empDto.memo);
+                cmd2.Parameters.AddWithValue("@gender", empDto.gender);
+                cmd2.Parameters.AddWithValue("@imgId", empDto.imgId);
+                
+                //cmd1.Parameters.AddWithValue("@imgName", (object)empDto.imgName??DBNull.Value);
+                cmd2.ExecuteNonQuery();
 
             }
         }
 
         public EmployeeDto empDelInfo(int empId)//사원 삭제시 사원명, 사원코드 가져오기
         {
-            string sql = "SELECT employeeCode , employeeName FROM employee WHERE employeeId =@employeeId"
+            string sql = "SELECT a.employeeCode , a.employeeName, a.imgId, b.imgName FROM employee a JOIN img b ON a.imgId = b.imgId WHERE employeeId =@employeeId"
                 ;
             using (SqlConnection conn = new SqlConnection(Server.connStr))
             {
@@ -203,24 +226,39 @@ namespace WindowsFormsApp1.employee.Model
                     return new EmployeeDto
                     {
                         employeeCode = reader["employeeCode"].ToString(),
-                        employeeName = reader["employeeName"].ToString()
+                        employeeName = reader["employeeName"].ToString(),
+                        imgId = Convert.ToInt32(reader["imgid"].ToString()),
+                        imgName = reader["imgName"].ToString()
                     };
                 }
             }
             return null;
         }
 
-        public int DelEmp(int empId)//사원 삭제
+        public int DelEmp(int empId, int imgId)//사원 삭제
         {
-            string sql = "DELETE FROM employee WHERE employeeId =  @employeeId";
+            string delImgSql = "DELETE FROM img WHERE imgId = @imgId";
+            string sql = "DELETE FROM employee WHERE employeeId = @employeeId";
             using (SqlConnection conn = new SqlConnection(Server.connStr))
             {
                 conn.Open();
+
+                bool success = false;
+
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@employeeId", empId);
-
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.RecordsAffected > 0)// 1개이상 영향을 받았을 때
+                {
+                    success = true;
+                }
+                reader.Close();
+
+                SqlCommand cmd1 = new SqlCommand(delImgSql, conn);
+                cmd1.Parameters.AddWithValue("@imgId", imgId);
+                cmd1.ExecuteNonQuery();
+
+                if (success)
                 {
                     return 1;
                 }
@@ -230,9 +268,8 @@ namespace WindowsFormsApp1.employee.Model
         }
         public EmployeeDto UpdateEmpInfo(int employeeId)//사원정보 수정
         {
-            string sql = "SELECT b.departmentCode, b.departmentName, a.employeeName, a.employeeCode, a.loginId, a.passwd, a.employeeRank," +
-                "a.employeeType, a.phone, a.email, a.messId, a.memo, a.gender, a.departmentId FROM employee a JOIN department b on a.departmentId = b.departmentId " +
-                "WHERE employeeId=@employeeId";
+            string sql = "SELECT b.departmentCode, b.departmentName, a.employeeName, a.employeeCode, c.imgName, a.loginId, a.passwd, a.employeeRank,a.imgId, " +
+                "a.employeeType, a.phone, a.email, a.messId, a.memo, a.gender, a.departmentId FROM employee a JOIN department b on a.departmentId = b.departmentId JOIN img c ON a.imgId = c.imgId WHERE employeeId=@employeeId";
             using (SqlConnection conn = new SqlConnection(Server.connStr))
             {
                 conn.Open();
@@ -246,6 +283,7 @@ namespace WindowsFormsApp1.employee.Model
                     {
                         departmentCode = reader["departmentCode"].ToString(),
                         departmentName = reader["departmentName"].ToString(),
+                        imgId = Convert.ToInt32(reader["imgId"]),
                         employeeCode = reader["employeeCode"].ToString(),
                         employeeName = reader["employeeName"].ToString(),
                         loginId = reader["loginId"].ToString(),
@@ -256,7 +294,9 @@ namespace WindowsFormsApp1.employee.Model
                         email = reader["email"].ToString(),
                         messId = reader["messId"].ToString(),
                         memo = reader["memo"].ToString(),
-                        gender = Convert.ToInt32(reader["gender"].ToString()),
+                        gender = (EmployeeDto.GenderType)Convert.ToInt32(reader["gender"]),
+                        imgName = reader["imgName"].ToString(),
+                        departmentId = Convert.ToInt32(reader["departmentId"])
                     };
                 }
             }
@@ -282,29 +322,36 @@ namespace WindowsFormsApp1.employee.Model
             return 0;
         }
 
-        public int UpdateEmp(EmployeeDto empDto, int empId)//사원정보 수정
+        public int UpdateEmp(EmployeeDto empDto)//사원정보 수정
         {
-            string sql = "UPDATE employee SET employeeCode=@employeeCode, employeeName = @employeeName, " +
-                             "employeeRank = @employeeRank, employeeType = @employeeType, " +
+            string updateImgNameSql = "UPDATE img SET imgName = @imgName";
+            string sql = "UPDATE employee SET employeeCode=@employeeCode, employeeName = @employeeName, departmentId = @departmentId," +
+                             "employeeRank = @employeeRank, employeeType = @employeeType," +
                              "phone = @phone, email = @email, messId = @messId, memo = @memo,gender=@gender WHERE employeeId = @employeeId";
 
             using (SqlConnection conn = new SqlConnection(Server.connStr))
             {
 
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(sql, conn);
 
-                cmd.Parameters.AddWithValue("@employeeCode", empDto.employeeCode);
-                cmd.Parameters.AddWithValue("@employeeName", empDto.employeeName);
-                cmd.Parameters.AddWithValue("@employeeRank", empDto.employeeRank);
-                cmd.Parameters.AddWithValue("@employeeType", empDto.employeeType);
-                cmd.Parameters.AddWithValue("@phone", empDto.phone);
-                cmd.Parameters.AddWithValue("@email", empDto.email);
-                cmd.Parameters.AddWithValue("@messId", empDto.messId);
-                cmd.Parameters.AddWithValue("@memo", empDto.memo);
-                cmd.Parameters.AddWithValue("@gender", empDto.gender);
-                cmd.Parameters.AddWithValue("@employeeId", empId);
+                SqlCommand cmd = new SqlCommand(updateImgNameSql, conn);
+                cmd.Parameters.AddWithValue("@imgName", (object)empDto.imgName ?? DBNull.Value);
 
+                SqlCommand cmd1 = new SqlCommand(sql, conn);
+
+                cmd1.Parameters.AddWithValue("@departmentId", empDto.departmentId);
+                cmd1.Parameters.AddWithValue("@employeeCode", empDto.employeeCode);
+                cmd1.Parameters.AddWithValue("@employeeName", empDto.employeeName);
+                cmd1.Parameters.AddWithValue("@employeeRank", empDto.employeeRank);
+                cmd1.Parameters.AddWithValue("@employeeType", empDto.employeeType);
+                cmd1.Parameters.AddWithValue("@phone", empDto.phone);
+                cmd1.Parameters.AddWithValue("@email", empDto.email);
+                cmd1.Parameters.AddWithValue("@messId", empDto.messId);
+                cmd1.Parameters.AddWithValue("@memo", empDto.memo);
+                cmd1.Parameters.AddWithValue("@gender", empDto.gender);
+                cmd1.Parameters.AddWithValue("@employeeId", empDto.employeeId);
+               // cmd1.Parameters.AddWithValue("@imgName", (object)empDto.imgName ?? DBNull.Value);
+                
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.RecordsAffected > 0)// 1개이상 영향을 받았을 때
                 {
@@ -355,6 +402,7 @@ namespace WindowsFormsApp1.employee.Model
             }
             return 0;
         }
+        
     }
 }
 

@@ -11,10 +11,15 @@ namespace WindowsFormsApp1.department.Model
 {
     public class DepartmentRepository
     {
+        private static DepartmentRepository _instance = new DepartmentRepository();
+        private DepartmentRepository() { }
+
+        public static DepartmentRepository deptRepo = _instance;
+
         public List<DepartmentDto> GetDeptListInfo()//부서 리스트 가져오기
         {
             var list = new List<DepartmentDto>();
-            string sql = "SELECT departmentCode , departmentName, memo FROM department ORDER BY departmentId";
+            string sql = "SELECT departmentCode , departmentName, memo, departmentId FROM department ORDER BY departmentId";
             using (SqlConnection conn = new SqlConnection(Server.connStr))
             {
                 conn.Open();
@@ -28,6 +33,7 @@ namespace WindowsFormsApp1.department.Model
                         departmentCode = reader["departmentCode"].ToString(),
                         departmentName = reader["departmentName"].ToString(),
                         memo = reader["memo"].ToString(),
+                        departmentId = Convert.ToInt32(reader["departmentId"].ToString())
                     });
                 }
             }
@@ -142,7 +148,21 @@ namespace WindowsFormsApp1.department.Model
             }
             return null;
         }
-
+        public int CheckEmployee(int deptId)
+        {
+            string sql = "SELECT employeeId FROM employee WHERE departmentId = @departmentId";
+            using (SqlConnection conn = new SqlConnection(Server.connStr))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@departmentId", deptId);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    return 1;
+                }
+            }return 0;
+        }
         public int DelDepartment(int deptId)//부서 삭제
         {
             string sql = "DELETE FROM department WHERE departmentId = @departmentId";
@@ -182,6 +202,26 @@ namespace WindowsFormsApp1.department.Model
             return 0;
         }
 
-       
+        public List<DepartmentDto> GetChart(int deptId)//차트
+        {
+            var list = new List<DepartmentDto>();
+            string chartSql = "SELECT d.departmentName, count(*) AS CNT FROM employee e JOIN department d ON e.departmentId = d.departmentId GROUP BY d.departmentName";
+            using (SqlConnection conn = new SqlConnection(Server.connStr))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(chartSql, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add(new DepartmentDto
+                    {
+                        departmentName = reader["departmentName"].ToString(),
+                        departmentCnt = Convert.ToInt32(reader["CNT"].ToString())
+                    });
+                }
+
+            }
+            return list;
+        }
     }
 }

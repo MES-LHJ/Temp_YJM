@@ -125,7 +125,6 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "UpdateLoginInfo";
             this.Text = "UpdateLoginInfo";
-            this.Load += new System.EventHandler(this.UpdateLoginInfo_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);

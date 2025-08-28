@@ -15,21 +15,23 @@ namespace WindowsFormsApp1
 {
     public partial class DelDepartment : Form
     {
-        private int departId;
-        DepartmentRepository deptRepo = new DepartmentRepository();
+        private readonly int departId;
         public DelDepartment(int deptId)
         {
-            InitializeComponent();
-
-           
             departId = deptId;
+
+            InitializeComponent();
+            Click_Event();
+        }
+        private void Click_Event()
+        {
             delBtn.Click += Del_Btn;//삭제 버튼
             cancelBtn.Click += Cancel_Btn;//취소 버튼
         }
 
         private void DelDepartment_Load(object sender, EventArgs e)
         {
-            var deptInfo = deptRepo.DepartmentInfo(departId);
+            var deptInfo = DepartmentRepository.deptRepo.DepartmentInfo(departId);
             if (deptInfo != null)
             {
                 string deptCode = deptInfo.departmentCode;
@@ -40,8 +42,16 @@ namespace WindowsFormsApp1
 
         private void Del_Btn(object sender, EventArgs e)//부서 삭제 버튼
         { 
+            var checkEmp = DepartmentRepository.deptRepo.CheckEmployee(departId);
+            
 
-            var delDept = deptRepo.DelDepartment(departId);
+            if(checkEmp ==1)
+            {
+                MessageBox.Show("부서에 소속된 사원이 존재합니다.");
+                this.DialogResult = DialogResult.OK;
+                return;
+            }
+            var delDept = DepartmentRepository.deptRepo.DelDepartment(departId);
             if (delDept == 1)
             {
                 MessageBox.Show("삭제에 성공하였습니다.");

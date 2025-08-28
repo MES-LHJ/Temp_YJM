@@ -14,6 +14,8 @@ namespace WindowsFormsApp1.department.Model
         public string employeeName { get; set; }
         public string loginId { get; set; }
         public string passwd { get; set; }
+
+        public string passwdMask => new string('*', passwd.Length);
         public string employeeRank { get; set; }
         public string employeeType { get; set; }
         public string phone { get; set; }
@@ -22,8 +24,17 @@ namespace WindowsFormsApp1.department.Model
         public string memo { get; set; }
         public int employeeId { get; set; }
         public int departmentId { get; set; }
+        public string imgName {  get; set; }
 
-        public int gender { get; set; }
+        public int imgId { get; set; }
+
+        public GenderType gender { get; set; }
+
+        public enum GenderType
+        {
+            Male=1,
+            Female = 2
+        }
         public int cnt { get; set; }
 
     }

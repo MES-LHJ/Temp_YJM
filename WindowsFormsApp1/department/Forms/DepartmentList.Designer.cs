@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DepartmentList));
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.deptListToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.deptInsertBtn = new System.Windows.Forms.ToolStripButton();
             this.deptUpdateBtn = new System.Windows.Forms.ToolStripButton();
@@ -39,24 +39,27 @@
             this.departmentCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.departmentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.memo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolStrip1.SuspendLayout();
+            this.chartBtn = new System.Windows.Forms.ToolStripButton();
+            this.deptListToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.deptListView)).BeginInit();
             this.SuspendLayout();
             // 
-            // toolStrip1
+            // deptListToolStrip
             // 
-            this.toolStrip1.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deptListToolStrip.AutoSize = false;
+            this.deptListToolStrip.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.deptListToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
             this.deptInsertBtn,
             this.deptUpdateBtn,
             this.deptDelBtn,
-            this.closeBtn});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(629, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
+            this.closeBtn,
+            this.chartBtn});
+            this.deptListToolStrip.Location = new System.Drawing.Point(0, 0);
+            this.deptListToolStrip.Name = "deptListToolStrip";
+            this.deptListToolStrip.Size = new System.Drawing.Size(629, 25);
+            this.deptListToolStrip.TabIndex = 0;
+            this.deptListToolStrip.Text = "toolStrip1";
             // 
             // toolStripLabel1
             // 
@@ -69,7 +72,6 @@
             this.deptInsertBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.deptInsertBtn.Image = ((System.Drawing.Image)(resources.GetObject("deptInsertBtn.Image")));
             this.deptInsertBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.deptInsertBtn.Margin = new System.Windows.Forms.Padding(400, 1, 0, 2);
             this.deptInsertBtn.Name = "deptInsertBtn";
             this.deptInsertBtn.Size = new System.Drawing.Size(35, 22);
             this.deptInsertBtn.Text = "추가";
@@ -118,18 +120,30 @@
             // 
             // departmentCode
             // 
+            this.departmentCode.DataPropertyName = "departmentCode";
             this.departmentCode.HeaderText = "부서코드";
             this.departmentCode.Name = "departmentCode";
             // 
             // departmentName
             // 
+            this.departmentName.DataPropertyName = "departmentName";
             this.departmentName.HeaderText = "부서명";
             this.departmentName.Name = "departmentName";
             // 
             // memo
             // 
+            this.memo.DataPropertyName = "memo";
             this.memo.HeaderText = "메모";
             this.memo.Name = "memo";
+            // 
+            // chartBtn
+            // 
+            this.chartBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.chartBtn.Image = ((System.Drawing.Image)(resources.GetObject("chartBtn.Image")));
+            this.chartBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.chartBtn.Name = "chartBtn";
+            this.chartBtn.Size = new System.Drawing.Size(35, 22);
+            this.chartBtn.Text = "차트";
             // 
             // DepartmentList
             // 
@@ -137,20 +151,19 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(629, 450);
             this.Controls.Add(this.deptListView);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.deptListToolStrip);
             this.Name = "DepartmentList";
             this.Text = "Form6";
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.deptListToolStrip.ResumeLayout(false);
+            this.deptListToolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.deptListView)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip deptListToolStrip;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripButton closeBtn;
         private System.Windows.Forms.ToolStripButton deptInsertBtn;
@@ -161,5 +174,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn departmentCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn departmentName;
         private System.Windows.Forms.DataGridViewTextBoxColumn memo;
+        private System.Windows.Forms.ToolStripButton chartBtn;
     }
 }

@@ -52,10 +52,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.updateBtn = new System.Windows.Forms.Button();
             this.closeBtn = new System.Windows.Forms.Button();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.menCheckBox = new System.Windows.Forms.CheckBox();
+            this.womenCheckBox = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.imgUpdateBox = new System.Windows.Forms.PictureBox();
+            this.imgUpdateBtn = new System.Windows.Forms.Button();
+            this.imgDelBtn = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgUpdateBox)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -262,45 +266,73 @@
             this.closeBtn.Text = "닫기";
             this.closeBtn.UseVisualStyleBackColor = false;
             // 
-            // checkBox2
+            // menCheckBox
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(391, 168);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(36, 16);
-            this.checkBox2.TabIndex = 53;
-            this.checkBox2.Text = "남";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.Check_Box);
+            this.menCheckBox.AutoSize = true;
+            this.menCheckBox.Location = new System.Drawing.Point(391, 193);
+            this.menCheckBox.Name = "menCheckBox";
+            this.menCheckBox.Size = new System.Drawing.Size(36, 16);
+            this.menCheckBox.TabIndex = 53;
+            this.menCheckBox.Text = "남";
+            this.menCheckBox.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // womenCheckBox
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(433, 168);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(36, 16);
-            this.checkBox3.TabIndex = 54;
-            this.checkBox3.Text = "여";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.Check_Box);
+            this.womenCheckBox.AutoSize = true;
+            this.womenCheckBox.Location = new System.Drawing.Point(433, 193);
+            this.womenCheckBox.Name = "womenCheckBox";
+            this.womenCheckBox.Size = new System.Drawing.Size(36, 16);
+            this.womenCheckBox.TabIndex = 54;
+            this.womenCheckBox.Text = "여";
+            this.womenCheckBox.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(389, 143);
+            this.label5.Location = new System.Drawing.Point(389, 168);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(29, 12);
             this.label5.TabIndex = 55;
             this.label5.Text = "성별";
+            // 
+            // imgUpdateBox
+            // 
+            this.imgUpdateBox.Location = new System.Drawing.Point(364, 37);
+            this.imgUpdateBox.Name = "imgUpdateBox";
+            this.imgUpdateBox.Size = new System.Drawing.Size(115, 106);
+            this.imgUpdateBox.TabIndex = 56;
+            this.imgUpdateBox.TabStop = false;
+            // 
+            // imgUpdateBtn
+            // 
+            this.imgUpdateBtn.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.imgUpdateBtn.Location = new System.Drawing.Point(485, 109);
+            this.imgUpdateBtn.Name = "imgUpdateBtn";
+            this.imgUpdateBtn.Size = new System.Drawing.Size(89, 34);
+            this.imgUpdateBtn.TabIndex = 57;
+            this.imgUpdateBtn.Text = "이미지 변경";
+            this.imgUpdateBtn.UseVisualStyleBackColor = false;
+            // 
+            // imgDelBtn
+            // 
+            this.imgDelBtn.Location = new System.Drawing.Point(468, 30);
+            this.imgDelBtn.Name = "imgDelBtn";
+            this.imgDelBtn.Size = new System.Drawing.Size(20, 23);
+            this.imgDelBtn.TabIndex = 62;
+            this.imgDelBtn.Text = "x";
+            this.imgDelBtn.UseVisualStyleBackColor = true;
             // 
             // UpdateEmployee
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(586, 531);
+            this.Controls.Add(this.imgDelBtn);
+            this.Controls.Add(this.imgUpdateBtn);
+            this.Controls.Add(this.imgUpdateBox);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.checkBox3);
-            this.Controls.Add(this.checkBox2);
+            this.Controls.Add(this.womenCheckBox);
+            this.Controls.Add(this.menCheckBox);
             this.Controls.Add(this.closeBtn);
             this.Controls.Add(this.updateBtn);
             this.Controls.Add(this.memoBox);
@@ -329,6 +361,7 @@
             this.Load += new System.EventHandler(this.UpdateEmployee_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgUpdateBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -360,8 +393,11 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button updateBtn;
         private System.Windows.Forms.Button closeBtn;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox menCheckBox;
+        private System.Windows.Forms.CheckBox womenCheckBox;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.PictureBox imgUpdateBox;
+        private System.Windows.Forms.Button imgUpdateBtn;
+        private System.Windows.Forms.Button imgDelBtn;
     }
 }

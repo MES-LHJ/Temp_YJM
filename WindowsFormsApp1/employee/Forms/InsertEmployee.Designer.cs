@@ -59,7 +59,11 @@
             this.label13 = new System.Windows.Forms.Label();
             this.womenCheckBox = new System.Windows.Forms.CheckBox();
             this.menCheckBox = new System.Windows.Forms.CheckBox();
+            this.imgInsertBox = new System.Windows.Forms.PictureBox();
+            this.imgSelectBtn = new System.Windows.Forms.Button();
+            this.imgDelBtn = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgInsertBox)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -332,11 +336,42 @@
             this.menCheckBox.Text = "남";
             this.menCheckBox.UseVisualStyleBackColor = true;
             // 
+            // imgInsertBox
+            // 
+            this.imgInsertBox.Location = new System.Drawing.Point(391, 43);
+            this.imgInsertBox.Name = "imgInsertBox";
+            this.imgInsertBox.Size = new System.Drawing.Size(140, 110);
+            this.imgInsertBox.TabIndex = 59;
+            this.imgInsertBox.TabStop = false;
+            // 
+            // imgSelectBtn
+            // 
+            this.imgSelectBtn.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.imgSelectBtn.ForeColor = System.Drawing.Color.White;
+            this.imgSelectBtn.Location = new System.Drawing.Point(415, 177);
+            this.imgSelectBtn.Name = "imgSelectBtn";
+            this.imgSelectBtn.Size = new System.Drawing.Size(90, 23);
+            this.imgSelectBtn.TabIndex = 60;
+            this.imgSelectBtn.Text = "이미지 선택";
+            this.imgSelectBtn.UseVisualStyleBackColor = false;
+            // 
+            // imgDelBtn
+            // 
+            this.imgDelBtn.Location = new System.Drawing.Point(521, 32);
+            this.imgDelBtn.Name = "imgDelBtn";
+            this.imgDelBtn.Size = new System.Drawing.Size(20, 23);
+            this.imgDelBtn.TabIndex = 61;
+            this.imgDelBtn.Text = "x";
+            this.imgDelBtn.UseVisualStyleBackColor = true;
+            // 
             // InsertEmployee
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(572, 485);
+            this.Controls.Add(this.imgDelBtn);
+            this.Controls.Add(this.imgSelectBtn);
+            this.Controls.Add(this.imgInsertBox);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.womenCheckBox);
             this.Controls.Add(this.menCheckBox);
@@ -372,6 +407,7 @@
             this.Load += new System.EventHandler(this.AddEmployee_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgInsertBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -410,5 +446,8 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.CheckBox womenCheckBox;
         private System.Windows.Forms.CheckBox menCheckBox;
+        private System.Windows.Forms.PictureBox imgInsertBox;
+        private System.Windows.Forms.Button imgSelectBtn;
+        private System.Windows.Forms.Button imgDelBtn;
     }
 }
