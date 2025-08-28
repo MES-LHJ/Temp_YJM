@@ -53,7 +53,6 @@
             this.email = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.messId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.memo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.empIdBox = new System.Windows.Forms.TextBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.empListView)).BeginInit();
             this.SuspendLayout();
@@ -127,7 +126,6 @@
             this.loginInfoBtn.Name = "loginInfoBtn";
             this.loginInfoBtn.Size = new System.Drawing.Size(71, 22);
             this.loginInfoBtn.Text = "로그인정보";
-        
             // 
             // empDelBtn
             // 
@@ -180,81 +178,84 @@
             this.empListView.RowTemplate.Height = 23;
             this.empListView.Size = new System.Drawing.Size(898, 381);
             this.empListView.TabIndex = 1;
-            this.empListView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.empListView_CellContentClick);
             // 
             // departmentCode
             // 
+            this.departmentCode.DataPropertyName = "departmentCode";
             this.departmentCode.HeaderText = "부서코드";
             this.departmentCode.Name = "departmentCode";
             // 
             // departmentName
             // 
+            this.departmentName.DataPropertyName = "departmentName";
             this.departmentName.HeaderText = "부서명";
             this.departmentName.Name = "departmentName";
             // 
             // employeeCode
             // 
+            this.employeeCode.DataPropertyName = "employeeCode";
             this.employeeCode.HeaderText = "사원코드";
             this.employeeCode.Name = "employeeCode";
             // 
             // employeeName
             // 
+            this.employeeName.DataPropertyName = "employeeName";
             this.employeeName.HeaderText = "사원명";
             this.employeeName.Name = "employeeName";
             // 
             // loginId
             // 
+            this.loginId.DataPropertyName = "loginId";
             this.loginId.HeaderText = "로그인ID";
             this.loginId.Name = "loginId";
             // 
             // passwd
             // 
+            this.passwd.DataPropertyName = "passwd";
             this.passwd.HeaderText = "비밀번호";
             this.passwd.Name = "passwd";
             // 
             // employeeRank
             // 
+            this.employeeRank.DataPropertyName = "employeeRank";
             this.employeeRank.HeaderText = "직위";
             this.employeeRank.Name = "employeeRank";
             // 
             // employeeType
             // 
+            this.employeeType.DataPropertyName = "employeeType";
             this.employeeType.HeaderText = "고용형태";
             this.employeeType.Name = "employeeType";
             // 
             // phone
             // 
+            this.phone.DataPropertyName = "phone";
             this.phone.HeaderText = "전화번호";
             this.phone.Name = "phone";
             // 
             // email
             // 
+            this.email.DataPropertyName = "email";
             this.email.HeaderText = "이메일";
             this.email.Name = "email";
             // 
             // messId
             // 
+            this.messId.DataPropertyName = "messId";
             this.messId.HeaderText = "메시지ID";
             this.messId.Name = "messId";
             // 
             // memo
             // 
+            this.memo.DataPropertyName = "memo";
             this.memo.HeaderText = "메모";
             this.memo.Name = "memo";
-            // 
-            // empIdBox
-            // 
-            this.empIdBox.Location = new System.Drawing.Point(521, 340);
-            this.empIdBox.Name = "empIdBox";
-            this.empIdBox.Size = new System.Drawing.Size(100, 21);
-            this.empIdBox.TabIndex = 3;
             // 
             // EmployeeList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(898, 406);
-            this.Controls.Add(this.empIdBox);
             this.Controls.Add(this.empListView);
             this.Controls.Add(this.toolStrip1);
             this.Name = "EmployeeList";
@@ -292,7 +293,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn email;
         private System.Windows.Forms.DataGridViewTextBoxColumn messId;
         private System.Windows.Forms.DataGridViewTextBoxColumn memo;
-        private System.Windows.Forms.TextBox empIdBox;
     }
 }
 

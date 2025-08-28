@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0279A0AD-8719-4026-A003-27496ADB8FD2}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>WindowsFormsApp1</RootNamespace>
     <AssemblyName>WindowsFormsApp1</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -36,6 +36,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1001\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,97 +53,101 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="employee\EmployeeList.cs">
+    <Compile Include="department\Models\DepartmentDto.cs" />
+    <Compile Include="department\Models\DepartmentRepository.cs" />
+    <Compile Include="employee\Models\EmployeeDto.cs" />
+    <Compile Include="employee\Forms\EmployeeList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="employee\EmployeeList.Designer.cs">
+    <Compile Include="employee\Forms\EmployeeList.Designer.cs">
       <DependentUpon>EmployeeList.cs</DependentUpon>
     </Compile>
-    <Compile Include="employee\InsertEmployee.cs">
+    <Compile Include="employee\Forms\InsertEmployee.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="employee\InsertEmployee.Designer.cs">
+    <Compile Include="employee\Forms\InsertEmployee.Designer.cs">
       <DependentUpon>InsertEmployee.cs</DependentUpon>
     </Compile>
-    <Compile Include="employee\UpdateEmployee.cs">
+    <Compile Include="employee\Models\EmployeeRepository.cs" />
+    <Compile Include="employee\Forms\UpdateEmployee.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="employee\UpdateEmployee.Designer.cs">
+    <Compile Include="employee\Forms\UpdateEmployee.Designer.cs">
       <DependentUpon>UpdateEmployee.cs</DependentUpon>
     </Compile>
-    <Compile Include="employee\LoginEmployee.cs">
+    <Compile Include="employee\Forms\LoginEmployee.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="employee\LoginEmployee.Designer.cs">
+    <Compile Include="employee\Forms\LoginEmployee.Designer.cs">
       <DependentUpon>LoginEmployee.cs</DependentUpon>
     </Compile>
-    <Compile Include="employee\DelEmployee.cs">
+    <Compile Include="employee\Forms\DelEmployee.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="employee\DelEmployee.Designer.cs">
+    <Compile Include="employee\Forms\DelEmployee.Designer.cs">
       <DependentUpon>DelEmployee.cs</DependentUpon>
     </Compile>
-    <Compile Include="department\DepartmentList.cs">
+    <Compile Include="department\Forms\DepartmentList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="department\DepartmentList.Designer.cs">
+    <Compile Include="department\Forms\DepartmentList.Designer.cs">
       <DependentUpon>DepartmentList.cs</DependentUpon>
     </Compile>
-    <Compile Include="department\InsertDepartment.cs">
+    <Compile Include="department\Forms\InsertDepartment.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="department\InsertDepartment.Designer.cs">
+    <Compile Include="department\Forms\InsertDepartment.Designer.cs">
       <DependentUpon>InsertDepartment.cs</DependentUpon>
     </Compile>
-    <Compile Include="department\UpdateDepartment.cs">
+    <Compile Include="department\Forms\UpdateDepartment.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="department\UpdateDepartment.Designer.cs">
+    <Compile Include="department\Forms\UpdateDepartment.Designer.cs">
       <DependentUpon>UpdateDepartment.cs</DependentUpon>
     </Compile>
-    <Compile Include="department\DelDepartment.cs">
+    <Compile Include="department\Forms\DelDepartment.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="department\DelDepartment.Designer.cs">
+    <Compile Include="department\Forms\DelDepartment.Designer.cs">
       <DependentUpon>DelDepartment.cs</DependentUpon>
     </Compile>
-    <Compile Include="employee\UpdateLoginInfo.cs">
+    <Compile Include="employee\Forms\UpdateLoginInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="employee\UpdateLoginInfo.Designer.cs">
+    <Compile Include="employee\Forms\UpdateLoginInfo.Designer.cs">
       <DependentUpon>UpdateLoginInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
-    <EmbeddedResource Include="employee\EmployeeList.resx">
+    <EmbeddedResource Include="employee\Forms\EmployeeList.resx">
       <DependentUpon>EmployeeList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="employee\InsertEmployee.resx">
+    <EmbeddedResource Include="employee\Forms\InsertEmployee.resx">
       <DependentUpon>InsertEmployee.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="employee\UpdateEmployee.resx">
+    <EmbeddedResource Include="employee\Forms\UpdateEmployee.resx">
       <DependentUpon>UpdateEmployee.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="employee\LoginEmployee.resx">
+    <EmbeddedResource Include="employee\Forms\LoginEmployee.resx">
       <DependentUpon>LoginEmployee.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="employee\DelEmployee.resx">
+    <EmbeddedResource Include="employee\Forms\DelEmployee.resx">
       <DependentUpon>DelEmployee.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="department\DepartmentList.resx">
+    <EmbeddedResource Include="department\Forms\DepartmentList.resx">
       <DependentUpon>DepartmentList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="department\InsertDepartment.resx">
+    <EmbeddedResource Include="department\Forms\InsertDepartment.resx">
       <DependentUpon>InsertDepartment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="department\UpdateDepartment.resx">
+    <EmbeddedResource Include="department\Forms\UpdateDepartment.resx">
       <DependentUpon>UpdateDepartment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="department\DelDepartment.resx">
+    <EmbeddedResource Include="department\Forms\DelDepartment.resx">
       <DependentUpon>DelDepartment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="employee\UpdateLoginInfo.resx">
+    <EmbeddedResource Include="employee\Forms\UpdateLoginInfo.resx">
       <DependentUpon>UpdateLoginInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -151,6 +159,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -164,8 +173,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="department\deptModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

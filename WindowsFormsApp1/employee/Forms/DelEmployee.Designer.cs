@@ -30,7 +30,7 @@
         {
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.empIdLabel = new System.Windows.Forms.Label();
+            this.empCodeLabel = new System.Windows.Forms.Label();
             this.empNameLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.delBtn = new System.Windows.Forms.Button();
@@ -55,14 +55,14 @@
             this.toolStripLabel1.Size = new System.Drawing.Size(59, 22);
             this.toolStripLabel1.Text = "사원 삭제";
             // 
-            // empIdLabel
+            // empCodeLabel
             // 
-            this.empIdLabel.AutoSize = true;
-            this.empIdLabel.Location = new System.Drawing.Point(12, 44);
-            this.empIdLabel.Name = "empIdLabel";
-            this.empIdLabel.Size = new System.Drawing.Size(38, 12);
-            this.empIdLabel.TabIndex = 1;
-            this.empIdLabel.Text = "label1";
+            this.empCodeLabel.AutoSize = true;
+            this.empCodeLabel.Location = new System.Drawing.Point(12, 44);
+            this.empCodeLabel.Name = "empCodeLabel";
+            this.empCodeLabel.Size = new System.Drawing.Size(38, 12);
+            this.empCodeLabel.TabIndex = 1;
+            this.empCodeLabel.Text = "label1";
             // 
             // empNameLabel
             // 
@@ -113,11 +113,10 @@
             this.Controls.Add(this.delBtn);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.empNameLabel);
-            this.Controls.Add(this.empIdLabel);
+            this.Controls.Add(this.empCodeLabel);
             this.Controls.Add(this.toolStrip1);
             this.Name = "DelEmployee";
             this.Text = "Form5";
-            this.Load += new System.EventHandler(this.DelEmployee_Load_1);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -129,7 +128,7 @@
 
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.Label empIdLabel;
+        private System.Windows.Forms.Label empCodeLabel;
         private System.Windows.Forms.Label empNameLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button delBtn;

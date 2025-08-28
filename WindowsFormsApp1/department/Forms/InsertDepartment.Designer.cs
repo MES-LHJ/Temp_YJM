@@ -150,7 +150,6 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "InsertDepartment";
             this.Text = "Form7";
-            this.Load += new System.EventHandler(this.InsertDepartment_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);

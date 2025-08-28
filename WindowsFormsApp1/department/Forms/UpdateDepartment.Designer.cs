@@ -32,7 +32,7 @@
             this.updateBtn = new System.Windows.Forms.Button();
             this.memoBtn = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.deptNameBtn = new System.Windows.Forms.TextBox();
+            this.deptNameBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.deptCodeBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -83,12 +83,12 @@
             this.label5.TabIndex = 35;
             this.label5.Text = "메모";
             // 
-            // deptNameBtn
+            // deptNameBox
             // 
-            this.deptNameBtn.Location = new System.Drawing.Point(198, 78);
-            this.deptNameBtn.Name = "deptNameBtn";
-            this.deptNameBtn.Size = new System.Drawing.Size(150, 21);
-            this.deptNameBtn.TabIndex = 34;
+            this.deptNameBox.Location = new System.Drawing.Point(198, 78);
+            this.deptNameBox.Name = "deptNameBox";
+            this.deptNameBox.Size = new System.Drawing.Size(150, 21);
+            this.deptNameBox.TabIndex = 34;
             // 
             // label4
             // 
@@ -143,14 +143,13 @@
             this.Controls.Add(this.updateBtn);
             this.Controls.Add(this.memoBtn);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.deptNameBtn);
+            this.Controls.Add(this.deptNameBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.deptCodeBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.toolStrip1);
             this.Name = "UpdateDepartment";
             this.Text = "Form8";
-            this.Load += new System.EventHandler(this.UpdateDepartment_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -164,7 +163,7 @@
         private System.Windows.Forms.Button updateBtn;
         private System.Windows.Forms.TextBox memoBtn;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox deptNameBtn;
+        private System.Windows.Forms.TextBox deptNameBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox deptCodeBox;
         private System.Windows.Forms.Label label3;
