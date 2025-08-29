@@ -38,7 +38,7 @@
             this.empUpdateBtn = new System.Windows.Forms.ToolStripButton();
             this.loginInfoBtn = new System.Windows.Forms.ToolStripButton();
             this.empDelBtn = new System.Windows.Forms.ToolStripButton();
-            this.excelBtn = new System.Windows.Forms.ToolStripButton();
+            this.excelExportBtn = new System.Windows.Forms.ToolStripButton();
             this.closeBtn = new System.Windows.Forms.ToolStripButton();
             this.empListView = new System.Windows.Forms.DataGridView();
             this.departmentCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -68,7 +68,7 @@
             this.empUpdateBtn,
             this.loginInfoBtn,
             this.empDelBtn,
-            this.excelBtn,
+            this.excelExportBtn,
             this.closeBtn});
             this.empListToolStrip.Location = new System.Drawing.Point(0, 0);
             this.empListToolStrip.Name = "empListToolStrip";
@@ -135,14 +135,14 @@
             this.empDelBtn.Size = new System.Drawing.Size(35, 22);
             this.empDelBtn.Text = "삭제";
             // 
-            // excelBtn
+            // excelExportBtn
             // 
-            this.excelBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.excelBtn.Image = ((System.Drawing.Image)(resources.GetObject("excelBtn.Image")));
-            this.excelBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.excelBtn.Name = "excelBtn";
-            this.excelBtn.Size = new System.Drawing.Size(59, 22);
-            this.excelBtn.Text = "자료변환";
+            this.excelExportBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.excelExportBtn.Image = ((System.Drawing.Image)(resources.GetObject("excelExportBtn.Image")));
+            this.excelExportBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.excelExportBtn.Name = "excelExportBtn";
+            this.excelExportBtn.Size = new System.Drawing.Size(59, 22);
+            this.excelExportBtn.Text = "자료변환";
             // 
             // closeBtn
             // 
@@ -278,7 +278,7 @@
         private System.Windows.Forms.ToolStripButton empUpdateBtn;
         private System.Windows.Forms.ToolStripButton loginInfoBtn;
         private System.Windows.Forms.ToolStripButton empDelBtn;
-        private System.Windows.Forms.ToolStripButton excelBtn;
+        private System.Windows.Forms.ToolStripButton excelExportBtn;
         private System.Windows.Forms.ToolStripButton closeBtn;
         private System.Windows.Forms.DataGridView empListView;
         private System.Windows.Forms.DataGridViewTextBoxColumn departmentCode;

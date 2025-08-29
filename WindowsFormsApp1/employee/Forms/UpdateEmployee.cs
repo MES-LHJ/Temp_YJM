@@ -23,6 +23,7 @@ namespace WindowsFormsApp1
         private string originImg;
 
         private bool imgChange = false;
+        private int cnt;
 
 
         public UpdateEmployee(int empId)
@@ -41,10 +42,10 @@ namespace WindowsFormsApp1
             closeBtn.Click += Close_Button; // 닫기 버튼 클릭 이벤트 핸들러 등록
             menCheckBox.CheckedChanged += MenCheck_Box;
             womenCheckBox.CheckedChanged += WomenCheck_Box;
-
         }
         private void Design()
         {
+            //deptCodeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             deptNameBox.ReadOnly = true;
             imgUpdateBox.SizeMode = PictureBoxSizeMode.Zoom;
             imgUpdateBtn.ForeColor = Color.White;
@@ -57,10 +58,9 @@ namespace WindowsFormsApp1
         private void UpdateEmployee_Load(object sender, EventArgs e)
         {
 
-            deptCodeComboBox.Items.Clear(); // 콤보박스 초기화
-
             var empInfo = EmployeeRepository.empRepo.UpdateEmpInfo(employee.employeeId);// 수정할 사원 정보 가져오기
 
+            //deptCodeComboBox.SelectedValue = empInfo.departmentCode.ToString();
             deptCodeComboBox.Text = empInfo.departmentCode;
             deptNameBox.Text = empInfo.departmentName;
             empCodeBox.Text = empInfo.employeeCode;
@@ -77,7 +77,6 @@ namespace WindowsFormsApp1
             originImg = empInfo.imgName;
             employee.imgId = empInfo.imgId;
 
-
             string imgPath = @"C:\NAS\" + employee.imgId + @"\" + empInfo.imgName;
             if (!string.IsNullOrEmpty(empInfo.imgName) && File.Exists(imgPath))
             {
@@ -86,8 +85,6 @@ namespace WindowsFormsApp1
             }
             else
             {
-                //imgUpdateBox.Image.Dispose();
-                //imgUpdateBox.Image = null;
                 imgDelBtn.Visible = false;
             }
 
@@ -129,7 +126,7 @@ namespace WindowsFormsApp1
             saveFileDialog.Title = "이미지 수정 완료";
             saveFileDialog.Filter = "이미지 파일 (*.png;*.jpeg;*.jpg;)|*.png;*.jpeg;*.jpg;";
 
-            string fileName = uuid + imgFormat;
+       
 
             if (checkEmpCode == 1)
             {
@@ -162,35 +159,35 @@ namespace WindowsFormsApp1
                     MessageBox.Show("이메일 형식이 틀립니다.");
                     return;
                 }
+
                 string folderPath = @"C:\NAS\" + employee.imgId;
                 string imgPath = folderPath + @"\" + originImg;
                 if (!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);
                 }
-                if (imgChange && !string.IsNullOrEmpty(originImg))
+
+                //파일 삭제 조건
+                if (imgChange && !string.IsNullOrEmpty(originImg) && imgUpdateBox.Image != null) // 업데이트 사진 있을 시 원본 사진 지움
                 {
-                    //imgUpdateBox.Image.Dispose();
                     File.Delete(imgPath);
                 }
-                else if (imgUpdateBox.Image == null && !string.IsNullOrEmpty(originImg))
+                else if (imgUpdateBox.Image == null && !string.IsNullOrEmpty(originImg) && !imgChange && cnt < 1)  //업데이트 사진 없고 원본 사진 있을 때 x 버튼
+
                 {
                     File.Delete(imgPath);
                 }
 
-
-                if (imgUpdateBox.Image == null)
+                string fileName = originImg;
+                //이미지명 변경 조건
+                if (imgUpdateBox.Image == null && !string.IsNullOrEmpty(originImg) && !imgChange && cnt < 1)// 업데이트 사진 없고 원본 사진 있을 때 x 버튼
                 {
                     fileName = null;
 
                 }
-                else if (imgUpdateBox.Image != null && !imgChange)
+                else if (imgChange && imgUpdateBox.Image != null)// 사진 변경 있을 시
                 {
-                    fileName = originImg;
-
-                }
-                else if (imgChange && imgUpdateBox.Image != null)
-                {
+                    fileName = uuid + imgFormat;
                     imgUpdateBox.Image.Save(folderPath + @"\" + fileName);
 
                 }
@@ -212,6 +209,7 @@ namespace WindowsFormsApp1
                 };
 
                 EmployeeRepository.empRepo.UpdateEmp(empDto);
+                EmployeeRepository.empRepo.UdpateImg(empDto.imgName);
                 MessageBox.Show("수정이 완료되었습니다.");
 
                 this.DialogResult = DialogResult.OK;
@@ -256,7 +254,7 @@ namespace WindowsFormsApp1
                     imgUpdateBox.Image.Dispose();
                     imgUpdateBox.Image = null;
                 }
-
+                cnt++;
 
                 imgUpdateBox.Image = Image.FromFile(fileName);
                 imgDelBtn.Visible = true;
