@@ -67,7 +67,7 @@ namespace WindowsFormsApp1
             {
                 deptCodeComboBox.Items.Add(dept.departmentCode);
             }
-            
+
 
         }
 
@@ -85,7 +85,8 @@ namespace WindowsFormsApp1
             employee.departmentCode = deptCodeComboBox.Text;
 
             string email = emailBox.Text;
-            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";//이메일 형식(@와 공백 제외 + @ + . +도메인)
+            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";//이메일 형식(@와 공백 제외 + @뒤에 오는문자가 @이나 공백이 아니면 + . +도메인(.다음에 공백이나 @가아니면)+문자열 끝
+
             if (deptCodeComboBox.Text.Equals(""))
             {
                 MessageBox.Show("부서코드를 입력해주세요.");
@@ -140,10 +141,10 @@ namespace WindowsFormsApp1
                 MessageBox.Show("중복하는 로그인ID가 존재합니다.");
                 return;
             }
-            
-            //image
+
+            //이미지 저장
             Guid nGuid = Guid.NewGuid();
-            string uuid = nGuid.ToString();//uuid 생성
+            string uuid = nGuid.ToString();//uuid
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "이미지 파일 (*.png;*.jpg;*.jpeg;)|*.png;*.jpg;*.jpeg;";
@@ -151,39 +152,38 @@ namespace WindowsFormsApp1
             saveFileDialog.FileName = uuid;
             string realFileName = saveFileDialog.FileName + imgFormat;
 
-
-
             if (imgInsertBox.Image == null)
             {
                 realFileName = null;
             }
 
-                var empDto = new EmployeeDto
-                {
-                    departmentId = employee.departmentId,
-                    employeeCode = empCodeBox.Text,
-                    employeeName = empNameBox.Text,
-                    loginId = loginIdBox.Text,
-                    passwd = passwdBox.Text,
-                    employeeRank = empRankBox.Text,
-                    employeeType = empTypeBox.Text,
-                    phone = phoneBox.Text,
-                    email = emailBox.Text,
-                    messId = messageIdBox.Text,
-                    memo = memoBox.Text,
-                    gender = employee.gender,
-                    imgName = realFileName,
-                };
+            var empDto = new EmployeeDto
+            {
+                departmentId = employee.departmentId,
+                employeeCode = empCodeBox.Text,
+                employeeName = empNameBox.Text,
+                loginId = loginIdBox.Text,
+                passwd = passwdBox.Text,
+                employeeRank = empRankBox.Text,
+                employeeType = empTypeBox.Text,
+                phone = phoneBox.Text,
+                email = emailBox.Text,
+                messId = messageIdBox.Text,
+                memo = memoBox.Text,
+                gender = employee.gender,
+                imgName = realFileName,
+            };
+
             int newImgId = EmployeeRepository.empRepo.InsertImgFolder(realFileName);
             empDto.imgId = newImgId;
 
             EmployeeRepository.empRepo.InsertEmpInfo(empDto);
             MessageBox.Show("사원 정보가 성공적으로 추가되었습니다.");
-            // 이미지 저장
-            //  저장할 경로
+
+            // 폴더 생성
             string folderPath = @"C:\NAS\" + newImgId;
-            string savePath = folderPath+ @"\" + saveFileDialog.FileName + imgFormat;
-            
+            string savePath = folderPath + @"\" + saveFileDialog.FileName + imgFormat;
+
             if (imgInsertBox.Image != null)
             {
                 if (!Directory.Exists(folderPath))
@@ -223,7 +223,7 @@ namespace WindowsFormsApp1
             {
                 string filePath = openFileDialog.FileName;
                 imgFormat = Path.GetExtension(filePath).ToLower();
-               
+
                 // 이미지 미리보기
                 imgInsertBox.Image = Image.FromFile(filePath);
                 imgDelBtn.Visible = true;

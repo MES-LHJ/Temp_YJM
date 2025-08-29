@@ -14,9 +14,9 @@ namespace WindowsFormsApp1.employee.Model
 {
     public class EmployeeRepository
     {
-        private static readonly EmployeeRepository _instance = new EmployeeRepository();
+        private static readonly EmployeeRepository instance = new EmployeeRepository();
         private EmployeeRepository() { }
-        public static EmployeeRepository empRepo => _instance;
+        public static EmployeeRepository empRepo => instance;
 
         public List<EmployeeDto> GetEmpList()//사원 리스트 가져오기
         {
@@ -321,10 +321,26 @@ namespace WindowsFormsApp1.employee.Model
             }
             return 0;
         }
-
-        public int UpdateEmp(EmployeeDto empDto)//사원정보 수정
+        public int UdpateImg(string imgName)
         {
             string updateImgNameSql = "UPDATE img SET imgName = @imgName";
+            using(SqlConnection conn = new SqlConnection(Server.connStr))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(updateImgNameSql, conn);
+                cmd.Parameters.AddWithValue("@imgName", (object)imgName ?? DBNull.Value);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                if(reader.RecordsAffected > 0)
+                {
+                    return 1;
+                }
+
+            }return 0;
+        }
+        public int UpdateEmp(EmployeeDto empDto)//사원정보 수정
+        {
+            
             string sql = "UPDATE employee SET employeeCode=@employeeCode, employeeName = @employeeName, departmentId = @departmentId," +
                              "employeeRank = @employeeRank, employeeType = @employeeType," +
                              "phone = @phone, email = @email, messId = @messId, memo = @memo,gender=@gender WHERE employeeId = @employeeId";
@@ -333,9 +349,6 @@ namespace WindowsFormsApp1.employee.Model
             {
 
                 conn.Open();
-
-                SqlCommand cmd = new SqlCommand(updateImgNameSql, conn);
-                cmd.Parameters.AddWithValue("@imgName", (object)empDto.imgName ?? DBNull.Value);
 
                 SqlCommand cmd1 = new SqlCommand(sql, conn);
 
@@ -352,7 +365,7 @@ namespace WindowsFormsApp1.employee.Model
                 cmd1.Parameters.AddWithValue("@employeeId", empDto.employeeId);
                // cmd1.Parameters.AddWithValue("@imgName", (object)empDto.imgName ?? DBNull.Value);
                 
-                SqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = cmd1.ExecuteReader();
                 if (reader.RecordsAffected > 0)// 1개이상 영향을 받았을 때
                 {
                     return 1;

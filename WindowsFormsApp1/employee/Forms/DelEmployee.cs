@@ -58,7 +58,7 @@ namespace WindowsFormsApp1
             var delResult = EmployeeRepository.empRepo.DelEmp(employee.employeeId, employee.imgId);
             if (delResult == 1)
             {
-                if (!string.IsNullOrEmpty(employee.imgName))
+                if (!string.IsNullOrEmpty(employee.imgId.ToString()))
                 {
                     Directory.Delete(@"C:\NAS\" + employee.imgId, true);
 

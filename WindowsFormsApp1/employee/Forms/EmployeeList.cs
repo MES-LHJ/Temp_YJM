@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using WindowsFormsApp1.department.Model;
 using WindowsFormsApp1.employee;
 using WindowsFormsApp1.employee.Model;
@@ -20,8 +22,7 @@ namespace WindowsFormsApp1
         private int empId;
         private string myLoginId;
         private int idx;
-       
-
+        
         public EmployeeList()
         {
             InitializeComponent();
@@ -38,6 +39,7 @@ namespace WindowsFormsApp1
             empDelBtn.Click += Delete_Button;//사원 삭제 버튼
             closeBtn.Click += Close_Btn;//닫기 버튼
             loginInfoBtn.Click += UpdateLoginInfo_Page;//id.passwd 변경 페이지이동
+            excelExportBtn.Click += Excel_Export;
         }
 
         private void Design()
@@ -52,11 +54,11 @@ namespace WindowsFormsApp1
             empUpdateBtn.Alignment = ToolStripItemAlignment.Right;
             loginInfoBtn.Alignment = ToolStripItemAlignment.Right;
             empDelBtn.Alignment = ToolStripItemAlignment.Right;
-            excelBtn.Alignment = ToolStripItemAlignment.Right;
+            excelExportBtn.Alignment = ToolStripItemAlignment.Right;
             closeBtn.Alignment = ToolStripItemAlignment.Right;
 
             empListToolStrip.Items.Insert(1, closeBtn);
-            empListToolStrip.Items.Insert(2, excelBtn);
+            empListToolStrip.Items.Insert(2, excelExportBtn);
             empListToolStrip.Items.Insert(3, empDelBtn);
             empListToolStrip.Items.Insert(4, loginInfoBtn);
             empListToolStrip.Items.Insert(5, empUpdateBtn);
@@ -82,15 +84,15 @@ namespace WindowsFormsApp1
                 empId = emp.employeeId;
                 myLoginId = emp.loginId;
                 idx = empListView.CurrentRow.Index;
-                
-            }
-           
+            }  
         }
+
         private void Search_Button(object sender, EventArgs e) //조회 버튼 클릭
         {
             
             EmpListRefresh();
         }
+
         private void Add_Button(object sender, EventArgs e) //추가 버튼 클릭
         {
             InsertEmployee insertEmployee = new InsertEmployee();
@@ -148,12 +150,54 @@ namespace WindowsFormsApp1
             }
 
         }
+
         private void Department_Button(object sender, EventArgs e) //부서 버튼
         {
             DepartmentList departmentList = new DepartmentList();
             if(departmentList.ShowDialog() == DialogResult.OK)
             {
                 EmpListRefresh();
+            }
+        }
+        private void Excel_Export(object sender, EventArgs e)
+        {
+            EmpListRefresh();
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = ".xlsx | *.xlsx";
+                saveFileDialog.FileName = "기본";
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    DataTable dt = new DataTable();
+                    foreach (DataGridViewColumn col in empListView.Columns)
+                    {
+                        dt.Columns.Add(col.HeaderText);
+                    }
+                    foreach (DataGridViewRow row in empListView.Rows)
+                    {
+                        DataRow dataRow = dt.NewRow();
+                        foreach (DataGridViewCell cell in row.Cells)
+                        {
+                            dataRow[cell.ColumnIndex] = cell.Value ?? DBNull.Value;
+                        }
+                        dt.Rows.Add(dataRow);
+                    }
+                    using (XLWorkbook workbook = new XLWorkbook())
+                    {
+                        workbook.Worksheets.Add(dt, "EmployeeList");
+
+                        try
+                        {
+                            MessageBox.Show("엑셀 저장에 성공하였습니다.");
+                            workbook.SaveAs(saveFileDialog.FileName);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("엑셀 저장에 실패하였습니다." + ex.Message);
+                        }
+                    }
+                }
             }
         }
         private void Close_Btn(object sender, EventArgs e)//닫기 버튼 클릭
