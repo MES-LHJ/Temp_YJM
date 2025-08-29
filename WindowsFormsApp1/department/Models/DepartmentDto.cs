@@ -13,6 +13,7 @@ namespace WindowsFormsApp1.department.Model
         public string memo {  get; set; }
 
         public int departmentId { get; set; }   
+        public int departmentCnt {  get; set; }
 
     }
 }

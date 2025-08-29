@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.department.Forms;
 using WindowsFormsApp1.department.Model;
 
 namespace WindowsFormsApp1
@@ -16,32 +17,61 @@ namespace WindowsFormsApp1
     public partial class DepartmentList : Form
     {
         private int departId; // 부서 ID를 저장할 변수
-        DepartmentRepository deptRepo = new DepartmentRepository();
+        private int idx;
+
         public DepartmentList()
         {
             InitializeComponent();
+            Click_Event();
+            Design();
 
-           
             this.Load += DeptList_Load; // 부서 목록 로드
+        }
+
+        private void Click_Event()//버튼 클릭 이벤트
+        {
             deptInsertBtn.Click += Insert_Button;// 추가 버튼
             deptDelBtn.Click += Del_Button; // 삭제 버튼
             deptUpdateBtn.Click += Update_Button; // 수정 버튼
-            closeBtn.Click += Close_Btn;
-            deptListView.CellClick += Cell_Click; // 부서코드 가져오기 위해
+            closeBtn.Click += Close_Btn;// 닫기 버튼
+            chartBtn.Click += Chart_Btn;
         }
 
+        private void Design()
+        {
+            deptListView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            deptListView.ReadOnly = true;
+
+            closeBtn.Alignment = ToolStripItemAlignment.Right;
+            deptDelBtn.Alignment = ToolStripItemAlignment.Right;
+            deptUpdateBtn.Alignment = ToolStripItemAlignment.Right;
+            deptInsertBtn.Alignment = ToolStripItemAlignment.Right;
+            chartBtn.Alignment = ToolStripItemAlignment.Right;
+
+            deptListToolStrip.Items.Insert(1, closeBtn);
+            deptListToolStrip.Items.Insert(2, chartBtn);
+            deptListToolStrip.Items.Insert(3,deptDelBtn);
+            deptListToolStrip.Items.Insert(4, deptUpdateBtn);
+            deptListToolStrip.Items.Insert(5, deptInsertBtn);
+        }
+
+        private void Cell_Select()//셀 선택
+        {
+            var dept = deptListView.SelectedRows[0].DataBoundItem as DepartmentDto;
+            departId = dept.departmentId;
+            idx = deptListView.CurrentRow.Index;
+        }
+
+        private void DeptListRefresh()//부서 리스트 새로고침
+        {
+            var deptInfo = DepartmentRepository.deptRepo.GetDeptListInfo();
+            deptListView.AutoGenerateColumns = false;
+            deptListView.DataSource = deptInfo;
+        }
 
         private void DeptList_Load(object sender, EventArgs e)
         {
-
-            var deptInfo = deptRepo.GetDeptListInfo();
-            deptListView.AutoGenerateColumns = false;
-            deptListView.DataSource = deptInfo;
-
-            deptListView.Columns["departmentCode"].DataPropertyName = "departmentCode";
-            deptListView.Columns["departmentName"].DataPropertyName = "departmentName";
-            deptListView.Columns["memo"].DataPropertyName = "memo";
-
+            DeptListRefresh();
         }
 
         private void Insert_Button(object sender, EventArgs e)//부서 추가 버튼
@@ -49,54 +79,43 @@ namespace WindowsFormsApp1
             InsertDepartment insertDepartment = new InsertDepartment();
             if (insertDepartment.ShowDialog() == DialogResult.OK)
             {
-                this.DeptList_Load(sender, e);
-            }   
+                DeptListRefresh();
+                deptListView.CurrentCell = deptListView.Rows[deptListView.RowCount-1].Cells[0];
+            }
         }
         private void Update_Button(object sender, EventArgs e)//부서 수정 버튼
         {
-            if (departId == 0)
+            Cell_Select();
+            Console.WriteLine(departId);
+            UpdateDepartment updateDepartment = new UpdateDepartment(departId);
+            if (updateDepartment.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("셀을 클릭해주세요.");
-                return;
+                DeptListRefresh();
+                deptListView.CurrentCell = deptListView.Rows[idx].Cells[0];
             }
-            else
-            {
-                UpdateDepartment updateDepartment = new UpdateDepartment(departId);
-                if (updateDepartment.ShowDialog() == DialogResult.OK)
-                {
-                    this.DeptList_Load(sender, e);
-                }
-            }
-                
-        }
-        private void Cell_Click(object sender, DataGridViewCellEventArgs e)//부서 id 가져오기 위해
-        {
-            int rowIndex = e.RowIndex; // 클릭한 행의 인덱스
-            string departCode = deptListView.Rows[rowIndex].Cells["departmentCode"].Value.ToString();
-            //Console.WriteLine(departCode);
-            var clickDeptInfo =  deptRepo.GetDeptId(departCode);
-            departId = clickDeptInfo.departmentId;
 
         }
-        private void Del_Button(object sender, EventArgs e)
+
+        private void Del_Button(object sender, EventArgs e)//부서 삭제 버튼
         {
-            if (departId == 0)
+            Cell_Select();
+
+            DelDepartment delDepartment = new DelDepartment(departId);
+            if (delDepartment.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("셀을 클릭해주세요.");
-                return;
+                DeptListRefresh();
             }
-            else
-            {
-                DelDepartment delDepartment = new DelDepartment(departId);
-                if(delDepartment.ShowDialog() == DialogResult.OK)
-                {
-                    this.DeptList_Load(sender, e);
-                }
-            }
+
+        }
+
+        private void Chart_Btn(object sender, EventArgs e)
+        {
+            ChartDepartment chartDepartment = new ChartDepartment(departId);
+            chartDepartment.ShowDialog();
         }
         private void Close_Btn(object sender, EventArgs e)//부서 닫기 버튼
         {
-            this.Close();
+            this.DialogResult = DialogResult.OK;
         }
     }
 }

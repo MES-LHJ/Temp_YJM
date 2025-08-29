@@ -16,10 +16,14 @@ namespace WindowsFormsApp1
     public partial class LoginEmployee : Form
 
     {
-        EmployeeRepository empRepo = new EmployeeRepository();
         public LoginEmployee()
         {
             InitializeComponent();
+            Click_Event();
+        }
+
+        private void Click_Event()
+        {
             loginBtn.Click += Login_Button;
             closeBtn.Click += Close_Btn;
         }
@@ -39,10 +43,8 @@ namespace WindowsFormsApp1
                 return;
             }
 
-            var checkLogin = empRepo.CheckLogin(loginId, passwd);
-            //Console.WriteLine(checkLogin);
-            //Console.WriteLine(loginId);
-            //Console.WriteLine(passwd);
+            var checkLogin = EmployeeRepository.empRepo.CheckLogin(loginId, passwd);
+           
             if (checkLogin == 1)
             {
                 MessageBox.Show("로그인에 성공하였습니다.");
@@ -53,8 +55,6 @@ namespace WindowsFormsApp1
                 MessageBox.Show("로그인에 실패하였습니다.");
                 return;
             }
-
-            
         }
 
         private void Close_Btn(object sender, EventArgs e)

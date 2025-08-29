@@ -5,11 +5,15 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using WindowsFormsApp1.department.Model;
 using WindowsFormsApp1.employee.Model;
 
@@ -17,20 +21,40 @@ namespace WindowsFormsApp1
 {
     public partial class InsertEmployee : Form
     {
-        private int gender = 0;
-        private string deptId;
-        private string deptCode;
-        EmployeeRepository empRepo = new EmployeeRepository();
+        private readonly EmployeeDto employee = new EmployeeDto();
+        private string imgFormat;
+
         public InsertEmployee()
         {
             InitializeComponent();
+            Click_Event();
+            Design();
+            Img_Event();
 
-            deptCodeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            deptCodeComboBox.SelectedIndexChanged += DepName_Change;
+            this.Load += AddEmployee_Load;
+        }
+
+        private void Click_Event()//이벤트 등록
+        {
             addBtn.Click += Insert_Button;//추가버튼
             cancleBtn.Click += Cancel_Button;//닫기 버튼
             menCheckBox.CheckedChanged += MenCheck_Box;
             womenCheckBox.CheckedChanged += WomenCheck_Box;
+            deptCodeComboBox.SelectedIndexChanged += DepName_Change;
+        }
+
+        private void Img_Event()
+        {
+            imgSelectBtn.Click += Img_Select;
+            imgDelBtn.Click += Img_Cancel;
+
+        }
+        private void Design()
+        {
+            deptCodeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            imgInsertBox.SizeMode = PictureBoxSizeMode.Zoom;
+            imgDelBtn.Visible = false;
+            imgInsertBox.ForeColor = Color.White;
         }
 
         private void AddEmployee_Load(object sender, EventArgs e)
@@ -38,28 +62,27 @@ namespace WindowsFormsApp1
             deptNameBox.ReadOnly = true;
             deptCodeComboBox.Items.Clear(); // 콤보박스 초기화
 
-            var deptList = empRepo.GetDeptCode();
+            var deptList = EmployeeRepository.empRepo.GetDeptCode();
             foreach (var dept in deptList)
             {
                 deptCodeComboBox.Items.Add(dept.departmentCode);
             }
+            
+
         }
 
         private void DepName_Change(object sender, EventArgs e)// 부서코드 변경시 부서 명 바뀌게
         {
-            deptCode = deptCodeComboBox.Text;
-            var deptInfo = empRepo.GetDeptName(deptCode);
+            employee.departmentCode = deptCodeComboBox.Text;
+            var deptInfo = EmployeeRepository.empRepo.GetDeptName(employee.departmentCode);
 
             deptNameBox.Text = deptInfo.departmentName;
-            deptId = deptInfo.departmentId.ToString();
+            employee.departmentId = Convert.ToInt32(deptInfo.departmentId.ToString());
         }
 
         private void Insert_Button(object sender, EventArgs e)
         {
-            bool check = true;
-            
-            deptCode = deptCodeComboBox.Text;
-
+            employee.departmentCode = deptCodeComboBox.Text;
 
             string email = emailBox.Text;
             string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";//이메일 형식(@와 공백 제외 + @ + . +도메인)
@@ -104,27 +127,40 @@ namespace WindowsFormsApp1
                 return;
             }
 
-            var getEmpCode = empRepo.GetEmpCode(empCodeBox.Text);
+            var getEmpCode = EmployeeRepository.empRepo.GetEmpCode(empCodeBox.Text);
             if (getEmpCode != null && getEmpCode.cnt > 0)
             {
                 MessageBox.Show("중복하는 사원코드가 존재합니다.");
-                check = false;
                 return;
             }
 
-            var getLoginCode = empRepo.GetInsertLoginId(loginIdBox.Text);
+            var getLoginCode = EmployeeRepository.empRepo.GetInsertLoginId(loginIdBox.Text);
             if (getLoginCode == 1)
             {
                 MessageBox.Show("중복하는 로그인ID가 존재합니다.");
-                check = false;
                 return;
             }
-            if (check)
+            
+            //image
+            Guid nGuid = Guid.NewGuid();
+            string uuid = nGuid.ToString();//uuid 생성
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "이미지 파일 (*.png;*.jpg;*.jpeg;)|*.png;*.jpg;*.jpeg;";
+            saveFileDialog.Title = "이미지 저장";
+            saveFileDialog.FileName = uuid;
+            string realFileName = saveFileDialog.FileName + imgFormat;
+
+
+
+            if (imgInsertBox.Image == null)
             {
-                
+                realFileName = null;
+            }
+
                 var empDto = new EmployeeDto
                 {
-                    departmentId = Convert.ToInt32(deptId),
+                    departmentId = employee.departmentId,
                     employeeCode = empCodeBox.Text,
                     employeeName = empNameBox.Text,
                     loginId = loginIdBox.Text,
@@ -135,46 +171,73 @@ namespace WindowsFormsApp1
                     email = emailBox.Text,
                     messId = messageIdBox.Text,
                     memo = memoBox.Text,
-                    gender = gender
+                    gender = employee.gender,
+                    imgName = realFileName,
                 };
-               
-                empRepo.InsertEmpInfo(empDto);
-                MessageBox.Show("사원 정보가 성공적으로 추가되었습니다.");
-                this.DialogResult = DialogResult.OK;
+            int newImgId = EmployeeRepository.empRepo.InsertImgFolder(realFileName);
+            empDto.imgId = newImgId;
 
+            EmployeeRepository.empRepo.InsertEmpInfo(empDto);
+            MessageBox.Show("사원 정보가 성공적으로 추가되었습니다.");
+            // 이미지 저장
+            //  저장할 경로
+            string folderPath = @"C:\NAS\" + newImgId;
+            string savePath = folderPath+ @"\" + saveFileDialog.FileName + imgFormat;
+            
+            if (imgInsertBox.Image != null)
+            {
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+                imgInsertBox.Image.Save(savePath);
             }
-
-
+            this.DialogResult = DialogResult.OK;
         }
+
         private void WomenCheck_Box(object sender, EventArgs e)
         {
             if (womenCheckBox.Checked)
             {
                 menCheckBox.Checked = false;
-                gender = 2;
-            }
-            if (menCheckBox.Checked)
-            {
-                womenCheckBox.Checked = false;
-                gender = 1;
-            }
-            
-        }
-        private void MenCheck_Box(object sender, EventArgs e)
-        {
-            
-            if (menCheckBox.Checked)
-            {
-                womenCheckBox.Checked = false;
-                gender = 1;
+                employee.gender = EmployeeDto.GenderType.Female;
             }
 
         }
+        private void MenCheck_Box(object sender, EventArgs e)
+        {
+            if (menCheckBox.Checked)
+            {
+                womenCheckBox.Checked = false;
+                employee.gender = EmployeeDto.GenderType.Male;
+            }
+
+        }
+        private void Img_Select(object sender, EventArgs e)//이미지 선택
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "이미지 선택";
+            openFileDialog.Filter = "이미지 파일 (*.png;*.jpg;*.jpeg;)|*.png;*.jpg;*.jpeg;";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+                imgFormat = Path.GetExtension(filePath).ToLower();
+               
+                // 이미지 미리보기
+                imgInsertBox.Image = Image.FromFile(filePath);
+                imgDelBtn.Visible = true;
+            }
+        }
+        private void Img_Cancel(object sender, EventArgs e)
+        {
+            imgInsertBox.Image = null;
+            imgDelBtn.Visible = false;
+        }
+
         private void Cancel_Button(object sender, EventArgs e)
         {
             this.Close(); // 폼 닫기
         }
-
-       
     }
 }

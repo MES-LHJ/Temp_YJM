@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmployeeList));
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.empListToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.deptListBtn = new System.Windows.Forms.ToolStripButton();
             this.empListBtn = new System.Windows.Forms.ToolStripButton();
@@ -38,7 +38,7 @@
             this.empUpdateBtn = new System.Windows.Forms.ToolStripButton();
             this.loginInfoBtn = new System.Windows.Forms.ToolStripButton();
             this.empDelBtn = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
+            this.excelBtn = new System.Windows.Forms.ToolStripButton();
             this.closeBtn = new System.Windows.Forms.ToolStripButton();
             this.empListView = new System.Windows.Forms.DataGridView();
             this.departmentCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,14 +53,14 @@
             this.email = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.messId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.memo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolStrip1.SuspendLayout();
+            this.empListToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.empListView)).BeginInit();
             this.SuspendLayout();
             // 
-            // toolStrip1
+            // empListToolStrip
             // 
-            this.toolStrip1.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.empListToolStrip.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.empListToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
             this.deptListBtn,
             this.empListBtn,
@@ -68,13 +68,13 @@
             this.empUpdateBtn,
             this.loginInfoBtn,
             this.empDelBtn,
-            this.toolStripButton7,
+            this.excelBtn,
             this.closeBtn});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(898, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
+            this.empListToolStrip.Location = new System.Drawing.Point(0, 0);
+            this.empListToolStrip.Name = "empListToolStrip";
+            this.empListToolStrip.Size = new System.Drawing.Size(898, 25);
+            this.empListToolStrip.TabIndex = 0;
+            this.empListToolStrip.Text = "toolStrip1";
             // 
             // toolStripLabel1
             // 
@@ -86,7 +86,6 @@
             // 
             this.deptListBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.deptListBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.deptListBtn.Margin = new System.Windows.Forms.Padding(400, 1, 0, 2);
             this.deptListBtn.Name = "deptListBtn";
             this.deptListBtn.Size = new System.Drawing.Size(35, 22);
             this.deptListBtn.Text = "부서";
@@ -136,14 +135,14 @@
             this.empDelBtn.Size = new System.Drawing.Size(35, 22);
             this.empDelBtn.Text = "삭제";
             // 
-            // toolStripButton7
+            // excelBtn
             // 
-            this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton7.Image")));
-            this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton7.Name = "toolStripButton7";
-            this.toolStripButton7.Size = new System.Drawing.Size(59, 22);
-            this.toolStripButton7.Text = "자료변환";
+            this.excelBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.excelBtn.Image = ((System.Drawing.Image)(resources.GetObject("excelBtn.Image")));
+            this.excelBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.excelBtn.Name = "excelBtn";
+            this.excelBtn.Size = new System.Drawing.Size(59, 22);
+            this.excelBtn.Text = "자료변환";
             // 
             // closeBtn
             // 
@@ -176,6 +175,7 @@
             this.empListView.Location = new System.Drawing.Point(0, 25);
             this.empListView.Name = "empListView";
             this.empListView.RowTemplate.Height = 23;
+            this.empListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.empListView.Size = new System.Drawing.Size(898, 381);
             this.empListView.TabIndex = 1;
             // 
@@ -257,10 +257,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(898, 406);
             this.Controls.Add(this.empListView);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.empListToolStrip);
             this.Name = "EmployeeList";
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.empListToolStrip.ResumeLayout(false);
+            this.empListToolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.empListView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -270,7 +270,7 @@
         #endregion
 
         private System.Windows.Forms.ColorDialog colorDialog1;
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip empListToolStrip;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripButton deptListBtn;
         private System.Windows.Forms.ToolStripButton empListBtn;
@@ -278,7 +278,7 @@
         private System.Windows.Forms.ToolStripButton empUpdateBtn;
         private System.Windows.Forms.ToolStripButton loginInfoBtn;
         private System.Windows.Forms.ToolStripButton empDelBtn;
-        private System.Windows.Forms.ToolStripButton toolStripButton7;
+        private System.Windows.Forms.ToolStripButton excelBtn;
         private System.Windows.Forms.ToolStripButton closeBtn;
         private System.Windows.Forms.DataGridView empListView;
         private System.Windows.Forms.DataGridViewTextBoxColumn departmentCode;
