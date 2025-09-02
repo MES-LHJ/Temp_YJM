@@ -56,8 +56,6 @@ namespace WindowsFormsApp1
         {
 
             //var delResult = EmployeeRepository.empRepo.DelEmp(employee.employeeId, employee.imgId);
-            //string delImgSql = "DELETE FROM img WHERE imgId = @imgId";
-            //string sql = "DELETE FROM employee WHERE employeeId = @employeeId";
             if (DelEmpInfo != null)
             {
                 using (var context = new LinqContext())
@@ -102,22 +100,7 @@ namespace WindowsFormsApp1
                     this.DialogResult = DialogResult.OK;
                 }
             }
-            //if (delResult == 1)
-            //{
-            //    if (!string.IsNullOrEmpty(employee.imgId.ToString()))
-            //    {
-
-            //        Directory.Delete(@"C:\NAS\" + employee.imgId, true);
-
-            //        //File.Delete(@"C:\NAS\" + employee.employeeId + @"\" + employee.imgName);
-            //    }
-            //    MessageBox.Show("삭제에 성공하였습니다.");
-            //    this.DialogResult = DialogResult.OK;
-            //}
-            //else
-            //{
-            //    MessageBox.Show("삭제에 실패하였습니다.");
-            //}
+          
         }
         private void Cancel_Button(object sender, EventArgs e)
         {

@@ -99,8 +99,6 @@ namespace WindowsFormsApp1
 
         private void Insert_Button(object sender, EventArgs e)
         {
-            //employee.departmentCode = deptCodeComboBox.Text;
-
             string email = emailBox.Text;
 
             if (SelectedDepartDto == null)
@@ -162,12 +160,17 @@ namespace WindowsFormsApp1
             {
                 employee.Gender = EmployeeDto.GenderType.Female;
             }
-            if (menCheckBox.Checked)
+            else if (menCheckBox.Checked)
             {
                 employee.Gender = EmployeeDto.GenderType.Male;
             }
-            //이미지 저장
-            var saveFile = util.ImgSaveType();
+            else
+            {
+                employee.Gender = EmployeeDto.GenderType.noSelect;
+            }
+
+                //이미지 저장
+                var saveFile = util.ImgSaveType();
 
             saveFile.FileName = util.Uuid();
             string realFileName = saveFile.FileName + imgFormat;

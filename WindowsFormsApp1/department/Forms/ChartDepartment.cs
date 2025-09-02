@@ -33,9 +33,13 @@ namespace WindowsFormsApp1.department.Forms
             //{
             //    deptChart.Series["department"].Points.AddXY(series.departmentName, series.departmentCnt);
             //}
+
             using(var context = new LinqContext())
             {
-                var list = context.Department.GroupJoin(context.Employee, d => d.departmentId, b => b.departmentId, (d, bs) => new { d.departmentName, Count = bs.Count() }).ToList();
+                var list = context.Department
+                                    .GroupJoin(context.Employee, d => d.departmentId, b => b.departmentId, (d, a) => new { d.departmentName, Count = a.Count() })
+                                    .OrderByDescending(a=>a.Count)
+                                    .ToList();
                 
                 foreach(var item in list)
                 {

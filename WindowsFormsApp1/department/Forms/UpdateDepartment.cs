@@ -45,7 +45,6 @@ namespace WindowsFormsApp1
         private void Update_Button(object sender, EventArgs e)
         {
             //var checkDeptCode = DepartmentRepository.DeptRepo.UpdateDeptCodeCheck(deptCodeBox.Text, myDeptCode);
-            //"SELECT departmentCode FROM department WHERE departmentCode = @departmentCode AND departmentCode <> @myDeptCode";
             using (var context = new LinqContext())
             {
                 var checkDeptCode = context.Department

@@ -63,6 +63,11 @@ namespace WindowsFormsApp1
                 {
                     deptListView.DataSource = deptListInfo;
                 }
+                else
+                {
+                    MessageBox.Show("등록된 부서가 없습니다.");
+                    return;
+                }
             } 
         }
 
@@ -73,10 +78,6 @@ namespace WindowsFormsApp1
 
         private void Insert_Button(object sender, EventArgs e)//부서 추가 버튼
         {
-            if (Dept != null)
-            {
-                idx = deptListView.CurrentRow.Index;
-            }
             InsertDepartment insertDepartment = new InsertDepartment();
             if (insertDepartment.ShowDialog() == DialogResult.OK)
             {
