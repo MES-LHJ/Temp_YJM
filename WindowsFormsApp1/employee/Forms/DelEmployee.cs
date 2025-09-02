@@ -65,7 +65,7 @@ namespace WindowsFormsApp1
 
                     Console.WriteLine(DelEmpInfo.EmployeeId);
                     Console.WriteLine(DelEmpInfo.ImgId);
-                   
+
                     if (delEmp != null)
                     {
                         context.Employee.Remove(delEmp);
@@ -87,7 +87,7 @@ namespace WindowsFormsApp1
                         MessageBox.Show("사진 삭제 실패");
                         return;
                     }
-                 
+
                     string folderPath = util.ImgFolderPath() + DelEmpInfo.ImgId;
 
                     if (Directory.Exists(folderPath))
@@ -100,7 +100,7 @@ namespace WindowsFormsApp1
                     this.DialogResult = DialogResult.OK;
                 }
             }
-          
+
         }
         private void Cancel_Button(object sender, EventArgs e)
         {

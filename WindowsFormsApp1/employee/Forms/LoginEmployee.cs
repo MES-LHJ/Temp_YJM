@@ -10,12 +10,14 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1.employee.Models;
+using WindowsFormsApp1.Utiliity;
 
 namespace WindowsFormsApp1
 {
     public partial class LoginEmployee : Form
 
     {
+        private Util util = new Util();
         public LoginEmployee()
         {
             InitializeComponent();
@@ -32,7 +34,7 @@ namespace WindowsFormsApp1
             string loginId = loginIdBox.Text;
             string passwd = passwdBox.Text;
 
-            if (Regex.IsMatch(passwd, "[^a-zA-Z0-9]"))
+            if (Regex.IsMatch(passwd, util.Pattern()["passwd"]))
             {
                 MessageBox.Show("비밀번호에 특수문자가 포함되어 있습니다.");
                 return;
@@ -44,7 +46,7 @@ namespace WindowsFormsApp1
             }
 
             var checkLogin = EmployeeRepository.EmpRepo.CheckLogin(loginId, passwd);
-           
+
             if (checkLogin == 1)
             {
                 MessageBox.Show("로그인에 성공하였습니다.");
