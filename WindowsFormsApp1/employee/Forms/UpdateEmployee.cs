@@ -34,10 +34,11 @@ namespace WindowsFormsApp1
         public UpdateEmployee(int empId)
         {
             employee.EmployeeId = empId;
+
             InitializeComponent();
-            Click_Event();
-            CheckBox_Event();
-            ComboBox_Event();
+            Click_Event();// 버튼 클릭 이벤트
+            CheckBox_Event();// 체크박스 이벤트
+            ComboBox_Event();// 콤보박스 이벤트
         }
 
         private void Click_Event()
@@ -60,11 +61,10 @@ namespace WindowsFormsApp1
         }
         private void UpdateEmployee_Load(object sender, EventArgs e)
         {
-
             //var empInfo = EmployeeRepository.empRepo.UpdateEmpInfo(employee.employeeId);// 수정할 사원 정보 가져오기
-
-            using (var context = new LinqContext())// 수정할 사원 정보 가져오기
+            using (var context = new LinqContext())
             {
+                // 수정할 사원 정보 가져오기
                 var empInfo = context.Employee
                                         .Join(context.Department, a => a.departmentId, d => d.departmentId, (a, d) => new { a, d })
                                         .Join(context.img, ed => ed.a.imgId, i => i.imgId, (ed, i) => new
@@ -132,7 +132,7 @@ namespace WindowsFormsApp1
             }
 
         }
-        private void DepName_Change(object sender, EventArgs e)// 부서코드 변경시 부서 명 바뀌게
+        private void DepName_Change(object sender, EventArgs e)
         {
             if (SelectDeptDto != null)
             {
@@ -140,9 +140,8 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void Complete_Button(object sender, EventArgs e) //수정 완료 버튼
+        private void Complete_Button(object sender, EventArgs e) 
         {
-
             string empCode = empCodeBox.Text;
             //var checkEmpCode = EmployeeRepository.empRepo.UpdateCheckEmpCode(empCode, myEmpCode);
             using (var context = new LinqContext())
@@ -184,7 +183,7 @@ namespace WindowsFormsApp1
                     return;
                 }
 
-                var saveFile = util.ImgSaveType();// 이미지 저장 다이얼로그
+                var saveFile = util.ImgSaveType();// 이미지 저장 공통코드
                 string folderPath = util.ImgFolderPath() + employee.ImgId;
                 string imgPath = folderPath + @"\" + originImg;
 
@@ -199,7 +198,6 @@ namespace WindowsFormsApp1
                     File.Delete(imgPath);
                 }
                 else if (imgUpdateBox.Image == null && !string.IsNullOrEmpty(originImg) && !imgChange && cnt < 1)  //업데이트 사진 없고 원본 사진 있을 때 x 버튼
-
                 {
                     File.Delete(imgPath);
                 }
@@ -222,9 +220,13 @@ namespace WindowsFormsApp1
                 {
                     employee.Gender = EmployeeDto.GenderType.Female;
                 }
-                if (menCheckBox.Checked)
+                else if (menCheckBox.Checked)
                 {
                     employee.Gender = EmployeeDto.GenderType.Male;
+                }
+                else
+                {
+                    employee.Gender = EmployeeDto.GenderType.noSelect;
                 }
 
                 //EmployeeDto empDto = new EmployeeDto

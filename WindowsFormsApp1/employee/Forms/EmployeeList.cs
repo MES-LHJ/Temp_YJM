@@ -21,7 +21,6 @@ namespace WindowsFormsApp1
 {
     public partial class EmployeeList : Form
     {
-        //private string myLoginId;//수정할 로그인 아이디
         private int idx;//선택된 행 인덱스
         private Util util = new Util();//공통 코드
         //선택된 행의 사원 정보
@@ -68,9 +67,14 @@ namespace WindowsFormsApp1
         //}
 
         private void Search_Button(object sender, EventArgs e) //조회 버튼 클릭
+
         {
             EmpListRefresh();
-
+            if(Emp == null)
+            {
+                MessageBox.Show("등록된 사원 정보가 없습니다.");
+                return;
+            }
         }
 
         private void Add_Button(object sender, EventArgs e) //추가 버튼 클릭
@@ -85,13 +89,10 @@ namespace WindowsFormsApp1
 
         private void Update_Button(object sender, EventArgs e) //수정 버튼 클릭
         {
+
             if (Emp != null)
             {
                 idx = empListView.CurrentRow.Index;
-            }
-            //Cell_Select();
-            if (Emp != null)
-            {
                 UpdateEmployee updateEmployee = new UpdateEmployee(Emp.EmployeeId);
                 if (updateEmployee.ShowDialog() == DialogResult.OK)
                 {
@@ -108,26 +109,27 @@ namespace WindowsFormsApp1
 
         private void UpdateLoginInfo_Page(object sender, EventArgs e)//id.passwd 변경 버튼 클릭
         {
-            if (Emp != null)
-            {
-                idx = empListView.CurrentRow.Index;
-            }
-            if (Emp.EmployeeId == 0)
+            if (Emp == null)
             {
                 MessageBox.Show("조회 버튼을 눌러주세요.");
                 return;
             }
-            UpdateLoginInfo updateLoginInfo = new UpdateLoginInfo(Emp.EmployeeId, Emp.LoginId);
-            if (updateLoginInfo.ShowDialog() == DialogResult.OK)
+            else
             {
-                EmpListRefresh();
-                if (idx > 0) empListView.CurrentCell = empListView.Rows[idx].Cells[0];
+                idx = empListView.CurrentRow.Index;
+                UpdateLoginInfo updateLoginInfo = new UpdateLoginInfo(Emp.EmployeeId, Emp.LoginId);
+                if (updateLoginInfo.ShowDialog() == DialogResult.OK)
+                {
+                    EmpListRefresh();
+                    if (idx > 0) empListView.CurrentCell = empListView.Rows[idx].Cells[0];
+                }
             }
+
         }
 
         private void Delete_Button(object sender, EventArgs e) //삭제 버튼 클릭
         {
-            if (Emp.EmployeeId == 0)
+            if (Emp== null)
             {
                 MessageBox.Show("조회 버튼을 눌러주세요.");
                 return;

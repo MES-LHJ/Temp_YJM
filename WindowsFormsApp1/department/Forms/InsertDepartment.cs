@@ -62,8 +62,6 @@ namespace WindowsFormsApp1
                 //    Memo = memoBox.Text
                 //};
                 //DepartmentRepository.DeptRepo.InsertDepartment(deptDto);
-                //string sql = "INSERT INTO department (departmentCode, departmentName, memo) " +
-                //"VALUES (@departmentCode, @departmentName, @memo)";
 
                 var deptInsertInfo = new Department
                 {
@@ -73,7 +71,7 @@ namespace WindowsFormsApp1
                 };
                 context.Department.Add(deptInsertInfo);
                 context.SaveChanges();
-                
+
                 MessageBox.Show("부서 등록이 완료되었습니다.");
                 this.DialogResult = DialogResult.OK;
 

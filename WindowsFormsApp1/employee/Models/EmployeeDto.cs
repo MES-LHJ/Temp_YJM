@@ -31,7 +31,8 @@ namespace WindowsFormsApp1.employee.Models
         public GenderType Gender { get; set; }
 
         public enum GenderType
-        {
+        {   
+            noSelect = 0,
             Male=1,
             Female = 2
         }
