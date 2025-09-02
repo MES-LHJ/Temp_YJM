@@ -12,16 +12,19 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1.department.Models;
 using WindowsFormsApp1.employee.Models;
+using WindowsFormsApp1.Utiliity;
 
 namespace WindowsFormsApp1
 {
     public partial class DelEmployee : Form
     {
-        private readonly EmployeeDto employee = new EmployeeDto();
+        private readonly int employeeId;
+        private EmployeeDto DelEmpInfo = new EmployeeDto();
+        private readonly Util util = new Util();//공통 코드
 
         public DelEmployee(int empId)
         {
-            employee.EmployeeId = empId;
+            employeeId = empId;
 
             InitializeComponent();
             Click_Event();
@@ -36,13 +39,11 @@ namespace WindowsFormsApp1
 
         private void DelEmployee_Load_1(object sender, EventArgs e)
         {
-            var delInfo = EmployeeRepository.EmpRepo.empDelInfo(employee.EmployeeId);
-            if (delInfo != null)
+            DelEmpInfo = EmployeeRepository.EmpRepo.empDelInfo(employeeId);
+            if (DelEmpInfo != null)
             {
-                empCodeLabel.Text = "사원코드 : " + delInfo.EmployeeCode;
-                empNameLabel.Text = "사원명 : " + delInfo.EmployeeName;
-                employee.ImgId = delInfo.ImgId;
-                employee.ImgName = delInfo.ImgName;
+                empCodeLabel.Text = "사원코드 : " + DelEmpInfo.EmployeeCode;
+                empNameLabel.Text = "사원명 : " + DelEmpInfo.EmployeeName;
             }
             else
             {
@@ -53,49 +54,59 @@ namespace WindowsFormsApp1
 
         private void Del_Button(object sender, EventArgs e)
         {
-           
+
             //var delResult = EmployeeRepository.empRepo.DelEmp(employee.employeeId, employee.imgId);
             //string delImgSql = "DELETE FROM img WHERE imgId = @imgId";
             //string sql = "DELETE FROM employee WHERE employeeId = @employeeId";
-            using(var context = new LinqContext())
+            if (DelEmpInfo != null)
             {
-                var delEmp = context.Employee.FirstOrDefault(a=>a.employeeId == employee.EmployeeId);
-                if(delEmp != null)
+                using (var context = new LinqContext())
                 {
-                    context.Employee.Remove(delEmp);
-                    context.SaveChanges();
-                }
-                else
-                {
-                    MessageBox.Show("사원 삭제 실패");
-                    return;
-                }
-                    var imgDel = context.img.FirstOrDefault(i => i.imgId == employee.ImgId);
-                if(imgDel != null){
-                    context.img.Remove(imgDel);
-                    context.SaveChanges();
-                }
-                else
-                {
-                    MessageBox.Show("사진 삭제 실패");
-                    return;
-                }
+                    var delEmp = context.Employee.FirstOrDefault(a => a.employeeId == DelEmpInfo.EmployeeId);
+                    var imgDel = context.img.FirstOrDefault(i => i.imgId == DelEmpInfo.ImgId);
 
-                string folderPath = @"C:\NAS\" + employee.ImgId;
-                if (Directory.Exists(folderPath))
-                {
-                  
-                    Directory.Delete(@"C:\NAS\" + employee.ImgId, true);
+                    Console.WriteLine(DelEmpInfo.EmployeeId);
+                    Console.WriteLine(DelEmpInfo.ImgId);
+                   
+                    if (delEmp != null)
+                    {
+                        context.Employee.Remove(delEmp);
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        MessageBox.Show("사원 삭제 실패");
+                        return;
+                    }
 
+                    if (imgDel != null)
+                    {
+                        context.img.Remove(imgDel);
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        MessageBox.Show("사진 삭제 실패");
+                        return;
+                    }
+                 
+                    string folderPath = util.ImgFolderPath() + DelEmpInfo.ImgId;
+
+                    if (Directory.Exists(folderPath))
+                    {
+
+                        Directory.Delete(@"C:\NAS\" + DelEmpInfo.ImgId, true);
+
+                    }
+                    MessageBox.Show("삭제에 성공하였습니다.");
+                    this.DialogResult = DialogResult.OK;
                 }
-                MessageBox.Show("삭제에 성공하였습니다.");
-                this.DialogResult = DialogResult.OK;
             }
             //if (delResult == 1)
             //{
             //    if (!string.IsNullOrEmpty(employee.imgId.ToString()))
             //    {
-                    
+
             //        Directory.Delete(@"C:\NAS\" + employee.imgId, true);
 
             //        //File.Delete(@"C:\NAS\" + employee.employeeId + @"\" + employee.imgName);

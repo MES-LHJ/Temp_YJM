@@ -14,7 +14,7 @@ namespace WindowsFormsApp1
 {
     public partial class UpdateDepartment : Form
     {
-        private int deptId; // 부서 ID를 저장할 변수
+        private readonly int deptId; // 부서 ID를 저장할 변수
         private string myDeptCode;//기존 부서코드 저장
 
         public UpdateDepartment(int departId)
@@ -44,7 +44,6 @@ namespace WindowsFormsApp1
 
         private void Update_Button(object sender, EventArgs e)
         {
-
             //var checkDeptCode = DepartmentRepository.DeptRepo.UpdateDeptCodeCheck(deptCodeBox.Text, myDeptCode);
             //"SELECT departmentCode FROM department WHERE departmentCode = @departmentCode AND departmentCode <> @myDeptCode";
             using (var context = new LinqContext())

@@ -31,11 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DepartmentList));
             this.deptListToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.deptInsertBtn = new System.Windows.Forms.ToolStripButton();
-            this.deptUpdateBtn = new System.Windows.Forms.ToolStripButton();
-            this.deptDelBtn = new System.Windows.Forms.ToolStripButton();
             this.closeBtn = new System.Windows.Forms.ToolStripButton();
             this.chartBtn = new System.Windows.Forms.ToolStripButton();
+            this.deptDelBtn = new System.Windows.Forms.ToolStripButton();
+            this.deptUpdateBtn = new System.Windows.Forms.ToolStripButton();
+            this.deptInsertBtn = new System.Windows.Forms.ToolStripButton();
             this.deptListView = new System.Windows.Forms.DataGridView();
             this.departmentCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.departmentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -67,36 +67,6 @@
             this.toolStripLabel1.Size = new System.Drawing.Size(55, 22);
             this.toolStripLabel1.Text = "부서사원";
             // 
-            // deptInsertBtn
-            // 
-            this.deptInsertBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.deptInsertBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.deptInsertBtn.Image = ((System.Drawing.Image)(resources.GetObject("deptInsertBtn.Image")));
-            this.deptInsertBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.deptInsertBtn.Name = "deptInsertBtn";
-            this.deptInsertBtn.Size = new System.Drawing.Size(35, 22);
-            this.deptInsertBtn.Text = "추가";
-            // 
-            // deptUpdateBtn
-            // 
-            this.deptUpdateBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.deptUpdateBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.deptUpdateBtn.Image = ((System.Drawing.Image)(resources.GetObject("deptUpdateBtn.Image")));
-            this.deptUpdateBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.deptUpdateBtn.Name = "deptUpdateBtn";
-            this.deptUpdateBtn.Size = new System.Drawing.Size(35, 22);
-            this.deptUpdateBtn.Text = "수정";
-            // 
-            // deptDelBtn
-            // 
-            this.deptDelBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.deptDelBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.deptDelBtn.Image = ((System.Drawing.Image)(resources.GetObject("deptDelBtn.Image")));
-            this.deptDelBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.deptDelBtn.Name = "deptDelBtn";
-            this.deptDelBtn.Size = new System.Drawing.Size(35, 22);
-            this.deptDelBtn.Text = "삭제";
-            // 
             // closeBtn
             // 
             this.closeBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -117,6 +87,36 @@
             this.chartBtn.Size = new System.Drawing.Size(35, 22);
             this.chartBtn.Text = "차트";
             // 
+            // deptDelBtn
+            // 
+            this.deptDelBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.deptDelBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.deptDelBtn.Image = ((System.Drawing.Image)(resources.GetObject("deptDelBtn.Image")));
+            this.deptDelBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.deptDelBtn.Name = "deptDelBtn";
+            this.deptDelBtn.Size = new System.Drawing.Size(35, 22);
+            this.deptDelBtn.Text = "삭제";
+            // 
+            // deptUpdateBtn
+            // 
+            this.deptUpdateBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.deptUpdateBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.deptUpdateBtn.Image = ((System.Drawing.Image)(resources.GetObject("deptUpdateBtn.Image")));
+            this.deptUpdateBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.deptUpdateBtn.Name = "deptUpdateBtn";
+            this.deptUpdateBtn.Size = new System.Drawing.Size(35, 22);
+            this.deptUpdateBtn.Text = "수정";
+            // 
+            // deptInsertBtn
+            // 
+            this.deptInsertBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.deptInsertBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.deptInsertBtn.Image = ((System.Drawing.Image)(resources.GetObject("deptInsertBtn.Image")));
+            this.deptInsertBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.deptInsertBtn.Name = "deptInsertBtn";
+            this.deptInsertBtn.Size = new System.Drawing.Size(35, 22);
+            this.deptInsertBtn.Text = "추가";
+            // 
             // deptListView
             // 
             this.deptListView.BackgroundColor = System.Drawing.Color.White;
@@ -128,7 +128,9 @@
             this.deptListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.deptListView.Location = new System.Drawing.Point(0, 25);
             this.deptListView.Name = "deptListView";
+            this.deptListView.ReadOnly = true;
             this.deptListView.RowTemplate.Height = 23;
+            this.deptListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.deptListView.Size = new System.Drawing.Size(629, 425);
             this.deptListView.TabIndex = 1;
             // 
@@ -137,18 +139,21 @@
             this.departmentCode.DataPropertyName = "departmentCode";
             this.departmentCode.HeaderText = "부서코드";
             this.departmentCode.Name = "departmentCode";
+            this.departmentCode.ReadOnly = true;
             // 
             // departmentName
             // 
             this.departmentName.DataPropertyName = "departmentName";
             this.departmentName.HeaderText = "부서명";
             this.departmentName.Name = "departmentName";
+            this.departmentName.ReadOnly = true;
             // 
             // memo
             // 
             this.memo.DataPropertyName = "memo";
             this.memo.HeaderText = "메모";
             this.memo.Name = "memo";
+            this.memo.ReadOnly = true;
             // 
             // DepartmentList
             // 

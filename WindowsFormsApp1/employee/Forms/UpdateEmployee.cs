@@ -22,7 +22,7 @@ namespace WindowsFormsApp1
     public partial class UpdateEmployee : Form
     {
         private readonly EmployeeDto employee = new EmployeeDto();
-        private Util util = new Util();//공통코드
+        private readonly Util util = new Util();//공통코드
         private string myEmpCode;//원래 사원코드
         private string imgFormat;//이미지 확장자
         private string originImg;//원본 이미지명
@@ -52,7 +52,7 @@ namespace WindowsFormsApp1
         {
             deptCodeComboBox.SelectedIndexChanged += DepName_Change;//부서코드 변경시 부서명 바뀌게
         }
-      
+
         private void CheckBox_Event()
         {
             menCheckBox.CheckedChanged += MenCheck_Box;// 남자 체크박스
@@ -106,7 +106,8 @@ namespace WindowsFormsApp1
                 employee.ImgId = Convert.ToInt32(empInfo.imgId);
                 employee.Gender = (EmployeeDto.GenderType)empInfo.gender;
 
-                string imgPath = @"C:\NAS\" + employee.ImgId + @"\" + empInfo.imgName;
+                string folderPath = util.ImgFolderPath() + employee.ImgId;
+                string imgPath = folderPath + @"\" + empInfo.imgName;
                 if (!string.IsNullOrEmpty(empInfo.imgName) && File.Exists(imgPath))
                 {
                     imgUpdateBox.Image = Image.FromFile(imgPath);
@@ -149,15 +150,14 @@ namespace WindowsFormsApp1
                 var checkEmpCode = context.Employee
                                             .Where(a => a.employeeCode == empCode && a.employeeCode != myEmpCode)
                                             .Select(a => a.employeeCode)
-                                            .FirstOrDefault();
+                                            .Any();
 
-                if (checkEmpCode != null)
+                if (checkEmpCode == true)
                 {
                     MessageBox.Show("중복된 사원코드가 존재합니다.");
                     return;
                 }
             }
-
 
             try
             {
@@ -243,7 +243,6 @@ namespace WindowsFormsApp1
                 //    ImgName = fileName
                 //};
 
-
                 //EmployeeRepository.empRepo.UpdateEmp(empDto);
                 //EmployeeRepository.empRepo.UdpateImg(empDto.imgName);
                 using (var context = new LinqContext())
@@ -281,7 +280,6 @@ namespace WindowsFormsApp1
             {
                 MessageBox.Show("수정 중 오류가 발생했습니다: " + ex.Message);
             }
-
         }
         private void WomenCheck_Box(object sender, EventArgs e)// 여자 체크박스
         {

@@ -39,6 +39,13 @@ namespace WindowsFormsApp1.Utiliity
 
             return saveFileDialog;
         }
+        public SaveFileDialog ExcelExportType()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = ".xlsx | *.xlsx";
+            saveFileDialog.FileName = "기본";
+            return saveFileDialog;
+        }
 
         public string ImgFolderPath()
         {

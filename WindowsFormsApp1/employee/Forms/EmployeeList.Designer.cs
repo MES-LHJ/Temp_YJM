@@ -183,8 +183,9 @@
             this.empListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.empListView.Location = new System.Drawing.Point(0, 25);
             this.empListView.Name = "empListView";
+            this.empListView.ReadOnly = true;
             this.empListView.RowTemplate.Height = 23;
-            this.empListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.empListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.empListView.Size = new System.Drawing.Size(1011, 381);
             this.empListView.TabIndex = 1;
             // 

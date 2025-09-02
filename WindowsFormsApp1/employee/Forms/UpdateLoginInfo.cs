@@ -16,8 +16,8 @@ namespace WindowsFormsApp1.employee
 {
     public partial class UpdateLoginInfo : Form
     {
-        private int employeeId;
-        private string myLoginId;//수정할 로그인 아이디
+        private readonly int employeeId;
+        private readonly string myLoginId;//수정할 로그인 아이디
         private readonly Util util = new Util();//공통 코드
         public UpdateLoginInfo(int empId, string myLoginId)
         {

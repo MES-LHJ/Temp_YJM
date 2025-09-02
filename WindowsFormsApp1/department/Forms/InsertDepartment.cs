@@ -64,6 +64,7 @@ namespace WindowsFormsApp1
                 //DepartmentRepository.DeptRepo.InsertDepartment(deptDto);
                 //string sql = "INSERT INTO department (departmentCode, departmentName, memo) " +
                 //"VALUES (@departmentCode, @departmentName, @memo)";
+
                 var deptInsertInfo = new Department
                 {
                     departmentName = deptNameBox.Text,

@@ -16,23 +16,9 @@ namespace WindowsFormsApp1
 {
     public partial class DepartmentList : Form
     {
+        private int idx;//셀 인덱스 번호
 
-        private int idx;
-
-        public DepartmentDto Dept
-        {
-            get
-            {
-                if (deptListView.SelectedRows.Count > 0)
-                {
-                    return deptListView.SelectedRows[0].DataBoundItem as DepartmentDto;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
+        public DepartmentDto Dept { get => deptListView.SelectedRows.Count > 0 ? deptListView.SelectedRows[0].DataBoundItem as DepartmentDto : null; }
 
         public DepartmentList()
         {
@@ -54,8 +40,6 @@ namespace WindowsFormsApp1
 
         private void Design()
         {
-            deptListView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            deptListView.ReadOnly = true;
             deptListView.AutoGenerateColumns = false;
         }
 
@@ -113,7 +97,6 @@ namespace WindowsFormsApp1
                 DeptListRefresh();
                 if (idx > 0) deptListView.CurrentCell = deptListView.Rows[idx].Cells[0];
             }
-
         }
 
         private void Del_Button(object sender, EventArgs e)//부서 삭제 버튼

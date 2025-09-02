@@ -14,15 +14,16 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using WindowsFormsApp1.department.Models;
 using WindowsFormsApp1.employee;
 using WindowsFormsApp1.employee.Models;
+using WindowsFormsApp1.Utiliity;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WindowsFormsApp1
 {
     public partial class EmployeeList : Form
     {
-        private string myLoginId;//수정할 로그인 아이디
+        //private string myLoginId;//수정할 로그인 아이디
         private int idx;//선택된 행 인덱스
-
+        private Util util = new Util();//공통 코드
         //선택된 행의 사원 정보
         public EmployeeDto Emp { get => empListView.SelectedRows.Count > 0 ? empListView.SelectedRows[0].DataBoundItem as EmployeeDto : null; }
 
@@ -47,44 +48,14 @@ namespace WindowsFormsApp1
 
         private void Design()
         {
-            empListView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            empListView.ReadOnly = true;
             empListView.AutoGenerateColumns = false;
         }
 
         private void EmpListRefresh()//사원 리스트 새로고침
         {
-            using (var context = new LinqContext())
-            {
-                var list = context.Employee
-                                    .Join(context.Department, e => e.departmentId, d => d.departmentId, (e, d) => new { e, d })
-                                    .Join(context.img, ed => ed.e.imgId, i => i.imgId, (ed, i) => new EmployeeDto
-                                    {
-                                        EmployeeCode = ed.e.employeeCode,
-                                        EmployeeName = ed.e.employeeName,
-                                        LoginId = ed.e.loginId,
-                                        Passwd = ed.e.passwd,
-                                        EmployeeRank = ed.e.employeeRank,
-                                        EmployeeType = ed.e.employeeType,
-                                        Phone = ed.e.phone,
-                                        Email = ed.e.email,
-                                        MessId = ed.e.messId,
-                                        Memo = ed.e.memo,
-                                        EmployeeId = ed.e.employeeId,
-                                        DepartmentCode = ed.d.departmentCode,
-                                        DepartmentName = ed.d.departmentName,
-                                        ImgId = i.imgId
-                                    })
-                                    .OrderBy(emp => emp.EmployeeId)
-                                    .ToList();
 
-                empListView.DataSource = list;
-                if(Emp != null)
-                {
-                    myLoginId = Emp.LoginId;
-                }
-               
-            }
+            var list = EmployeeRepository.EmpRepo.GetLinqEmpInfo();
+            empListView.DataSource = list;
         }
 
         //private void Cell_Select()//선택된 셀의 사원Id
@@ -103,12 +74,12 @@ namespace WindowsFormsApp1
         }
 
         private void Add_Button(object sender, EventArgs e) //추가 버튼 클릭
-        {   
+        {
             InsertEmployee insertEmployee = new InsertEmployee();
             if (insertEmployee.ShowDialog() == DialogResult.OK)
             {
                 EmpListRefresh();
-                empListView.CurrentCell = empListView.Rows[empListView.RowCount-1].Cells[0];
+                empListView.CurrentCell = empListView.Rows[empListView.RowCount - 1].Cells[0];
             }
         }
 
@@ -146,7 +117,7 @@ namespace WindowsFormsApp1
                 MessageBox.Show("조회 버튼을 눌러주세요.");
                 return;
             }
-            UpdateLoginInfo updateLoginInfo = new UpdateLoginInfo(Emp.EmployeeId, myLoginId);
+            UpdateLoginInfo updateLoginInfo = new UpdateLoginInfo(Emp.EmployeeId, Emp.LoginId);
             if (updateLoginInfo.ShowDialog() == DialogResult.OK)
             {
                 EmpListRefresh();
@@ -180,43 +151,40 @@ namespace WindowsFormsApp1
         private void Excel_Export(object sender, EventArgs e) //엑셀 내보내기 버튼 클릭
         {
             EmpListRefresh();
-            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+
+            var saveExcel = util.ExcelExportType();
+            if (saveExcel.ShowDialog() == DialogResult.OK)
             {
-                saveFileDialog.Filter = ".xlsx | *.xlsx";
-                saveFileDialog.FileName = "기본";
-
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                DataTable dt = new DataTable();//엑셀로 내보낼 데이터 테이블 생성
+                foreach (DataGridViewColumn col in empListView.Columns)
                 {
-                    DataTable dt = new DataTable();//엑셀로 내보낼 데이터 테이블 생성
-                    foreach (DataGridViewColumn col in empListView.Columns)
+                    dt.Columns.Add(col.HeaderText);//컬럼명 추가
+                }
+                foreach (DataGridViewRow row in empListView.Rows)
+                {
+                    DataRow dataRow = dt.NewRow();//새로운 행 추가
+                    foreach (DataGridViewCell cell in row.Cells)
                     {
-                        dt.Columns.Add(col.HeaderText);//컬럼명 추가
+                        dataRow[cell.ColumnIndex] = cell.Value;//셀 값 추가
                     }
-                    foreach (DataGridViewRow row in empListView.Rows)
+                    dt.Rows.Add(dataRow);//행 추가
+                }
+                using (XLWorkbook workbook = new XLWorkbook())
+                {
+                    workbook.Worksheets.Add(dt, "EmployeeList");//데이터 테이블을 워크시트로 추가
+
+                    try
                     {
-                        DataRow dataRow = dt.NewRow();//새로운 행 추가
-                        foreach (DataGridViewCell cell in row.Cells)
-                        {
-                            dataRow[cell.ColumnIndex] = cell.Value;//셀 값 추가
-                        }
-                        dt.Rows.Add(dataRow);//행 추가
+                        MessageBox.Show("엑셀 저장에 성공하였습니다.");
+
+                        workbook.SaveAs(saveExcel.FileName);
                     }
-                    using (XLWorkbook workbook = new XLWorkbook())
+                    catch (Exception ex)
                     {
-                        workbook.Worksheets.Add(dt, "EmployeeList");//데이터 테이블을 워크시트로 추가
-
-                        try
-                        {
-                            MessageBox.Show("엑셀 저장에 성공하였습니다.");
-
-                            workbook.SaveAs(saveFileDialog.FileName);
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("엑셀 저장에 실패하였습니다." + ex.Message);
-                        }
+                        MessageBox.Show("엑셀 저장에 실패하였습니다." + ex.Message);
                     }
                 }
+
             }
         }
         private void Close_Btn(object sender, EventArgs e)//닫기 버튼 클릭
