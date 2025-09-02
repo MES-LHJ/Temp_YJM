@@ -14,22 +14,31 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using WindowsFormsApp1.department.Model;
-using WindowsFormsApp1.employee.Model;
+using WindowsFormsApp1.department.Models;
+using WindowsFormsApp1.employee.Models;
+using WindowsFormsApp1.Utiliity;
 
 namespace WindowsFormsApp1
 {
     public partial class InsertEmployee : Form
     {
         private readonly EmployeeDto employee = new EmployeeDto();
-        private string imgFormat;
+        private readonly Util util = new Util();//공통 코드
+        private string imgFormat;//이미지 확장자
+
+        /// 사원코드
+        public string EmployeeCode { get => empCodeBox.Text; private set => empCodeBox.Text = value; }
+
+        /// 선택된 부서
+        public DepartmentDto SelectedDepartDto => deptCodeComboBox.SelectedItem as DepartmentDto;
 
         public InsertEmployee()
         {
             InitializeComponent();
             Click_Event();
             Design();
-            Img_Event();
+            CheckBox_Event();
+            ComboBox_Event();
 
             this.Load += AddEmployee_Load;
         }
@@ -38,61 +47,68 @@ namespace WindowsFormsApp1
         {
             addBtn.Click += Insert_Button;//추가버튼
             cancleBtn.Click += Cancel_Button;//닫기 버튼
-            menCheckBox.CheckedChanged += MenCheck_Box;
-            womenCheckBox.CheckedChanged += WomenCheck_Box;
-            deptCodeComboBox.SelectedIndexChanged += DepName_Change;
+            imgSelectBtn.Click += Img_Select;//이미지 선택
+            imgDelBtn.Click += Img_Cancel;//이미지 x 버튼
         }
-
-        private void Img_Event()
+        private void CheckBox_Event()
         {
-            imgSelectBtn.Click += Img_Select;
-            imgDelBtn.Click += Img_Cancel;
-
+            menCheckBox.CheckedChanged += MenCheck_Box;// 남자 체크박스
+            womenCheckBox.CheckedChanged += WomenCheck_Box;// 여자 체크박스
         }
+        private void ComboBox_Event()
+        {
+            deptCodeComboBox.SelectedIndexChanged += DepName_Change;//부서코드 변경시 부서명 바뀌게
+        }
+
         private void Design()
         {
-            deptCodeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            imgInsertBox.SizeMode = PictureBoxSizeMode.Zoom;
             imgDelBtn.Visible = false;
-            imgInsertBox.ForeColor = Color.White;
         }
 
         private void AddEmployee_Load(object sender, EventArgs e)
         {
-            deptNameBox.ReadOnly = true;
-            deptCodeComboBox.Items.Clear(); // 콤보박스 초기화
-
-            var deptList = EmployeeRepository.empRepo.GetDeptCode();
-            foreach (var dept in deptList)
+            // 데이터 불러오기
+            //var deptList = DepartmentRepository.deptRepo.GetDeptListInfo();
+            using (var context = new LinqContext())
             {
-                deptCodeComboBox.Items.Add(dept.departmentCode);
+                var deptListInfo = context.Department
+                                            .OrderBy(d => d.departmentId)
+                                            .Select(d => new DepartmentDto
+                                            {
+                                                DepartmentId = d.departmentId,
+                                                DepartmentName = d.departmentName,
+                                                DepartmentCode = d.departmentCode,
+                                                Memo = d.memo
+                                            })
+                                            .ToList();
+                // 콤보박스 파싱 초기화
+                deptCodeComboBox.Items.Clear(); // 콤보박스 초기화
+                //파싱
+                deptCodeComboBox.Items.AddRange(deptListInfo.ToArray());
             }
-
-
         }
 
         private void DepName_Change(object sender, EventArgs e)// 부서코드 변경시 부서 명 바뀌게
         {
-            employee.departmentCode = deptCodeComboBox.Text;
-            var deptInfo = EmployeeRepository.empRepo.GetDeptName(employee.departmentCode);
-
-            deptNameBox.Text = deptInfo.departmentName;
-            employee.departmentId = Convert.ToInt32(deptInfo.departmentId.ToString());
+            // 선택값 확인 후 부서명 변경
+            if (SelectedDepartDto != null)
+            {
+                deptNameBox.Text = SelectedDepartDto.DepartmentName;
+            }
         }
 
         private void Insert_Button(object sender, EventArgs e)
         {
-            employee.departmentCode = deptCodeComboBox.Text;
+            //employee.departmentCode = deptCodeComboBox.Text;
 
             string email = emailBox.Text;
-            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";//이메일 형식(@와 공백 제외 + @뒤에 오는문자가 @이나 공백이 아니면 + . +도메인(.다음에 공백이나 @가아니면)+문자열 끝
 
-            if (deptCodeComboBox.Text.Equals(""))
+            if (SelectedDepartDto == null)
             {
                 MessageBox.Show("부서코드를 입력해주세요.");
                 return;
             }
-            else if (string.IsNullOrWhiteSpace(empCodeBox.Text))
+            else if (string.IsNullOrWhiteSpace(EmployeeCode))
             {
                 MessageBox.Show("사원코드를 입력해주세요.");
                 return;
@@ -112,7 +128,7 @@ namespace WindowsFormsApp1
                 MessageBox.Show("비밀번호를 입력해주세요.");
                 return;
             }
-            else if (Regex.IsMatch(passwdBox.Text, "[^a-zA-Z0-9]"))//영문자나 숫자가 아닌
+            else if (Regex.IsMatch(passwdBox.Text, util.Pattern()["passwd"]))
             {
                 MessageBox.Show("비밀번호에 특수문자가 포함 되어있습니다.");
                 return;
@@ -122,85 +138,104 @@ namespace WindowsFormsApp1
                 MessageBox.Show("비밀번호를 8자리 이상 입력해주세요.");
                 return;
             }
-            else if (!string.IsNullOrWhiteSpace(email) && !Regex.IsMatch(email, pattern))
+            else if (!string.IsNullOrWhiteSpace(email) && !Regex.IsMatch(email, util.Pattern()["email"]))
             {
                 MessageBox.Show("이메일 형식이 틀립니다.");
                 return;
             }
 
-            var getEmpCode = EmployeeRepository.empRepo.GetEmpCode(empCodeBox.Text);
-            if (getEmpCode != null && getEmpCode.cnt > 0)
+            var getEmpCode = EmployeeRepository.EmpRepo.GetEmpCode(empCodeBox.Text);
+            if (getEmpCode != null && getEmpCode.Cnt > 0)
             {
                 MessageBox.Show("중복하는 사원코드가 존재합니다.");
                 return;
             }
 
-            var getLoginCode = EmployeeRepository.empRepo.GetInsertLoginId(loginIdBox.Text);
+            var getLoginCode = EmployeeRepository.EmpRepo.GetInsertLoginId(loginIdBox.Text);
             if (getLoginCode == 1)
             {
                 MessageBox.Show("중복하는 로그인ID가 존재합니다.");
                 return;
             }
-
+            //성별 변경
+            if (womenCheckBox.Checked)
+            {
+                employee.Gender = EmployeeDto.GenderType.Female;
+            }
+            if (menCheckBox.Checked)
+            {
+                employee.Gender = EmployeeDto.GenderType.Male;
+            }
             //이미지 저장
-            Guid nGuid = Guid.NewGuid();
-            string uuid = nGuid.ToString();//uuid
+            var saveFile = util.ImgSaveType();
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "이미지 파일 (*.png;*.jpg;*.jpeg;)|*.png;*.jpg;*.jpeg;";
-            saveFileDialog.Title = "이미지 저장";
-            saveFileDialog.FileName = uuid;
-            string realFileName = saveFileDialog.FileName + imgFormat;
+            saveFile.FileName = util.Uuid();
+            string realFileName = saveFile.FileName + imgFormat;
 
             if (imgInsertBox.Image == null)
             {
                 realFileName = null;
             }
 
-            var empDto = new EmployeeDto
+            //int newImgId = EmployeeRepository.empRepo.InsertImgFolder(realFileName);
+            try
             {
-                departmentId = employee.departmentId,
-                employeeCode = empCodeBox.Text,
-                employeeName = empNameBox.Text,
-                loginId = loginIdBox.Text,
-                passwd = passwdBox.Text,
-                employeeRank = empRankBox.Text,
-                employeeType = empTypeBox.Text,
-                phone = phoneBox.Text,
-                email = emailBox.Text,
-                messId = messageIdBox.Text,
-                memo = memoBox.Text,
-                gender = employee.gender,
-                imgName = realFileName,
-            };
-
-            int newImgId = EmployeeRepository.empRepo.InsertImgFolder(realFileName);
-            empDto.imgId = newImgId;
-
-            EmployeeRepository.empRepo.InsertEmpInfo(empDto);
-            MessageBox.Show("사원 정보가 성공적으로 추가되었습니다.");
-
-            // 폴더 생성
-            string folderPath = @"C:\NAS\" + newImgId;
-            string savePath = folderPath + @"\" + saveFileDialog.FileName + imgFormat;
-
-            if (imgInsertBox.Image != null)
-            {
-                if (!Directory.Exists(folderPath))
+                using (var context = new LinqContext())
                 {
-                    Directory.CreateDirectory(folderPath);
-                }
-                imgInsertBox.Image.Save(savePath);
-            }
-            this.DialogResult = DialogResult.OK;
-        }
+                    var newImg = new img { imgName = realFileName };
+                    context.img.Add(newImg);
+                    context.SaveChanges();
+                    var newImgId = newImg.imgId;
 
+                    // 폴더 생성
+                    string folderPath = util.ImgFolderPath() + newImgId;
+                    string savePath = folderPath + @"\" + saveFile.FileName + imgFormat;
+
+                    if (imgInsertBox.Image != null)
+                    {
+                        if (!Directory.Exists(folderPath))
+                        {
+                            Directory.CreateDirectory(folderPath);
+                        }
+                        imgInsertBox.Image.Save(savePath);
+                    }
+
+                    var empDto = new Employee
+                    {
+                        departmentId = SelectedDepartDto.DepartmentId,
+                        employeeCode = EmployeeCode,
+                        employeeName = empNameBox.Text,
+                        loginId = loginIdBox.Text,
+                        passwd = passwdBox.Text,
+                        employeeRank = empRankBox.Text,
+                        employeeType = empTypeBox.Text,
+                        phone = phoneBox.Text,
+                        email = emailBox.Text,
+                        messId = messageIdBox.Text,
+                        memo = memoBox.Text,
+                        gender = Convert.ToInt32(employee.Gender),
+                        imgId = newImgId
+                    };
+                    //EmployeeRepository.empRepo.InsertEmpInfo(empDto);
+                    context.Employee.Add(empDto);
+                    context.SaveChanges();
+
+                    MessageBox.Show("사원 정보가 성공적으로 추가되었습니다.");
+
+                    this.DialogResult = DialogResult.OK;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("사원 정보 추가 중 오류가 발생했습니다: " + ex.Message);
+            }
+        }
         private void WomenCheck_Box(object sender, EventArgs e)
         {
             if (womenCheckBox.Checked)
             {
                 menCheckBox.Checked = false;
-                employee.gender = EmployeeDto.GenderType.Female;
+
             }
 
         }
@@ -209,19 +244,15 @@ namespace WindowsFormsApp1
             if (menCheckBox.Checked)
             {
                 womenCheckBox.Checked = false;
-                employee.gender = EmployeeDto.GenderType.Male;
             }
 
         }
         private void Img_Select(object sender, EventArgs e)//이미지 선택
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Title = "이미지 선택";
-            openFileDialog.Filter = "이미지 파일 (*.png;*.jpg;*.jpeg;)|*.png;*.jpg;*.jpeg;";
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            var openFile = util.ImgOpenType();
+            if (openFile.ShowDialog() == DialogResult.OK)
             {
-                string filePath = openFileDialog.FileName;
+                string filePath = openFile.FileName;
                 imgFormat = Path.GetExtension(filePath).ToLower();
 
                 // 이미지 미리보기

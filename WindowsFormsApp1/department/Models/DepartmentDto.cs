@@ -4,16 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsFormsApp1.department.Model
+namespace WindowsFormsApp1.department.Models
 {
     public class DepartmentDto
     {
-        public string departmentCode {  get; set; }
-        public string departmentName { get; set; }
-        public string memo {  get; set; }
+        public string DepartmentCode {  get; set; }
+        public string DepartmentName { get; set; }
+        public string Memo {  get; set; }
 
-        public int departmentId { get; set; }   
-        public int departmentCnt {  get; set; }
+        public int DepartmentId { get; set; }   
+        public int DepartmentCnt {  get; set; }
+
+        public override string ToString()
+        {
+            return DepartmentCode;
+        }
 
     }
 }

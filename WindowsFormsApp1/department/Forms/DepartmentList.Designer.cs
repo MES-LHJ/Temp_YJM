@@ -35,11 +35,11 @@
             this.deptUpdateBtn = new System.Windows.Forms.ToolStripButton();
             this.deptDelBtn = new System.Windows.Forms.ToolStripButton();
             this.closeBtn = new System.Windows.Forms.ToolStripButton();
+            this.chartBtn = new System.Windows.Forms.ToolStripButton();
             this.deptListView = new System.Windows.Forms.DataGridView();
             this.departmentCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.departmentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.memo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.chartBtn = new System.Windows.Forms.ToolStripButton();
             this.deptListToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.deptListView)).BeginInit();
             this.SuspendLayout();
@@ -50,11 +50,11 @@
             this.deptListToolStrip.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.deptListToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
-            this.deptInsertBtn,
-            this.deptUpdateBtn,
-            this.deptDelBtn,
             this.closeBtn,
-            this.chartBtn});
+            this.chartBtn,
+            this.deptDelBtn,
+            this.deptUpdateBtn,
+            this.deptInsertBtn});
             this.deptListToolStrip.Location = new System.Drawing.Point(0, 0);
             this.deptListToolStrip.Name = "deptListToolStrip";
             this.deptListToolStrip.Size = new System.Drawing.Size(629, 25);
@@ -69,6 +69,7 @@
             // 
             // deptInsertBtn
             // 
+            this.deptInsertBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.deptInsertBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.deptInsertBtn.Image = ((System.Drawing.Image)(resources.GetObject("deptInsertBtn.Image")));
             this.deptInsertBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -78,6 +79,7 @@
             // 
             // deptUpdateBtn
             // 
+            this.deptUpdateBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.deptUpdateBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.deptUpdateBtn.Image = ((System.Drawing.Image)(resources.GetObject("deptUpdateBtn.Image")));
             this.deptUpdateBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -87,6 +89,7 @@
             // 
             // deptDelBtn
             // 
+            this.deptDelBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.deptDelBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.deptDelBtn.Image = ((System.Drawing.Image)(resources.GetObject("deptDelBtn.Image")));
             this.deptDelBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -96,12 +99,23 @@
             // 
             // closeBtn
             // 
+            this.closeBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.closeBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.closeBtn.Image = ((System.Drawing.Image)(resources.GetObject("closeBtn.Image")));
             this.closeBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(35, 22);
             this.closeBtn.Text = "닫기";
+            // 
+            // chartBtn
+            // 
+            this.chartBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.chartBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.chartBtn.Image = ((System.Drawing.Image)(resources.GetObject("chartBtn.Image")));
+            this.chartBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.chartBtn.Name = "chartBtn";
+            this.chartBtn.Size = new System.Drawing.Size(35, 22);
+            this.chartBtn.Text = "차트";
             // 
             // deptListView
             // 
@@ -135,15 +149,6 @@
             this.memo.DataPropertyName = "memo";
             this.memo.HeaderText = "메모";
             this.memo.Name = "memo";
-            // 
-            // chartBtn
-            // 
-            this.chartBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.chartBtn.Image = ((System.Drawing.Image)(resources.GetObject("chartBtn.Image")));
-            this.chartBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.chartBtn.Name = "chartBtn";
-            this.chartBtn.Size = new System.Drawing.Size(35, 22);
-            this.chartBtn.Text = "차트";
             // 
             // DepartmentList
             // 

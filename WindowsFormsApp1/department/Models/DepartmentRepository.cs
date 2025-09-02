@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
-namespace WindowsFormsApp1.department.Model
+namespace WindowsFormsApp1.department.Models
 {
     public class DepartmentRepository
     {
         private static DepartmentRepository _instance = new DepartmentRepository();
         private DepartmentRepository() { }
 
-        public static DepartmentRepository deptRepo = _instance;
+        public static DepartmentRepository DeptRepo = _instance;
 
         public List<DepartmentDto> GetDeptListInfo()//부서 리스트 가져오기
         {
@@ -30,10 +30,10 @@ namespace WindowsFormsApp1.department.Model
                 {
                     list.Add(new DepartmentDto
                     {
-                        departmentCode = reader["departmentCode"].ToString(),
-                        departmentName = reader["departmentName"].ToString(),
-                        memo = reader["memo"].ToString(),
-                        departmentId = Convert.ToInt32(reader["departmentId"].ToString())
+                        DepartmentCode = reader["departmentCode"].ToString(),
+                        DepartmentName = reader["departmentName"].ToString(),
+                        Memo = reader["memo"].ToString(),
+                        DepartmentId = Convert.ToInt32(reader["departmentId"].ToString())
                     });
                 }
             }
@@ -55,7 +55,7 @@ namespace WindowsFormsApp1.department.Model
                 {
                     return new DepartmentDto
                     {
-                        departmentId = Convert.ToInt32(reader["departmentId"].ToString())
+                        DepartmentId = Convert.ToInt32(reader["departmentId"].ToString())
                     };
                 }
 
@@ -112,9 +112,9 @@ namespace WindowsFormsApp1.department.Model
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@departmentCode", departmentDto.departmentCode);
-                cmd.Parameters.AddWithValue("@departmentName", departmentDto.departmentName);
-                cmd.Parameters.AddWithValue("@memo", departmentDto.memo);
+                cmd.Parameters.AddWithValue("@departmentCode", departmentDto.DepartmentCode);
+                cmd.Parameters.AddWithValue("@departmentName", departmentDto.DepartmentName);
+                cmd.Parameters.AddWithValue("@memo", departmentDto.Memo);
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.RecordsAffected > 0)
@@ -139,9 +139,9 @@ namespace WindowsFormsApp1.department.Model
                 {
                     return new DepartmentDto
                     {
-                        departmentCode = reader["departmentCode"].ToString(),
-                        departmentName = reader["departmentName"].ToString(),
-                        memo = reader["memo"].ToString()
+                        DepartmentCode = reader["departmentCode"].ToString(),
+                        DepartmentName = reader["departmentName"].ToString(),
+                        Memo = reader["memo"].ToString()
                     };
 
                 }
@@ -188,10 +188,10 @@ namespace WindowsFormsApp1.department.Model
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@departmentCode", deptDto.departmentCode);
-                cmd.Parameters.AddWithValue("@departmentName", deptDto.departmentName);
-                cmd.Parameters.AddWithValue("@memo", deptDto.memo);
-                cmd.Parameters.AddWithValue("@departmentId", deptDto.departmentId);
+                cmd.Parameters.AddWithValue("@departmentCode", deptDto.DepartmentCode);
+                cmd.Parameters.AddWithValue("@departmentName", deptDto.DepartmentName);
+                cmd.Parameters.AddWithValue("@memo", deptDto.Memo);
+                cmd.Parameters.AddWithValue("@departmentId", deptDto.DepartmentId);
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
@@ -205,7 +205,7 @@ namespace WindowsFormsApp1.department.Model
         public List<DepartmentDto> GetChart(int deptId)//차트
         {
             var list = new List<DepartmentDto>();
-            string chartSql = "SELECT d.departmentName, count(*) AS CNT FROM employee e JOIN department d ON e.departmentId = d.departmentId GROUP BY d.departmentName";
+            string chartSql = "SELECT d.departmentName, count(a.employeeId) AS CNT FROM employee e Right JOIN department d ON e.departmentId = d.departmentId GROUP BY d.departmentName";
             using (SqlConnection conn = new SqlConnection(Server.connStr))
             {
                 conn.Open();
@@ -215,8 +215,8 @@ namespace WindowsFormsApp1.department.Model
                 {
                     list.Add(new DepartmentDto
                     {
-                        departmentName = reader["departmentName"].ToString(),
-                        departmentCnt = Convert.ToInt32(reader["CNT"].ToString())
+                        DepartmentName = reader["departmentName"].ToString(),
+                        DepartmentCnt = Convert.ToInt32(reader["CNT"].ToString())
                     });
                 }
 

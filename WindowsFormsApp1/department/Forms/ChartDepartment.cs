@@ -6,9 +6,10 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.department.Model;
+using WindowsFormsApp1.department.Models;
 
 namespace WindowsFormsApp1.department.Forms
 {
@@ -19,19 +20,27 @@ namespace WindowsFormsApp1.department.Forms
         {
             deptId = departId;
             InitializeComponent();
-            deptChart.Dock = DockStyle.Fill;
 
             this.Load += ChartDept_Load;
         }
 
         private void ChartDept_Load(object sender, EventArgs e)
         {
-            var chartInfo = DepartmentRepository.deptRepo.GetChart(deptId);
-            deptChart.DataSource = chartInfo;
+            //var chartInfo = DepartmentRepository.deptRepo.GetChart(deptId);
+            //deptChart.DataSource = chartInfo;
 
-            foreach(var series in chartInfo)
+            //foreach(var series in chartInfo)
+            //{
+            //    deptChart.Series["department"].Points.AddXY(series.departmentName, series.departmentCnt);
+            //}
+            using(var context = new LinqContext())
             {
-                deptChart.Series["department"].Points.AddXY(series.departmentName, series.departmentCnt);
+                var list = context.Department.GroupJoin(context.Employee, d => d.departmentId, b => b.departmentId, (d, bs) => new { d.departmentName, Count = bs.Count() }).ToList();
+                
+                foreach(var item in list)
+                {
+                    deptChart.Series["department"].Points.AddXY(item.departmentName, item.Count);
+                }
             }
         }
     }

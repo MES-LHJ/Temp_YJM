@@ -8,14 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.department.Model;
+using WindowsFormsApp1.department.Models;
 
 namespace WindowsFormsApp1
 {
     public partial class UpdateDepartment : Form
     {
         private int deptId; // 부서 ID를 저장할 변수
-        private string myDeptCode;
+        private string myDeptCode;//기존 부서코드 저장
 
         public UpdateDepartment(int departId)
         {
@@ -34,54 +34,71 @@ namespace WindowsFormsApp1
 
         private void UpdateDepartment_Load(object sender, EventArgs e)
         {
-            var deptInfo = DepartmentRepository.deptRepo.DepartmentInfo(deptId);
+            var deptInfo = DepartmentRepository.DeptRepo.DepartmentInfo(deptId);
 
-            deptCodeBox.Text = deptInfo.departmentCode;
-            deptNameBox.Text = deptInfo.departmentName;
-            memoBtn.Text = deptInfo.memo;
-            myDeptCode = deptInfo.departmentCode;
+            deptCodeBox.Text = deptInfo.DepartmentCode;
+            deptNameBox.Text = deptInfo.DepartmentName;
+            memoBtn.Text = deptInfo.Memo;
+            myDeptCode = deptInfo.DepartmentCode;
         }
 
         private void Update_Button(object sender, EventArgs e)
         {
 
-            var checkDeptCode = DepartmentRepository.deptRepo.UpdateDeptCodeCheck(deptCodeBox.Text, myDeptCode);
-            if (checkDeptCode == 1)
+            //var checkDeptCode = DepartmentRepository.DeptRepo.UpdateDeptCodeCheck(deptCodeBox.Text, myDeptCode);
+            //"SELECT departmentCode FROM department WHERE departmentCode = @departmentCode AND departmentCode <> @myDeptCode";
+            using (var context = new LinqContext())
             {
-                MessageBox.Show("중복되는 부서코드가 존재합니다.");
-                return;
-            }
-
-            try
-            {
-                if (string.IsNullOrWhiteSpace(deptCodeBox.Text))
+                var checkDeptCode = context.Department
+                                            .Any(d => d.departmentCode == deptCodeBox.Text && d.departmentCode != myDeptCode);
+                if (checkDeptCode == true)
                 {
-                    MessageBox.Show("부서코드 입력하세요");
+                    MessageBox.Show("중복되는 부서코드가 존재합니다.");
                     return;
                 }
-                else if (string.IsNullOrWhiteSpace(deptNameBox.Text))
+
+                try
                 {
-                    MessageBox.Show("부서명을 입력하세요");
+                    if (string.IsNullOrWhiteSpace(deptCodeBox.Text))
+                    {
+                        MessageBox.Show("부서코드 입력하세요");
+                        return;
+                    }
+                    else if (string.IsNullOrWhiteSpace(deptNameBox.Text))
+                    {
+                        MessageBox.Show("부서명을 입력하세요");
+                        return;
+                    }
+                    //DepartmentDto deptDto = new DepartmentDto
+                    //{
+                    //    DepartmentCode = deptCodeBox.Text,
+                    //    DepartmentName = deptNameBox.Text,
+                    //    Memo = memoBtn.Text,
+                    //    DepartmentId = deptId
+                    //};
+                    // DepartmentRepository.DeptRepo.UpdateDept(deptDto);
+
+                    var updateDept = context.Department
+                                             .FirstOrDefault(d => d.departmentId == deptId);
+                   if(updateDept != null)
+                    {
+                        updateDept.departmentCode = deptCodeBox.Text;
+                        updateDept.memo = memoBtn.Text;
+                        updateDept.departmentName = deptNameBox.Text;
+
+                        context.SaveChanges();
+                    }
+                  
+                    MessageBox.Show("수정완료");
+                    this.DialogResult = DialogResult.OK;
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("수정 실패: " + ex.Message);
                     return;
                 }
-                DepartmentDto deptDto = new DepartmentDto
-                {
-                    departmentCode = deptCodeBox.Text,
-                    departmentName = deptNameBox.Text,
-                    memo = memoBtn.Text,
-                    departmentId = deptId
-                };
-                DepartmentRepository.deptRepo.UpdateDept(deptDto);
-                MessageBox.Show("수정완료");
-                this.DialogResult = DialogResult.OK;
-
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("수정 실패: " + ex.Message);
-                return;
-            }
-
         }
         private void Close_Button(object sender, EventArgs e)
         {
