@@ -169,8 +169,8 @@ namespace WindowsFormsApp1
                 employee.Gender = EmployeeDto.GenderType.noSelect;
             }
 
-                //이미지 저장
-                var saveFile = util.ImgSaveType();
+            //이미지 저장
+            var saveFile = util.ImgSaveType();
 
             saveFile.FileName = util.Uuid();
             string realFileName = saveFile.FileName + imgFormat;
@@ -248,7 +248,6 @@ namespace WindowsFormsApp1
             {
                 womenCheckBox.Checked = false;
             }
-
         }
         private void Img_Select(object sender, EventArgs e)//이미지 선택
         {

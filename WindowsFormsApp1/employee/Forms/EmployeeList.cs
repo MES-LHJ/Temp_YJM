@@ -70,7 +70,7 @@ namespace WindowsFormsApp1
 
         {
             EmpListRefresh();
-            if(Emp == null)
+            if (Emp == null)
             {
                 MessageBox.Show("등록된 사원 정보가 없습니다.");
                 return;
@@ -129,7 +129,7 @@ namespace WindowsFormsApp1
 
         private void Delete_Button(object sender, EventArgs e) //삭제 버튼 클릭
         {
-            if (Emp== null)
+            if (Emp == null)
             {
                 MessageBox.Show("조회 버튼을 눌러주세요.");
                 return;
