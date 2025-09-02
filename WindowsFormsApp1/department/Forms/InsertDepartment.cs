@@ -9,12 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.department.Model;
+using WindowsFormsApp1.department.Models;
 
 namespace WindowsFormsApp1
 {
     public partial class InsertDepartment : Form
     {
+
         public InsertDepartment()
         {
             InitializeComponent();
@@ -30,35 +31,53 @@ namespace WindowsFormsApp1
         private void Insert_Button(object sender, EventArgs e)//부서 추가 버튼
         {
             string deptCode = deptCodeBox.Text;
-            var checkDeptCode = DepartmentRepository.deptRepo.InsertDeptCodeCheck(deptCode);
-
-            if (string.IsNullOrWhiteSpace(deptCodeBox.Text))
+            //var checkDeptCode = DepartmentRepository.DeptRepo.InsertDeptCodeCheck(deptCode);
+            using (var context = new LinqContext())
             {
-                MessageBox.Show("부서코드를 입력해주세요.");
-                return;
+                var checkDeptCode = context.Department
+                                            .Where(d => d.departmentCode == deptCode)
+                                            .FirstOrDefault();
+
+                if (string.IsNullOrWhiteSpace(deptCodeBox.Text))
+                {
+                    MessageBox.Show("부서코드를 입력해주세요.");
+                    return;
+                }
+                else if (string.IsNullOrWhiteSpace(deptNameBox.Text))
+                {
+                    MessageBox.Show("부서명을 입력해주세요.");
+                    return;
+                }
+
+                if (checkDeptCode != null)
+                {
+                    MessageBox.Show("중복되는 부서코드가 존재합니다.");
+                    return;
+                }
+
+                //DepartmentDto deptDto = new DepartmentDto
+                //{
+                //    DepartmentCode = deptCodeBox.Text,
+                //    DepartmentName = deptNameBox.Text,
+                //    Memo = memoBox.Text
+                //};
+                //DepartmentRepository.DeptRepo.InsertDepartment(deptDto);
+                //string sql = "INSERT INTO department (departmentCode, departmentName, memo) " +
+                //"VALUES (@departmentCode, @departmentName, @memo)";
+
+                var deptInsertInfo = new Department
+                {
+                    departmentName = deptNameBox.Text,
+                    departmentCode = deptCodeBox.Text,
+                    memo = memoBox.Text
+                };
+                context.Department.Add(deptInsertInfo);
+                context.SaveChanges();
+                
+                MessageBox.Show("부서 등록이 완료되었습니다.");
+                this.DialogResult = DialogResult.OK;
+
             }
-            else if (string.IsNullOrWhiteSpace(deptNameBox.Text))
-            {
-                MessageBox.Show("부서명을 입력해주세요.");
-                return;
-            }
-
-            if (checkDeptCode == 1)
-            {
-                MessageBox.Show("중복되는 부서코드가 존재합니다.");
-                return;
-            }
-
-            DepartmentDto deptDto = new DepartmentDto
-            {
-                departmentCode = deptCodeBox.Text,
-                departmentName = deptNameBox.Text,
-                memo = memoBox.Text
-            };
-            DepartmentRepository.deptRepo.InsertDepartment(deptDto);
-            MessageBox.Show("부서 등록이 완료되었습니다.");
-            this.DialogResult = DialogResult.OK;
-
 
         }
         private void Cancel_Button(object sender, EventArgs e) //취소 버튼

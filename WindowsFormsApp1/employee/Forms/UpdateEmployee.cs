@@ -6,138 +6,162 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.department.Model;
-using WindowsFormsApp1.employee.Model;
+using DocumentFormat.OpenXml.Spreadsheet;
+using WindowsFormsApp1.department.Models;
+using WindowsFormsApp1.employee.Models;
+using WindowsFormsApp1.Utiliity;
+using static System.Data.Entity.Infrastructure.Design.Executor;
 
 namespace WindowsFormsApp1
 {
     public partial class UpdateEmployee : Form
     {
         private readonly EmployeeDto employee = new EmployeeDto();
-        private string myEmpCode;
-        private string imgFormat;
-        private string originImg;
-
+        private readonly Util util = new Util();//공통코드
+        private string myEmpCode;//원래 사원코드
+        private string imgFormat;//이미지 확장자
+        private string originImg;//원본 이미지명
         private bool imgChange = false;
         private int cnt;
 
+        public DepartmentDto SelectDeptDto => deptCodeComboBox.SelectedItem as DepartmentDto;//선택된 부서코드 콤보박스
 
         public UpdateEmployee(int empId)
         {
-            employee.employeeId = empId;
+            employee.EmployeeId = empId;
             InitializeComponent();
             Click_Event();
-            Design();
-            Img_Event();
+            CheckBox_Event();
+            ComboBox_Event();
         }
 
         private void Click_Event()
         {
-            deptCodeComboBox.SelectedIndexChanged += DepName_Change;
             updateBtn.Click += Complete_Button; // 수정 완료 버튼 클릭 이벤트 핸들러 등록
             closeBtn.Click += Close_Button; // 닫기 버튼 클릭 이벤트 핸들러 등록
-            menCheckBox.CheckedChanged += MenCheck_Box;
-            womenCheckBox.CheckedChanged += WomenCheck_Box;
+            imgUpdateBtn.Click += Img_Update;// 이미지 선택
+            imgDelBtn.Click += Img_Del;// 이미지 x 버튼
+
         }
-        private void Design()
+        private void ComboBox_Event()
         {
-            //deptCodeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            deptNameBox.ReadOnly = true;
-            imgUpdateBox.SizeMode = PictureBoxSizeMode.Zoom;
-            imgUpdateBtn.ForeColor = Color.White;
+            deptCodeComboBox.SelectedIndexChanged += DepName_Change;//부서코드 변경시 부서명 바뀌게
         }
-        private void Img_Event()
+
+        private void CheckBox_Event()
         {
-            imgUpdateBtn.Click += Img_Update;
-            imgDelBtn.Click += Img_Del;
+            menCheckBox.CheckedChanged += MenCheck_Box;// 남자 체크박스
+            womenCheckBox.CheckedChanged += WomenCheck_Box;// 여자 체크박스
         }
         private void UpdateEmployee_Load(object sender, EventArgs e)
         {
 
-            var empInfo = EmployeeRepository.empRepo.UpdateEmpInfo(employee.employeeId);// 수정할 사원 정보 가져오기
+            //var empInfo = EmployeeRepository.empRepo.UpdateEmpInfo(employee.employeeId);// 수정할 사원 정보 가져오기
 
-            //deptCodeComboBox.SelectedValue = empInfo.departmentCode.ToString();
-            deptCodeComboBox.Text = empInfo.departmentCode;
-            deptNameBox.Text = empInfo.departmentName;
-            empCodeBox.Text = empInfo.employeeCode;
-            empNameBox.Text = empInfo.employeeName;
-            empRankBox.Text = empInfo.employeeRank;
-            empTypeBox.Text = empInfo.employeeType;
-            phoneBox.Text = empInfo.phone;
-            emailBox.Text = empInfo.email;
-            messageBox.Text = empInfo.messId;
-            memoBox.Text = empInfo.memo;
-            employee.departmentId = Convert.ToInt32(empInfo.departmentId.ToString());
-            employee.gender = empInfo.gender;
-            myEmpCode = empInfo.employeeCode;
-            originImg = empInfo.imgName;
-            employee.imgId = empInfo.imgId;
+            using (var context = new LinqContext())// 수정할 사원 정보 가져오기
+            {
+                var empInfo = context.Employee
+                                        .Join(context.Department, a => a.departmentId, d => d.departmentId, (a, d) => new { a, d })
+                                        .Join(context.img, ed => ed.a.imgId, i => i.imgId, (ed, i) => new
+                                        {
+                                            ed.d.departmentCode,
+                                            ed.d.departmentName,
+                                            ed.a.employeeName,
+                                            ed.a.employeeCode,
+                                            i.imgName,
+                                            ed.a.loginId,
+                                            ed.a.passwd,
+                                            ed.a.employeeRank,
+                                            ed.a.imgId,
+                                            ed.a.employeeType,
+                                            ed.a.phone,
+                                            ed.a.email,
+                                            ed.a.messId,
+                                            ed.a.memo,
+                                            ed.a.gender,
+                                            ed.a.departmentId,
+                                            ed.a.employeeId
 
-            string imgPath = @"C:\NAS\" + employee.imgId + @"\" + empInfo.imgName;
-            if (!string.IsNullOrEmpty(empInfo.imgName) && File.Exists(imgPath))
-            {
-                imgUpdateBox.Image = Image.FromFile(imgPath);
-                imgDelBtn.Visible = true;
-            }
-            else
-            {
-                imgDelBtn.Visible = false;
+                                        })
+                                        .FirstOrDefault(emp => emp.employeeId == employee.EmployeeId);
+
+                deptCodeComboBox.Text = empInfo.departmentCode;
+                deptNameBox.Text = empInfo.departmentName;
+                empCodeBox.Text = empInfo.employeeCode;
+                empNameBox.Text = empInfo.employeeName;
+                empRankBox.Text = empInfo.employeeRank;
+                empTypeBox.Text = empInfo.employeeType;
+                phoneBox.Text = empInfo.phone;
+                emailBox.Text = empInfo.email;
+                messageBox.Text = empInfo.messId;
+                memoBox.Text = empInfo.memo;
+                employee.DepartmentId = Convert.ToInt32(empInfo.departmentId.ToString());
+                myEmpCode = empInfo.employeeCode;
+                originImg = empInfo.imgName;
+                employee.ImgId = Convert.ToInt32(empInfo.imgId);
+                employee.Gender = (EmployeeDto.GenderType)empInfo.gender;
+
+                string folderPath = util.ImgFolderPath() + employee.ImgId;
+                string imgPath = folderPath + @"\" + empInfo.imgName;
+                if (!string.IsNullOrEmpty(empInfo.imgName) && File.Exists(imgPath))
+                {
+                    imgUpdateBox.Image = Image.FromFile(imgPath);
+                    imgDelBtn.Visible = true;
+                }
+                else
+                {
+                    imgDelBtn.Visible = false;
+                }
+
+                if (employee.Gender == EmployeeDto.GenderType.Male)
+                {
+                    menCheckBox.Checked = true;
+                }
+                else if (employee.Gender == EmployeeDto.GenderType.Female)
+                {
+                    womenCheckBox.Checked = true;
+                }
+
+                var deptList = DepartmentRepository.DeptRepo.GetDeptListInfo();// 부서 정보  리스트 가져오기
+                deptCodeComboBox.Items.AddRange(deptList.ToArray());// 콤보박스에 부서 코드 리스트 추가
             }
 
-            if (employee.gender == EmployeeDto.GenderType.Male)
-            {
-                menCheckBox.Checked = true;
-            }
-            else if (employee.gender == EmployeeDto.GenderType.Female)
-            {
-                womenCheckBox.Checked = true;
-            }
-
-            var deptList = EmployeeRepository.empRepo.GetDeptCode();// 부서 코드 리스트 가져오기
-            foreach (var dept in deptList)
-            {
-                deptCodeComboBox.Items.Add(dept.departmentCode);
-            }
         }
         private void DepName_Change(object sender, EventArgs e)// 부서코드 변경시 부서 명 바뀌게
         {
-
-            string deptCode = deptCodeComboBox.Text;
-            var deptInfo = EmployeeRepository.empRepo.GetDeptName(deptCode);
-
-            deptNameBox.Text = deptInfo.departmentName;
-            employee.departmentId = Convert.ToInt32(deptInfo.departmentId.ToString());
+            if (SelectDeptDto != null)
+            {
+                deptNameBox.Text = SelectDeptDto.DepartmentName;
+            }
         }
 
         private void Complete_Button(object sender, EventArgs e) //수정 완료 버튼
         {
 
-            string employeeCode = empCodeBox.Text;
-            var checkEmpCode = EmployeeRepository.empRepo.UpdateCheckEmpCode(employeeCode, myEmpCode);
-
-            Guid nGuid = Guid.NewGuid();
-            string uuid = nGuid.ToString();
-
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Title = "이미지 수정 완료";
-            saveFileDialog.Filter = "이미지 파일 (*.png;*.jpeg;*.jpg;)|*.png;*.jpeg;*.jpg;";
-
-       
-
-            if (checkEmpCode == 1)
+            string empCode = empCodeBox.Text;
+            //var checkEmpCode = EmployeeRepository.empRepo.UpdateCheckEmpCode(empCode, myEmpCode);
+            using (var context = new LinqContext())
             {
-                MessageBox.Show("중복된 사원코드가 존재합니다.");
-                return;
+                var checkEmpCode = context.Employee
+                                            .Where(a => a.employeeCode == empCode && a.employeeCode != myEmpCode)
+                                            .Select(a => a.employeeCode)
+                                            .Any();
+
+                if (checkEmpCode == true)
+                {
+                    MessageBox.Show("중복된 사원코드가 존재합니다.");
+                    return;
+                }
             }
 
             try
             {
                 string email = emailBox.Text;
-                string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";//이메일 패턴 검사
 
                 if (string.IsNullOrEmpty(deptCodeComboBox.Text))
                 {
@@ -154,14 +178,16 @@ namespace WindowsFormsApp1
                     MessageBox.Show("사원명을 입력해주세요.");
                     return;
                 }
-                else if (!string.IsNullOrWhiteSpace(email) && !Regex.IsMatch(email, pattern))
+                else if (!string.IsNullOrWhiteSpace(email) && !Regex.IsMatch(email, util.Pattern()["email"]))
                 {
                     MessageBox.Show("이메일 형식이 틀립니다.");
                     return;
                 }
 
-                string folderPath = @"C:\NAS\" + employee.imgId;
+                var saveFile = util.ImgSaveType();// 이미지 저장 다이얼로그
+                string folderPath = util.ImgFolderPath() + employee.ImgId;
                 string imgPath = folderPath + @"\" + originImg;
+
                 if (!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);
@@ -178,38 +204,74 @@ namespace WindowsFormsApp1
                     File.Delete(imgPath);
                 }
 
-                string fileName = originImg;
+                saveFile.FileName = originImg;
                 //이미지명 변경 조건
                 if (imgUpdateBox.Image == null && !string.IsNullOrEmpty(originImg) && !imgChange && cnt < 1)// 업데이트 사진 없고 원본 사진 있을 때 x 버튼
                 {
-                    fileName = null;
+                    saveFile.FileName = null;
 
                 }
                 else if (imgChange && imgUpdateBox.Image != null)// 사진 변경 있을 시
                 {
-                    fileName = uuid + imgFormat;
-                    imgUpdateBox.Image.Save(folderPath + @"\" + fileName);
+                    saveFile.FileName = util.Uuid() + imgFormat;
+                    imgUpdateBox.Image.Save(folderPath + @"\" + saveFile.FileName);
 
                 }
-
-                EmployeeDto empDto = new EmployeeDto
+                //체크 박스 변경 시 gender 값
+                if (womenCheckBox.Checked)
                 {
-                    departmentId = employee.departmentId,
-                    employeeId = employee.employeeId,
-                    employeeCode = empCodeBox.Text,
-                    employeeName = empNameBox.Text,
-                    employeeRank = empRankBox.Text,
-                    employeeType = empTypeBox.Text,
-                    phone = phoneBox.Text,
-                    email = emailBox.Text,
-                    messId = messageBox.Text,
-                    memo = memoBox.Text,
-                    gender = employee.gender,
-                    imgName = fileName
-                };
+                    employee.Gender = EmployeeDto.GenderType.Female;
+                }
+                if (menCheckBox.Checked)
+                {
+                    employee.Gender = EmployeeDto.GenderType.Male;
+                }
 
-                EmployeeRepository.empRepo.UpdateEmp(empDto);
-                EmployeeRepository.empRepo.UdpateImg(empDto.imgName);
+                //EmployeeDto empDto = new EmployeeDto
+                //{
+                //    DepartmentId = employee.DepartmentId,
+                //    EmployeeId = employee.EmployeeId,
+                //    EmployeeCode = empCodeBox.Text,
+                //    EmployeeName = empNameBox.Text,
+                //    EmployeeRank = empRankBox.Text,
+                //    EmployeeType = empTypeBox.Text,
+                //    Phone = phoneBox.Text,
+                //    Email = emailBox.Text,
+                //    MessId = messageBox.Text,
+                //    Memo = memoBox.Text,
+                //    Gender = employee.Gender,
+                //    ImgName = fileName
+                //};
+
+                //EmployeeRepository.empRepo.UpdateEmp(empDto);
+                //EmployeeRepository.empRepo.UdpateImg(empDto.imgName);
+                using (var context = new LinqContext())
+                {
+                    var updateEmp = context.Employee.FirstOrDefault(a => a.employeeId == employee.EmployeeId);
+                    if (updateEmp != null)
+                    {
+                        if (SelectDeptDto != null) updateEmp.departmentId = SelectDeptDto.DepartmentId;
+                        else updateEmp.departmentId = employee.DepartmentId;
+                        updateEmp.employeeId = employee.EmployeeId;
+                        updateEmp.employeeCode = empCodeBox.Text;
+                        updateEmp.employeeName = empNameBox.Text;
+                        updateEmp.employeeRank = empRankBox.Text;
+                        updateEmp.employeeType = empTypeBox.Text;
+                        updateEmp.phone = phoneBox.Text;
+                        updateEmp.email = emailBox.Text;
+                        updateEmp.messId = messageBox.Text;
+                        updateEmp.memo = memoBox.Text;
+                        updateEmp.gender = Convert.ToInt32(employee.Gender);
+
+                        context.SaveChanges();
+                    }
+                    var imgIdCheck = context.img.FirstOrDefault(i => i.imgId == employee.ImgId);
+                    if (imgIdCheck != null)
+                    {
+                        imgIdCheck.imgName = saveFile.FileName;
+                        context.SaveChanges();
+                    }
+                }
                 MessageBox.Show("수정이 완료되었습니다.");
 
                 this.DialogResult = DialogResult.OK;
@@ -218,34 +280,29 @@ namespace WindowsFormsApp1
             {
                 MessageBox.Show("수정 중 오류가 발생했습니다: " + ex.Message);
             }
-
         }
-        private void WomenCheck_Box(object sender, EventArgs e)
+        private void WomenCheck_Box(object sender, EventArgs e)// 여자 체크박스
         {
             if (womenCheckBox.Checked)
             {
                 menCheckBox.Checked = false;
-                employee.gender = EmployeeDto.GenderType.Female;
             }
 
         }
-        private void MenCheck_Box(object sender, EventArgs e)
+        private void MenCheck_Box(object sender, EventArgs e)// 남자 체크박스
         {
             if (menCheckBox.Checked)
             {
                 womenCheckBox.Checked = false;
-                employee.gender = EmployeeDto.GenderType.Male;
             }
         }
-        private void Img_Update(object sender, EventArgs e)
+        private void Img_Update(object sender, EventArgs e)// 이미지 선택
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Title = "이미지 수정";
-            openFileDialog.Filter = "이미지 파일 (*.png;*.jpeg;*.jpg;)|*.png;*.jpeg;*.jpg;";
+            var openFile = util.ImgOpenType();
 
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            if (openFile.ShowDialog() == DialogResult.OK)
             {
-                string fileName = openFileDialog.FileName;
+                string fileName = openFile.FileName;
 
                 imgFormat = Path.GetExtension(fileName).ToLower();
                 imgChange = true;
@@ -258,10 +315,9 @@ namespace WindowsFormsApp1
 
                 imgUpdateBox.Image = Image.FromFile(fileName);
                 imgDelBtn.Visible = true;
-
             }
         }
-        private void Img_Del(object sender, EventArgs e)
+        private void Img_Del(object sender, EventArgs e)// 이미지 x 버튼
         {
             imgUpdateBox.Image.Dispose();
             imgUpdateBox.Image = null;

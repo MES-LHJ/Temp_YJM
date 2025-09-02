@@ -31,15 +31,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DepartmentList));
             this.deptListToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.deptInsertBtn = new System.Windows.Forms.ToolStripButton();
-            this.deptUpdateBtn = new System.Windows.Forms.ToolStripButton();
-            this.deptDelBtn = new System.Windows.Forms.ToolStripButton();
             this.closeBtn = new System.Windows.Forms.ToolStripButton();
+            this.chartBtn = new System.Windows.Forms.ToolStripButton();
+            this.deptDelBtn = new System.Windows.Forms.ToolStripButton();
+            this.deptUpdateBtn = new System.Windows.Forms.ToolStripButton();
+            this.deptInsertBtn = new System.Windows.Forms.ToolStripButton();
             this.deptListView = new System.Windows.Forms.DataGridView();
             this.departmentCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.departmentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.memo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.chartBtn = new System.Windows.Forms.ToolStripButton();
             this.deptListToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.deptListView)).BeginInit();
             this.SuspendLayout();
@@ -50,11 +50,11 @@
             this.deptListToolStrip.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.deptListToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
-            this.deptInsertBtn,
-            this.deptUpdateBtn,
-            this.deptDelBtn,
             this.closeBtn,
-            this.chartBtn});
+            this.chartBtn,
+            this.deptDelBtn,
+            this.deptUpdateBtn,
+            this.deptInsertBtn});
             this.deptListToolStrip.Location = new System.Drawing.Point(0, 0);
             this.deptListToolStrip.Name = "deptListToolStrip";
             this.deptListToolStrip.Size = new System.Drawing.Size(629, 25);
@@ -67,26 +67,29 @@
             this.toolStripLabel1.Size = new System.Drawing.Size(55, 22);
             this.toolStripLabel1.Text = "부서사원";
             // 
-            // deptInsertBtn
+            // closeBtn
             // 
-            this.deptInsertBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.deptInsertBtn.Image = ((System.Drawing.Image)(resources.GetObject("deptInsertBtn.Image")));
-            this.deptInsertBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.deptInsertBtn.Name = "deptInsertBtn";
-            this.deptInsertBtn.Size = new System.Drawing.Size(35, 22);
-            this.deptInsertBtn.Text = "추가";
+            this.closeBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.closeBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.closeBtn.Image = ((System.Drawing.Image)(resources.GetObject("closeBtn.Image")));
+            this.closeBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.closeBtn.Name = "closeBtn";
+            this.closeBtn.Size = new System.Drawing.Size(35, 22);
+            this.closeBtn.Text = "닫기";
             // 
-            // deptUpdateBtn
+            // chartBtn
             // 
-            this.deptUpdateBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.deptUpdateBtn.Image = ((System.Drawing.Image)(resources.GetObject("deptUpdateBtn.Image")));
-            this.deptUpdateBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.deptUpdateBtn.Name = "deptUpdateBtn";
-            this.deptUpdateBtn.Size = new System.Drawing.Size(35, 22);
-            this.deptUpdateBtn.Text = "수정";
+            this.chartBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.chartBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.chartBtn.Image = ((System.Drawing.Image)(resources.GetObject("chartBtn.Image")));
+            this.chartBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.chartBtn.Name = "chartBtn";
+            this.chartBtn.Size = new System.Drawing.Size(35, 22);
+            this.chartBtn.Text = "차트";
             // 
             // deptDelBtn
             // 
+            this.deptDelBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.deptDelBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.deptDelBtn.Image = ((System.Drawing.Image)(resources.GetObject("deptDelBtn.Image")));
             this.deptDelBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -94,14 +97,25 @@
             this.deptDelBtn.Size = new System.Drawing.Size(35, 22);
             this.deptDelBtn.Text = "삭제";
             // 
-            // closeBtn
+            // deptUpdateBtn
             // 
-            this.closeBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.closeBtn.Image = ((System.Drawing.Image)(resources.GetObject("closeBtn.Image")));
-            this.closeBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.closeBtn.Name = "closeBtn";
-            this.closeBtn.Size = new System.Drawing.Size(35, 22);
-            this.closeBtn.Text = "닫기";
+            this.deptUpdateBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.deptUpdateBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.deptUpdateBtn.Image = ((System.Drawing.Image)(resources.GetObject("deptUpdateBtn.Image")));
+            this.deptUpdateBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.deptUpdateBtn.Name = "deptUpdateBtn";
+            this.deptUpdateBtn.Size = new System.Drawing.Size(35, 22);
+            this.deptUpdateBtn.Text = "수정";
+            // 
+            // deptInsertBtn
+            // 
+            this.deptInsertBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.deptInsertBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.deptInsertBtn.Image = ((System.Drawing.Image)(resources.GetObject("deptInsertBtn.Image")));
+            this.deptInsertBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.deptInsertBtn.Name = "deptInsertBtn";
+            this.deptInsertBtn.Size = new System.Drawing.Size(35, 22);
+            this.deptInsertBtn.Text = "추가";
             // 
             // deptListView
             // 
@@ -114,7 +128,9 @@
             this.deptListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.deptListView.Location = new System.Drawing.Point(0, 25);
             this.deptListView.Name = "deptListView";
+            this.deptListView.ReadOnly = true;
             this.deptListView.RowTemplate.Height = 23;
+            this.deptListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.deptListView.Size = new System.Drawing.Size(629, 425);
             this.deptListView.TabIndex = 1;
             // 
@@ -123,27 +139,21 @@
             this.departmentCode.DataPropertyName = "departmentCode";
             this.departmentCode.HeaderText = "부서코드";
             this.departmentCode.Name = "departmentCode";
+            this.departmentCode.ReadOnly = true;
             // 
             // departmentName
             // 
             this.departmentName.DataPropertyName = "departmentName";
             this.departmentName.HeaderText = "부서명";
             this.departmentName.Name = "departmentName";
+            this.departmentName.ReadOnly = true;
             // 
             // memo
             // 
             this.memo.DataPropertyName = "memo";
             this.memo.HeaderText = "메모";
             this.memo.Name = "memo";
-            // 
-            // chartBtn
-            // 
-            this.chartBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.chartBtn.Image = ((System.Drawing.Image)(resources.GetObject("chartBtn.Image")));
-            this.chartBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.chartBtn.Name = "chartBtn";
-            this.chartBtn.Size = new System.Drawing.Size(35, 22);
-            this.chartBtn.Text = "차트";
+            this.memo.ReadOnly = true;
             // 
             // DepartmentList
             // 

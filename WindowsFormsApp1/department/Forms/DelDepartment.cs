@@ -5,11 +5,13 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.department.Model;
+using DocumentFormat.OpenXml.Spreadsheet;
+using WindowsFormsApp1.department.Models;
 
 namespace WindowsFormsApp1
 {
@@ -31,43 +33,62 @@ namespace WindowsFormsApp1
 
         private void DelDepartment_Load(object sender, EventArgs e)
         {
-            var deptInfo = DepartmentRepository.deptRepo.DepartmentInfo(departId);
-            if (deptInfo != null)
+            //var deptInfo = DepartmentRepository.DeptRepo.DepartmentInfo(departId);
+         
+
+            using (var context = new LinqContext())
             {
-                string deptCode = deptInfo.departmentCode;
-                deptCodeLabel.Text = "부서코드 : " + deptCode;
-                deptNameLabel.Text = "부서명 : " + deptInfo.departmentName;
+                var deptInfo = context.Department
+                                        .FirstOrDefault(d => d.departmentId == departId);
+
+                if (deptInfo != null)
+                {
+                    deptCodeLabel.Text = "부서코드 : " + deptInfo.departmentCode;
+                    deptNameLabel.Text = "부서명 : " + deptInfo.departmentName;
+                }
+
             }
+
         }
 
         private void Del_Btn(object sender, EventArgs e)//부서 삭제 버튼
-        { 
-            var checkEmp = DepartmentRepository.deptRepo.CheckEmployee(departId);
-            
+        {
+           // var checkEmp = DepartmentRepository.DeptRepo.CheckEmployee(departId);
+     
+            using (var context = new LinqContext())
+            {
+                var checkEmpId = context.Employee
+                                            .Any(a => a.departmentId == departId);
+                if (checkEmpId == true)
+                {
+                    MessageBox.Show("부서에 소속된 사원이 존재합니다.");
+                    this.DialogResult = DialogResult.OK;
+                    return;
+                }
+                //var delDept = DepartmentRepository.DeptRepo.DelDepartment(departId);
+                
+                var delDept = context.Department
+                                        .FirstOrDefault(d => d.departmentId == departId);
+                if (delDept != null)
+                {
+                    context.Department.Remove(delDept);
+                    context.SaveChanges();
+                    MessageBox.Show("삭제에 성공하였습니다.");
+                    this.DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    MessageBox.Show("삭제에 실패하였습니다");
+                    return;
+                }
 
-            if(checkEmp ==1)
-            {
-                MessageBox.Show("부서에 소속된 사원이 존재합니다.");
-                this.DialogResult = DialogResult.OK;
-                return;
             }
-            var delDept = DepartmentRepository.deptRepo.DelDepartment(departId);
-            if (delDept == 1)
-            {
-                MessageBox.Show("삭제에 성공하였습니다.");
-                this.DialogResult = DialogResult.OK;
-            }
-            else
-            {
-                MessageBox.Show("삭제에 실패하였습니다.");
-            }
-
         }
         private void Cancel_Btn(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        
+
     }
 }

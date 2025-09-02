@@ -39,6 +39,7 @@
             // 
             chartArea1.Name = "ChartArea1";
             this.deptChart.ChartAreas.Add(chartArea1);
+            this.deptChart.Dock = System.Windows.Forms.DockStyle.Fill;
             legend1.Name = "Legend1";
             this.deptChart.Legends.Add(legend1);
             this.deptChart.Location = new System.Drawing.Point(0, 0);
@@ -47,7 +48,7 @@
             series1.Legend = "Legend1";
             series1.Name = "department";
             this.deptChart.Series.Add(series1);
-            this.deptChart.Size = new System.Drawing.Size(507, 377);
+            this.deptChart.Size = new System.Drawing.Size(800, 450);
             this.deptChart.TabIndex = 0;
             this.deptChart.Text = "chart1";
             // 

@@ -9,14 +9,16 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.employee.Model;
+using WindowsFormsApp1.employee.Models;
+using WindowsFormsApp1.Utiliity;
 
 namespace WindowsFormsApp1.employee
 {
     public partial class UpdateLoginInfo : Form
     {
-        private int employeeId;
-        private string myLoginId;
+        private readonly int employeeId;
+        private readonly string myLoginId;//수정할 로그인 아이디
+        private readonly Util util = new Util();//공통 코드
         public UpdateLoginInfo(int empId, string myLoginId)
         {
             employeeId = empId;
@@ -24,31 +26,41 @@ namespace WindowsFormsApp1.employee
 
             InitializeComponent();
             Click_Event();
-
         }
 
         private void Click_Event()
         {
-            updateBtn.Click += UpdateBtn_Click;
-            closeBtn.Click += CloseBtn_Click;
+            updateBtn.Click += UpdateBtn_Click;//수정 버튼
+            closeBtn.Click += CloseBtn_Click;//닫기 버튼
         }
+        private int Check_Id(string loginId, string myLoginId)//아이디 중복체크
+        {
+            using (var context = new LinqContext())
+            {
+                var loginCheck = context.Employee
+                                            .Where(a => a.loginId == loginId && a.loginId != myLoginId)
+                                            .Any();
+                
+                return loginCheck ? 1:0;
 
-
+                }
+        }
         private void UpdateBtn_Click(object sender, EventArgs e)
         {
             string loginId = loginIdBox.Text;
             string passwd = passwdBox.Text;
-            var loginIdCheck = EmployeeRepository.empRepo.GetLoginId(loginId, myLoginId);
+            //var loginIdCheck = EmployeeRepository.empRepo.GetLoginId(loginId, myLoginId);
+            int check = Check_Id(loginId, myLoginId);
 
-            if (loginIdCheck == 1)
+
+            if (check == 1)
             {
                 MessageBox.Show("중복되는 로그인 아이디가 존재합니다.");
-
                 return;
             }
             try
             {
-                if (Regex.IsMatch(passwdBox.Text, "[^a-zA-Z0-9]"))
+                if (Regex.IsMatch(passwdBox.Text, util.Pattern()["passwd"]))
                 {
                     MessageBox.Show("비밀번호에 특수문자가 포함되어있습니다.");
                     return;
@@ -58,7 +70,8 @@ namespace WindowsFormsApp1.employee
                     MessageBox.Show("비밀번호를 8자리이상 입력해주세요.");
                     return;
                 }
-                EmployeeRepository.empRepo.UpdateLogin(employeeId, loginId, passwd);
+                //return;
+                EmployeeRepository.EmpRepo.UpdateLogin(employeeId, loginId, passwd);
                 MessageBox.Show("수정이 완료되었습니다.");
                 this.DialogResult = DialogResult.OK;
             }
@@ -66,7 +79,8 @@ namespace WindowsFormsApp1.employee
             {
                 MessageBox.Show("수정 실패 : " + ex.Message);
                 return;
-            }
+            
+        }
 
         }
         private void CloseBtn_Click(object sender, EventArgs e)

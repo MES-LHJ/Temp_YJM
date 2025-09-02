@@ -213,6 +213,7 @@
             // 
             this.deptNameBox.Location = new System.Drawing.Point(198, 56);
             this.deptNameBox.Name = "deptNameBox";
+            this.deptNameBox.ReadOnly = true;
             this.deptNameBox.Size = new System.Drawing.Size(150, 21);
             this.deptNameBox.TabIndex = 29;
             // 
@@ -300,12 +301,14 @@
             this.imgUpdateBox.Location = new System.Drawing.Point(364, 37);
             this.imgUpdateBox.Name = "imgUpdateBox";
             this.imgUpdateBox.Size = new System.Drawing.Size(115, 106);
+            this.imgUpdateBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.imgUpdateBox.TabIndex = 56;
             this.imgUpdateBox.TabStop = false;
             // 
             // imgUpdateBtn
             // 
             this.imgUpdateBtn.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.imgUpdateBtn.ForeColor = System.Drawing.Color.White;
             this.imgUpdateBtn.Location = new System.Drawing.Point(485, 109);
             this.imgUpdateBtn.Name = "imgUpdateBtn";
             this.imgUpdateBtn.Size = new System.Drawing.Size(89, 34);

@@ -95,6 +95,7 @@
             // 
             // deptCodeComboBox
             // 
+            this.deptCodeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.deptCodeComboBox.FormattingEnabled = true;
             this.deptCodeComboBox.Location = new System.Drawing.Point(14, 67);
             this.deptCodeComboBox.Name = "deptCodeComboBox";
@@ -114,6 +115,7 @@
             // 
             this.deptNameBox.Location = new System.Drawing.Point(198, 66);
             this.deptNameBox.Name = "deptNameBox";
+            this.deptNameBox.ReadOnly = true;
             this.deptNameBox.Size = new System.Drawing.Size(150, 21);
             this.deptNameBox.TabIndex = 5;
             // 
@@ -341,6 +343,7 @@
             this.imgInsertBox.Location = new System.Drawing.Point(391, 43);
             this.imgInsertBox.Name = "imgInsertBox";
             this.imgInsertBox.Size = new System.Drawing.Size(140, 110);
+            this.imgInsertBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.imgInsertBox.TabIndex = 59;
             this.imgInsertBox.TabStop = false;
             // 

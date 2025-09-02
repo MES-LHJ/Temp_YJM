@@ -7,16 +7,16 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.department.Model;
+using WindowsFormsApp1.department.Models;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
-namespace WindowsFormsApp1.employee.Model
+namespace WindowsFormsApp1.employee.Models
 {
     public class EmployeeRepository
     {
         private static readonly EmployeeRepository instance = new EmployeeRepository();
         private EmployeeRepository() { }
-        public static EmployeeRepository empRepo => instance;
+        public static EmployeeRepository EmpRepo => instance;
 
         public List<EmployeeDto> GetEmpList()//사원 리스트 가져오기
         {
@@ -34,20 +34,20 @@ namespace WindowsFormsApp1.employee.Model
                 {
                     list.Add(new EmployeeDto
                     {
-                        departmentCode = reader["departmentCode"].ToString(),
-                        departmentName = reader["departmentName"].ToString(),
-                        employeeCode = reader["employeeCode"].ToString(),
-                        employeeName = reader["employeeName"].ToString(),
-                        loginId = reader["loginId"].ToString(),
-                        passwd = reader["passwd"].ToString(),
-                        employeeRank = reader["employeeRank"].ToString(),
-                        employeeType = reader["employeeType"].ToString(),
-                        phone = reader["phone"].ToString(),
-                        email = reader["email"].ToString(),
-                        messId = reader["messId"].ToString(),
-                        memo = reader["memo"].ToString(),
-                        employeeId = Convert.ToInt32(reader["employeeId"]),
-                        imgId = Convert.ToInt32(reader["imgId"])
+                        DepartmentCode = reader["departmentCode"].ToString(),
+                        DepartmentName = reader["departmentName"].ToString(),
+                        EmployeeCode = reader["employeeCode"].ToString(),
+                        EmployeeName = reader["employeeName"].ToString(),
+                        LoginId = reader["loginId"].ToString(),
+                        Passwd = reader["passwd"].ToString(),
+                        EmployeeRank = reader["employeeRank"].ToString(),
+                        EmployeeType = reader["employeeType"].ToString(),
+                        Phone = reader["phone"].ToString(),
+                        Email = reader["email"].ToString(),
+                        MessId = reader["messId"].ToString(),
+                        Memo = reader["memo"].ToString(),
+                        EmployeeId = Convert.ToInt32(reader["employeeId"]),
+                        ImgId = Convert.ToInt32(reader["imgId"])
                     });
                 }
             }
@@ -67,7 +67,7 @@ namespace WindowsFormsApp1.employee.Model
                 {
                     list.Add(new EmployeeDto
                     {
-                        departmentCode = reader["departmentCode"].ToString()
+                        DepartmentCode = reader["departmentCode"].ToString()
                     });
                 }
             }
@@ -91,9 +91,9 @@ namespace WindowsFormsApp1.employee.Model
 
                     return new EmployeeDto
                     {
-                        departmentName = reader["departmentName"].ToString(),
-                        departmentId = Convert.ToInt32(reader["departmentId"].ToString()),
-                        cnt = 1
+                        DepartmentName = reader["departmentName"].ToString(),
+                        DepartmentId = Convert.ToInt32(reader["departmentId"].ToString()),
+                        Cnt = 1
 
                     };
 
@@ -117,10 +117,10 @@ namespace WindowsFormsApp1.employee.Model
                 {
                     return new EmployeeDto
                     {
-                        employeeCode = reader["employeeCode"].ToString(),
-                        employeeId = Convert.ToInt32(reader["employeeId"].ToString()),
-                        loginId = reader["loginid"].ToString(),
-                        cnt = 1
+                        EmployeeCode = reader["employeeCode"].ToString(),
+                        EmployeeId = Convert.ToInt32(reader["employeeId"].ToString()),
+                        LoginId = reader["loginid"].ToString(),
+                        Cnt = 1
                     };
                 }
             }
@@ -135,7 +135,7 @@ namespace WindowsFormsApp1.employee.Model
 
                 SqlCommand cmd = new SqlCommand(logIdCheckSql, conn);
                 cmd.Parameters.AddWithValue("@logId", loginId);
-               
+
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
@@ -166,11 +166,11 @@ namespace WindowsFormsApp1.employee.Model
         public int InsertImgFolder(string imgName)
         {
             string imgInserSql = "INSERT INTO img (imgName) VALUES (@imgName); SELECT SCOPE_IDENTITY();";
-            using(SqlConnection Conn  = new SqlConnection(Server.connStr))
+            using (SqlConnection Conn = new SqlConnection(Server.connStr))
             {
                 Conn.Open();
                 SqlCommand cmd = new SqlCommand(imgInserSql, Conn);
-            
+
                 cmd.Parameters.AddWithValue("@imgName", (object)imgName ?? DBNull.Value);
                 int newId = Convert.ToInt32(cmd.ExecuteScalar());
 
@@ -180,29 +180,29 @@ namespace WindowsFormsApp1.employee.Model
 
         public void InsertEmpInfo(EmployeeDto empDto)//사원정보 추가
         {
-            
+
             string insertEmpsql = "INSERT INTO employee (departmentId, employeeCode, employeeName, loginId, passwd, employeeRank, employeeType, phone, email, messId, memo, gender,imgId) " +
                          "VALUES (@departmentId, @employeeCode, @employeeName, @loginId, @passwd, @employeeRank, @employeeType, @phone, @email, @messId, @memo, @gender,@imgId)";
-           
+
             using (SqlConnection conn = new SqlConnection(Server.connStr))
             {
                 conn.Open();
-   
+
                 SqlCommand cmd2 = new SqlCommand(insertEmpsql, conn);
-                cmd2.Parameters.AddWithValue("@departmentId", empDto.departmentId);
-                cmd2.Parameters.AddWithValue("@employeeCode", empDto.employeeCode);
-                cmd2.Parameters.AddWithValue("@employeeName", empDto.employeeName);
-                cmd2.Parameters.AddWithValue("@loginId", empDto.loginId);
-                cmd2.Parameters.AddWithValue("@passwd", empDto.passwd);
-                cmd2.Parameters.AddWithValue("@employeeRank", empDto.employeeRank);
-                cmd2.Parameters.AddWithValue("@employeeType", empDto.employeeType);
-                cmd2.Parameters.AddWithValue("@phone", empDto.phone);
-                cmd2.Parameters.AddWithValue("@email", empDto.email);
-                cmd2.Parameters.AddWithValue("@messId", empDto.messId);
-                cmd2.Parameters.AddWithValue("@memo", empDto.memo);
-                cmd2.Parameters.AddWithValue("@gender", empDto.gender);
-                cmd2.Parameters.AddWithValue("@imgId", empDto.imgId);
-                
+                cmd2.Parameters.AddWithValue("@departmentId", empDto.DepartmentId);
+                cmd2.Parameters.AddWithValue("@employeeCode", empDto.EmployeeCode);
+                cmd2.Parameters.AddWithValue("@employeeName", empDto.EmployeeName);
+                cmd2.Parameters.AddWithValue("@loginId", empDto.LoginId);
+                cmd2.Parameters.AddWithValue("@passwd", empDto.Passwd);
+                cmd2.Parameters.AddWithValue("@employeeRank", empDto.EmployeeRank);
+                cmd2.Parameters.AddWithValue("@employeeType", empDto.EmployeeType);
+                cmd2.Parameters.AddWithValue("@phone", empDto.Phone);
+                cmd2.Parameters.AddWithValue("@email", empDto.Email);
+                cmd2.Parameters.AddWithValue("@messId", empDto.MessId);
+                cmd2.Parameters.AddWithValue("@memo", empDto.Memo);
+                cmd2.Parameters.AddWithValue("@gender", empDto.Gender);
+                cmd2.Parameters.AddWithValue("@imgId", empDto.ImgId);
+
                 //cmd1.Parameters.AddWithValue("@imgName", (object)empDto.imgName??DBNull.Value);
                 cmd2.ExecuteNonQuery();
 
@@ -211,7 +211,7 @@ namespace WindowsFormsApp1.employee.Model
 
         public EmployeeDto empDelInfo(int empId)//사원 삭제시 사원명, 사원코드 가져오기
         {
-            string sql = "SELECT a.employeeCode , a.employeeName, a.imgId, b.imgName FROM employee a JOIN img b ON a.imgId = b.imgId WHERE employeeId =@employeeId"
+            string sql = "SELECT a.employeeCode , a.employeeName, a.imgId, b.imgName, a.employeeId FROM employee a JOIN img b ON a.imgId = b.imgId WHERE employeeId =@employeeId"
                 ;
             using (SqlConnection conn = new SqlConnection(Server.connStr))
             {
@@ -225,10 +225,11 @@ namespace WindowsFormsApp1.employee.Model
                 {
                     return new EmployeeDto
                     {
-                        employeeCode = reader["employeeCode"].ToString(),
-                        employeeName = reader["employeeName"].ToString(),
-                        imgId = Convert.ToInt32(reader["imgid"].ToString()),
-                        imgName = reader["imgName"].ToString()
+                        EmployeeId = Convert.ToInt32(reader["employeeId"]),
+                        EmployeeCode = reader["employeeCode"].ToString(),
+                        EmployeeName = reader["employeeName"].ToString(),
+                        ImgId = Convert.ToInt32(reader["imgid"]),
+                        ImgName = reader["imgName"].ToString()
                     };
                 }
             }
@@ -281,22 +282,22 @@ namespace WindowsFormsApp1.employee.Model
                 {
                     return new EmployeeDto
                     {
-                        departmentCode = reader["departmentCode"].ToString(),
-                        departmentName = reader["departmentName"].ToString(),
-                        imgId = Convert.ToInt32(reader["imgId"]),
-                        employeeCode = reader["employeeCode"].ToString(),
-                        employeeName = reader["employeeName"].ToString(),
-                        loginId = reader["loginId"].ToString(),
-                        passwd = reader["passwd"].ToString(),
-                        employeeRank = reader["employeeRank"].ToString(),
-                        employeeType = reader["employeeType"].ToString(),
-                        phone = reader["phone"].ToString(),
-                        email = reader["email"].ToString(),
-                        messId = reader["messId"].ToString(),
-                        memo = reader["memo"].ToString(),
-                        gender = (EmployeeDto.GenderType)Convert.ToInt32(reader["gender"]),
-                        imgName = reader["imgName"].ToString(),
-                        departmentId = Convert.ToInt32(reader["departmentId"])
+                        DepartmentCode = reader["departmentCode"].ToString(),
+                        DepartmentName = reader["departmentName"].ToString(),
+                        ImgId = Convert.ToInt32(reader["imgId"]),
+                        EmployeeCode = reader["employeeCode"].ToString(),
+                        EmployeeName = reader["employeeName"].ToString(),
+                        LoginId = reader["loginId"].ToString(),
+                        Passwd = reader["passwd"].ToString(),
+                        EmployeeRank = reader["employeeRank"].ToString(),
+                        EmployeeType = reader["employeeType"].ToString(),
+                        Phone = reader["phone"].ToString(),
+                        Email = reader["email"].ToString(),
+                        MessId = reader["messId"].ToString(),
+                        Memo = reader["memo"].ToString(),
+                        Gender = (EmployeeDto.GenderType)Convert.ToInt32(reader["gender"]),
+                        ImgName = reader["imgName"].ToString(),
+                        DepartmentId = Convert.ToInt32(reader["departmentId"])
                     };
                 }
             }
@@ -312,7 +313,7 @@ namespace WindowsFormsApp1.employee.Model
                 SqlCommand cmd = new SqlCommand(empCodeCheckSql, conn);
                 cmd.Parameters.AddWithValue("@empCode", employeeCode);
                 cmd.Parameters.AddWithValue("@myEmpCode", myEmpCode);
-                
+
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
@@ -324,23 +325,24 @@ namespace WindowsFormsApp1.employee.Model
         public int UdpateImg(string imgName)
         {
             string updateImgNameSql = "UPDATE img SET imgName = @imgName";
-            using(SqlConnection conn = new SqlConnection(Server.connStr))
+            using (SqlConnection conn = new SqlConnection(Server.connStr))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(updateImgNameSql, conn);
                 cmd.Parameters.AddWithValue("@imgName", (object)imgName ?? DBNull.Value);
 
                 SqlDataReader reader = cmd.ExecuteReader();
-                if(reader.RecordsAffected > 0)
+                if (reader.RecordsAffected > 0)
                 {
                     return 1;
                 }
 
-            }return 0;
+            }
+            return 0;
         }
         public int UpdateEmp(EmployeeDto empDto)//사원정보 수정
         {
-            
+
             string sql = "UPDATE employee SET employeeCode=@employeeCode, employeeName = @employeeName, departmentId = @departmentId," +
                              "employeeRank = @employeeRank, employeeType = @employeeType," +
                              "phone = @phone, email = @email, messId = @messId, memo = @memo,gender=@gender WHERE employeeId = @employeeId";
@@ -352,19 +354,19 @@ namespace WindowsFormsApp1.employee.Model
 
                 SqlCommand cmd1 = new SqlCommand(sql, conn);
 
-                cmd1.Parameters.AddWithValue("@departmentId", empDto.departmentId);
-                cmd1.Parameters.AddWithValue("@employeeCode", empDto.employeeCode);
-                cmd1.Parameters.AddWithValue("@employeeName", empDto.employeeName);
-                cmd1.Parameters.AddWithValue("@employeeRank", empDto.employeeRank);
-                cmd1.Parameters.AddWithValue("@employeeType", empDto.employeeType);
-                cmd1.Parameters.AddWithValue("@phone", empDto.phone);
-                cmd1.Parameters.AddWithValue("@email", empDto.email);
-                cmd1.Parameters.AddWithValue("@messId", empDto.messId);
-                cmd1.Parameters.AddWithValue("@memo", empDto.memo);
-                cmd1.Parameters.AddWithValue("@gender", empDto.gender);
-                cmd1.Parameters.AddWithValue("@employeeId", empDto.employeeId);
-               // cmd1.Parameters.AddWithValue("@imgName", (object)empDto.imgName ?? DBNull.Value);
-                
+                cmd1.Parameters.AddWithValue("@departmentId", empDto.DepartmentId);
+                cmd1.Parameters.AddWithValue("@employeeCode", empDto.EmployeeCode);
+                cmd1.Parameters.AddWithValue("@employeeName", empDto.EmployeeName);
+                cmd1.Parameters.AddWithValue("@employeeRank", empDto.EmployeeRank);
+                cmd1.Parameters.AddWithValue("@employeeType", empDto.EmployeeType);
+                cmd1.Parameters.AddWithValue("@phone", empDto.Phone);
+                cmd1.Parameters.AddWithValue("@email", empDto.Email);
+                cmd1.Parameters.AddWithValue("@messId", empDto.MessId);
+                cmd1.Parameters.AddWithValue("@memo", empDto.Memo);
+                cmd1.Parameters.AddWithValue("@gender", empDto.Gender);
+                cmd1.Parameters.AddWithValue("@employeeId", empDto.EmployeeId);
+                // cmd1.Parameters.AddWithValue("@imgName", (object)empDto.imgName ?? DBNull.Value);
+
                 SqlDataReader reader = cmd1.ExecuteReader();
                 if (reader.RecordsAffected > 0)// 1개이상 영향을 받았을 때
                 {
@@ -415,7 +417,36 @@ namespace WindowsFormsApp1.employee.Model
             }
             return 0;
         }
-        
+
+        public List<EmployeeDto> GetLinqEmpInfo()
+        {
+            using (var context = new LinqContext())
+            {
+                var list = context.Employee
+                                    .Join(context.Department, e => e.departmentId, d => d.departmentId, (e, d) => new { e, d })
+                                    .Join(context.img, ed => ed.e.imgId, i => i.imgId, (ed, i) => new EmployeeDto
+                                    {
+                                        EmployeeCode = ed.e.employeeCode,
+                                        EmployeeName = ed.e.employeeName,
+                                        LoginId = ed.e.loginId,
+                                        Passwd = ed.e.passwd,
+                                        EmployeeRank = ed.e.employeeRank,
+                                        EmployeeType = ed.e.employeeType,
+                                        Phone = ed.e.phone,
+                                        Email = ed.e.email,
+                                        MessId = ed.e.messId,
+                                        Memo = ed.e.memo,
+                                        EmployeeId = ed.e.employeeId,
+                                        DepartmentCode = ed.d.departmentCode,
+                                        DepartmentName = ed.d.departmentName,
+                                        ImgId = i.imgId
+                                    })
+                                    .OrderBy(emp => emp.EmployeeId)
+                                    .ToList();
+                return list;
+            }
+        }
+
     }
 }
 

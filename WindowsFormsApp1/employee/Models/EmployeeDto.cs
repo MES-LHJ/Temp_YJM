@@ -4,38 +4,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsFormsApp1.department.Model
+namespace WindowsFormsApp1.employee.Models
 {
     public class EmployeeDto
     {
-        public string departmentCode { get; set; }
-        public string departmentName { get; set; }
-        public string employeeCode { get; set; }
-        public string employeeName { get; set; }
-        public string loginId { get; set; }
-        public string passwd { get; set; }
+        public string DepartmentCode { get; set; }
+        public string DepartmentName { get; set; }
+        public string EmployeeCode { get; set; }
+        public string EmployeeName { get; set; }
+        public string LoginId { get; set; }
+        public string Passwd { get; set; }
 
-        public string passwdMask => new string('*', passwd.Length);
-        public string employeeRank { get; set; }
-        public string employeeType { get; set; }
-        public string phone { get; set; }
-        public string email { get; set; }
-        public string messId { get; set; }
-        public string memo { get; set; }
-        public int employeeId { get; set; }
-        public int departmentId { get; set; }
-        public string imgName {  get; set; }
+        public string PasswdMask => new string('*', Passwd.Length);
+        public string EmployeeRank { get; set; }
+        public string EmployeeType { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public string MessId { get; set; }
+        public string Memo { get; set; }
+        public int EmployeeId { get; set; }
+        public int DepartmentId { get; set; }
+        public string ImgName {  get; set; }
 
-        public int imgId { get; set; }
+        public int ImgId { get; set; }
 
-        public GenderType gender { get; set; }
+        public GenderType Gender { get; set; }
 
         public enum GenderType
         {
             Male=1,
             Female = 2
         }
-        public int cnt { get; set; }
+        public int Cnt { get; set; }
 
     }
 }

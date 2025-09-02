@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.employee.Model;
+using WindowsFormsApp1.employee.Models;
 
 namespace WindowsFormsApp1
 {
@@ -24,8 +24,8 @@ namespace WindowsFormsApp1
 
         private void Click_Event()
         {
-            loginBtn.Click += Login_Button;
-            closeBtn.Click += Close_Btn;
+            loginBtn.Click += Login_Button;//로그인 버튼
+            closeBtn.Click += Close_Btn;//닫기 버튼
         }
         private void Login_Button(object sender, EventArgs e)
         {
@@ -43,7 +43,7 @@ namespace WindowsFormsApp1
                 return;
             }
 
-            var checkLogin = EmployeeRepository.empRepo.CheckLogin(loginId, passwd);
+            var checkLogin = EmployeeRepository.EmpRepo.CheckLogin(loginId, passwd);
            
             if (checkLogin == 1)
             {

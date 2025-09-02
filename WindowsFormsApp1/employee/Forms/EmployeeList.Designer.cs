@@ -32,14 +32,14 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.empListToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.deptListBtn = new System.Windows.Forms.ToolStripButton();
-            this.empListBtn = new System.Windows.Forms.ToolStripButton();
-            this.empAddBtn = new System.Windows.Forms.ToolStripButton();
-            this.empUpdateBtn = new System.Windows.Forms.ToolStripButton();
-            this.loginInfoBtn = new System.Windows.Forms.ToolStripButton();
-            this.empDelBtn = new System.Windows.Forms.ToolStripButton();
-            this.excelExportBtn = new System.Windows.Forms.ToolStripButton();
             this.closeBtn = new System.Windows.Forms.ToolStripButton();
+            this.excelExportBtn = new System.Windows.Forms.ToolStripButton();
+            this.empDelBtn = new System.Windows.Forms.ToolStripButton();
+            this.loginInfoBtn = new System.Windows.Forms.ToolStripButton();
+            this.empUpdateBtn = new System.Windows.Forms.ToolStripButton();
+            this.empAddBtn = new System.Windows.Forms.ToolStripButton();
+            this.empListBtn = new System.Windows.Forms.ToolStripButton();
+            this.deptListBtn = new System.Windows.Forms.ToolStripButton();
             this.empListView = new System.Windows.Forms.DataGridView();
             this.departmentCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.departmentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -62,17 +62,17 @@
             this.empListToolStrip.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.empListToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
-            this.deptListBtn,
-            this.empListBtn,
-            this.empAddBtn,
-            this.empUpdateBtn,
-            this.loginInfoBtn,
-            this.empDelBtn,
+            this.closeBtn,
             this.excelExportBtn,
-            this.closeBtn});
+            this.empDelBtn,
+            this.loginInfoBtn,
+            this.empUpdateBtn,
+            this.empAddBtn,
+            this.empListBtn,
+            this.deptListBtn});
             this.empListToolStrip.Location = new System.Drawing.Point(0, 0);
             this.empListToolStrip.Name = "empListToolStrip";
-            this.empListToolStrip.Size = new System.Drawing.Size(898, 25);
+            this.empListToolStrip.Size = new System.Drawing.Size(1011, 25);
             this.empListToolStrip.TabIndex = 0;
             this.empListToolStrip.Text = "toolStrip1";
             // 
@@ -82,70 +82,9 @@
             this.toolStripLabel1.Size = new System.Drawing.Size(55, 22);
             this.toolStripLabel1.Text = "부서코드";
             // 
-            // deptListBtn
-            // 
-            this.deptListBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.deptListBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.deptListBtn.Name = "deptListBtn";
-            this.deptListBtn.Size = new System.Drawing.Size(35, 22);
-            this.deptListBtn.Text = "부서";
-            // 
-            // empListBtn
-            // 
-            this.empListBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.empListBtn.Image = ((System.Drawing.Image)(resources.GetObject("empListBtn.Image")));
-            this.empListBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.empListBtn.Name = "empListBtn";
-            this.empListBtn.Size = new System.Drawing.Size(35, 22);
-            this.empListBtn.Text = "조회";
-            // 
-            // empAddBtn
-            // 
-            this.empAddBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.empAddBtn.Image = ((System.Drawing.Image)(resources.GetObject("empAddBtn.Image")));
-            this.empAddBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.empAddBtn.Name = "empAddBtn";
-            this.empAddBtn.Size = new System.Drawing.Size(35, 22);
-            this.empAddBtn.Text = "추가";
-            // 
-            // empUpdateBtn
-            // 
-            this.empUpdateBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.empUpdateBtn.Image = ((System.Drawing.Image)(resources.GetObject("empUpdateBtn.Image")));
-            this.empUpdateBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.empUpdateBtn.Name = "empUpdateBtn";
-            this.empUpdateBtn.Size = new System.Drawing.Size(35, 22);
-            this.empUpdateBtn.Text = "수정";
-            // 
-            // loginInfoBtn
-            // 
-            this.loginInfoBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.loginInfoBtn.Image = ((System.Drawing.Image)(resources.GetObject("loginInfoBtn.Image")));
-            this.loginInfoBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.loginInfoBtn.Name = "loginInfoBtn";
-            this.loginInfoBtn.Size = new System.Drawing.Size(71, 22);
-            this.loginInfoBtn.Text = "로그인정보";
-            // 
-            // empDelBtn
-            // 
-            this.empDelBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.empDelBtn.Image = ((System.Drawing.Image)(resources.GetObject("empDelBtn.Image")));
-            this.empDelBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.empDelBtn.Name = "empDelBtn";
-            this.empDelBtn.Size = new System.Drawing.Size(35, 22);
-            this.empDelBtn.Text = "삭제";
-            // 
-            // excelExportBtn
-            // 
-            this.excelExportBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.excelExportBtn.Image = ((System.Drawing.Image)(resources.GetObject("excelExportBtn.Image")));
-            this.excelExportBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.excelExportBtn.Name = "excelExportBtn";
-            this.excelExportBtn.Size = new System.Drawing.Size(59, 22);
-            this.excelExportBtn.Text = "자료변환";
-            // 
             // closeBtn
             // 
+            this.closeBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.closeBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.closeBtn.Image = ((System.Drawing.Image)(resources.GetObject("closeBtn.Image")));
             this.closeBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -153,8 +92,78 @@
             this.closeBtn.Size = new System.Drawing.Size(35, 22);
             this.closeBtn.Text = "닫기";
             // 
+            // excelExportBtn
+            // 
+            this.excelExportBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.excelExportBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.excelExportBtn.Image = ((System.Drawing.Image)(resources.GetObject("excelExportBtn.Image")));
+            this.excelExportBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.excelExportBtn.Name = "excelExportBtn";
+            this.excelExportBtn.Size = new System.Drawing.Size(59, 22);
+            this.excelExportBtn.Text = "자료변환";
+            // 
+            // empDelBtn
+            // 
+            this.empDelBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.empDelBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.empDelBtn.Image = ((System.Drawing.Image)(resources.GetObject("empDelBtn.Image")));
+            this.empDelBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.empDelBtn.Name = "empDelBtn";
+            this.empDelBtn.Size = new System.Drawing.Size(35, 22);
+            this.empDelBtn.Text = "삭제";
+            // 
+            // loginInfoBtn
+            // 
+            this.loginInfoBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.loginInfoBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.loginInfoBtn.Image = ((System.Drawing.Image)(resources.GetObject("loginInfoBtn.Image")));
+            this.loginInfoBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.loginInfoBtn.Name = "loginInfoBtn";
+            this.loginInfoBtn.Size = new System.Drawing.Size(71, 22);
+            this.loginInfoBtn.Text = "로그인정보";
+            // 
+            // empUpdateBtn
+            // 
+            this.empUpdateBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.empUpdateBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.empUpdateBtn.Image = ((System.Drawing.Image)(resources.GetObject("empUpdateBtn.Image")));
+            this.empUpdateBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.empUpdateBtn.Name = "empUpdateBtn";
+            this.empUpdateBtn.Size = new System.Drawing.Size(35, 22);
+            this.empUpdateBtn.Text = "수정";
+            // 
+            // empAddBtn
+            // 
+            this.empAddBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.empAddBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.empAddBtn.Image = ((System.Drawing.Image)(resources.GetObject("empAddBtn.Image")));
+            this.empAddBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.empAddBtn.Name = "empAddBtn";
+            this.empAddBtn.Size = new System.Drawing.Size(35, 22);
+            this.empAddBtn.Text = "추가";
+            // 
+            // empListBtn
+            // 
+            this.empListBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.empListBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.empListBtn.Image = ((System.Drawing.Image)(resources.GetObject("empListBtn.Image")));
+            this.empListBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.empListBtn.Name = "empListBtn";
+            this.empListBtn.Size = new System.Drawing.Size(35, 22);
+            this.empListBtn.Text = "조회";
+            // 
+            // deptListBtn
+            // 
+            this.deptListBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.deptListBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.deptListBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.deptListBtn.Name = "deptListBtn";
+            this.deptListBtn.Size = new System.Drawing.Size(35, 22);
+            this.deptListBtn.Text = "부서";
+            // 
             // empListView
             // 
+            this.empListView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.empListView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.empListView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.empListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -174,9 +183,10 @@
             this.empListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.empListView.Location = new System.Drawing.Point(0, 25);
             this.empListView.Name = "empListView";
+            this.empListView.ReadOnly = true;
             this.empListView.RowTemplate.Height = 23;
-            this.empListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.empListView.Size = new System.Drawing.Size(898, 381);
+            this.empListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.empListView.Size = new System.Drawing.Size(1011, 381);
             this.empListView.TabIndex = 1;
             // 
             // departmentCode
@@ -211,7 +221,7 @@
             // 
             // passwd
             // 
-            this.passwd.DataPropertyName = "passwd";
+            this.passwd.DataPropertyName = "passwdMask";
             this.passwd.HeaderText = "비밀번호";
             this.passwd.Name = "passwd";
             // 
@@ -255,7 +265,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(898, 406);
+            this.ClientSize = new System.Drawing.Size(1011, 406);
             this.Controls.Add(this.empListView);
             this.Controls.Add(this.empListToolStrip);
             this.Name = "EmployeeList";
