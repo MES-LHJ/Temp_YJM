@@ -37,8 +37,6 @@ namespace WindowsFormsApp1
             InitializeComponent();
             Click_Event();
             Design();
-            CheckBox_Event();
-            ComboBox_Event();
 
             this.Load += AddEmployee_Load;
         }
@@ -49,14 +47,10 @@ namespace WindowsFormsApp1
             cancleBtn.Click += Cancel_Button;//닫기 버튼
             imgSelectBtn.Click += Img_Select;//이미지 선택
             imgDelBtn.Click += Img_Cancel;//이미지 x 버튼
-        }
-        private void CheckBox_Event()
-        {
+
             menCheckBox.CheckedChanged += MenCheck_Box;// 남자 체크박스
             womenCheckBox.CheckedChanged += WomenCheck_Box;// 여자 체크박스
-        }
-        private void ComboBox_Event()
-        {
+
             deptCodeComboBox.SelectedIndexChanged += DepName_Change;//부서코드 변경시 부서명 바뀌게
         }
 
@@ -69,24 +63,13 @@ namespace WindowsFormsApp1
         {
             // 데이터 불러오기
             //var deptList = DepartmentRepository.deptRepo.GetDeptListInfo();
-            using (var context = new LinqContext())
-            {
-                var deptListInfo = context.Department
-                                            .OrderBy(d => d.departmentId)
-                                            .Select(d => new DepartmentDto
-                                            {
-                                                DepartmentId = d.departmentId,
-                                                DepartmentName = d.departmentName,
-                                                DepartmentCode = d.departmentCode,
-                                                Memo = d.memo
-                                            })
-                                            .ToList();
-                // 콤보박스 파싱 초기화
-                deptCodeComboBox.Items.Clear(); // 콤보박스 초기화
-                //파싱
-                deptCodeComboBox.Items.AddRange(deptListInfo.ToArray());
-            }
+            var deptListInfo = DepartmentRepository.DeptRepo.GetLinqDeptListInfo();
+            // 콤보박스 파싱 초기화
+            deptCodeComboBox.Items.Clear(); // 콤보박스 초기화
+                                            //파싱
+            deptCodeComboBox.Items.AddRange(deptListInfo.ToArray());
         }
+        
 
         private void DepName_Change(object sender, EventArgs e)// 부서코드 변경시 부서 명 바뀌게
         {
@@ -185,17 +168,19 @@ namespace WindowsFormsApp1
             {
                 using (var context = new LinqContext())
                 {
-                    var newImg = new img { imgName = realFileName };
-                    context.img.Add(newImg);
-                    context.SaveChanges();
-                    var newImgId = newImg.imgId;
-
-                    // 폴더 생성
-                    string folderPath = util.ImgFolderPath() + newImgId;
-                    string savePath = folderPath + @"\" + saveFile.FileName + imgFormat;
+                    int? newImgId = null;
 
                     if (imgInsertBox.Image != null)
                     {
+                        var newImg = new img { imgName = realFileName };
+                        context.img.Add(newImg);
+                        context.SaveChanges();
+                        newImgId = newImg.imgId;
+
+                        // 폴더 생성
+                        string folderPath = util.ImgFolderPath() + newImgId;
+                        string savePath = folderPath + @"\" + saveFile.FileName + imgFormat;
+
                         if (!Directory.Exists(folderPath))
                         {
                             Directory.CreateDirectory(folderPath);
@@ -227,6 +212,7 @@ namespace WindowsFormsApp1
 
                     this.DialogResult = DialogResult.OK;
                 }
+              
             }
             catch (Exception ex)
             {

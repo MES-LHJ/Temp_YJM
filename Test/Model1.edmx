@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="test2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="departmentId" />
+          </Key>
+          <Property Name="departmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="departmentCode" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="departmentName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="memo" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="employeeId" />
+          </Key>
+          <Property Name="employeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="employeeCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="loginId" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="passwd" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="messId" Type="varchar" MaxLength="20" />
+          <Property Name="phone" Type="varchar" MaxLength="20" />
+          <Property Name="employeeName" Type="varchar" MaxLength="20" />
+          <Property Name="email" Type="varchar" MaxLength="20" />
+          <Property Name="gender" Type="int" />
+          <Property Name="employeeType" Type="varchar" MaxLength="20" />
+          <Property Name="employeeRank" Type="varchar" MaxLength="20" />
+          <Property Name="memo" Type="varchar" MaxLength="30" />
+          <Property Name="departmentId" Type="int" Nullable="false" />
+          <Property Name="subDeptId" Type="int" />
+        </EntityType>
+        <EntityType Name="Img">
+          <Key>
+            <PropertyRef Name="imgId" />
+          </Key>
+          <Property Name="imgId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="imgName" Type="varchar" MaxLength="50" />
+          <Property Name="employeeId" Type="int" />
+        </EntityType>
+        <EntityType Name="SubDepartment">
+          <Key>
+            <PropertyRef Name="subDeptId" />
+          </Key>
+          <Property Name="subDeptId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="subDeptName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="memo" Type="varchar" MaxLength="20" />
+          <Property Name="departmentId" Type="int" Nullable="false" />
+          <Property Name="subDeptCode" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="emp_fk">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="departmentId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="departmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="empId_fk">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Img" Type="Self.Img" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="employeeId" />
+            </Principal>
+            <Dependent Role="Img">
+              <PropertyRef Name="employeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subDep_fk">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="SubDepartment" Type="Self.SubDepartment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="departmentId" />
+            </Principal>
+            <Dependent Role="SubDepartment">
+              <PropertyRef Name="departmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subDept_fk">
+          <End Role="SubDepartment" Type="Self.SubDepartment" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubDepartment">
+              <PropertyRef Name="subDeptId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="subDeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="test2ModelStoreContainer">
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Img" EntityType="Self.Img" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubDepartment" EntityType="Self.SubDepartment" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="emp_fk" Association="Self.emp_fk">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="empId_fk" Association="Self.empId_fk">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Img" EntitySet="Img" />
+          </AssociationSet>
+          <AssociationSet Name="subDep_fk" Association="Self.subDep_fk">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="SubDepartment" EntitySet="SubDepartment" />
+          </AssociationSet>
+          <AssociationSet Name="subDept_fk" Association="Self.subDept_fk">
+            <End Role="SubDepartment" EntitySet="SubDepartment" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="test2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="departmentId" />
+          </Key>
+          <Property Name="departmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="departmentCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="departmentName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="memo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.emp_fk" FromRole="Department" ToRole="Employee" />
+          <NavigationProperty Name="SubDepartment" Relationship="Self.subDep_fk" FromRole="Department" ToRole="SubDepartment" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="employeeId" />
+          </Key>
+          <Property Name="employeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="employeeCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="loginId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="passwd" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="messId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="employeeName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="gender" Type="Int32" />
+          <Property Name="employeeType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="employeeRank" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="memo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="departmentId" Type="Int32" Nullable="false" />
+          <Property Name="subDeptId" Type="Int32" />
+          <NavigationProperty Name="Department" Relationship="Self.emp_fk" FromRole="Employee" ToRole="Department" />
+          <NavigationProperty Name="Img" Relationship="Self.empId_fk" FromRole="Employee" ToRole="Img" />
+          <NavigationProperty Name="SubDepartment" Relationship="Self.subDept_fk" FromRole="Employee" ToRole="SubDepartment" />
+        </EntityType>
+        <EntityType Name="Img">
+          <Key>
+            <PropertyRef Name="imgId" />
+          </Key>
+          <Property Name="imgId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="imgName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="employeeId" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="Self.empId_fk" FromRole="Img" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="SubDepartment">
+          <Key>
+            <PropertyRef Name="subDeptId" />
+          </Key>
+          <Property Name="subDeptId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="subDeptName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="memo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="departmentId" Type="Int32" Nullable="false" />
+          <Property Name="subDeptCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Department" Relationship="Self.subDep_fk" FromRole="SubDepartment" ToRole="Department" />
+          <NavigationProperty Name="Employee" Relationship="Self.subDept_fk" FromRole="SubDepartment" ToRole="Employee" />
+        </EntityType>
+        <Association Name="emp_fk">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="departmentId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="departmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subDep_fk">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="SubDepartment" Type="Self.SubDepartment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="departmentId" />
+            </Principal>
+            <Dependent Role="SubDepartment">
+              <PropertyRef Name="departmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="empId_fk">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Img" Type="Self.Img" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="employeeId" />
+            </Principal>
+            <Dependent Role="Img">
+              <PropertyRef Name="employeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subDept_fk">
+          <End Role="SubDepartment" Type="Self.SubDepartment" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubDepartment">
+              <PropertyRef Name="subDeptId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="subDeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="test2Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Department" EntityType="Self.Department" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="Img" EntityType="Self.Img" />
+          <EntitySet Name="SubDepartment" EntityType="Self.SubDepartment" />
+          <AssociationSet Name="emp_fk" Association="Self.emp_fk">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="subDep_fk" Association="Self.subDep_fk">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="SubDepartment" EntitySet="SubDepartment" />
+          </AssociationSet>
+          <AssociationSet Name="empId_fk" Association="Self.empId_fk">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Img" EntitySet="Img" />
+          </AssociationSet>
+          <AssociationSet Name="subDept_fk" Association="Self.subDept_fk">
+            <End Role="SubDepartment" EntitySet="SubDepartment" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="test2ModelStoreContainer" CdmEntityContainer="test2Entities1">
+          <EntitySetMapping Name="Department">
+            <EntityTypeMapping TypeName="test2Model.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="departmentId" ColumnName="departmentId" />
+                <ScalarProperty Name="departmentCode" ColumnName="departmentCode" />
+                <ScalarProperty Name="departmentName" ColumnName="departmentName" />
+                <ScalarProperty Name="memo" ColumnName="memo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="test2Model.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="employeeId" ColumnName="employeeId" />
+                <ScalarProperty Name="employeeCode" ColumnName="employeeCode" />
+                <ScalarProperty Name="loginId" ColumnName="loginId" />
+                <ScalarProperty Name="passwd" ColumnName="passwd" />
+                <ScalarProperty Name="messId" ColumnName="messId" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="employeeName" ColumnName="employeeName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="employeeType" ColumnName="employeeType" />
+                <ScalarProperty Name="employeeRank" ColumnName="employeeRank" />
+                <ScalarProperty Name="memo" ColumnName="memo" />
+                <ScalarProperty Name="departmentId" ColumnName="departmentId" />
+                <ScalarProperty Name="subDeptId" ColumnName="subDeptId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Img">
+            <EntityTypeMapping TypeName="test2Model.Img">
+              <MappingFragment StoreEntitySet="Img">
+                <ScalarProperty Name="imgId" ColumnName="imgId" />
+                <ScalarProperty Name="imgName" ColumnName="imgName" />
+                <ScalarProperty Name="employeeId" ColumnName="employeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubDepartment">
+            <EntityTypeMapping TypeName="test2Model.SubDepartment">
+              <MappingFragment StoreEntitySet="SubDepartment">
+                <ScalarProperty Name="subDeptId" ColumnName="subDeptId" />
+                <ScalarProperty Name="subDeptName" ColumnName="subDeptName" />
+                <ScalarProperty Name="memo" ColumnName="memo" />
+                <ScalarProperty Name="departmentId" ColumnName="departmentId" />
+                <ScalarProperty Name="subDeptCode" ColumnName="subDeptCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="없음" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

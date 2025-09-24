@@ -14,7 +14,7 @@ namespace WindowsFormsApp1.department.Models
 
         public int DepartmentId { get; set; }   
         public int DepartmentCnt {  get; set; }
-
+        public int Count {  get; set; }
         public override string ToString()
         {
             return DepartmentCode;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace WindowsFormsApp1.employee.Models
             string employeeInfoSql = "SELECT b.departmentCode, b.departmentName, a.employeeCode, a.employeeName, a.loginId, a.passwd, a.employeeRank," +
                "a.employeeType, a.phone, a.email, a.messId, a.memo, a.employeeId, c.imgId FROM employee a JOIN department b on a.departmentId = b.departmentId JOIN img c ON a.imgId =c.imgId  " +
                "Order by employeeId";
+            DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(Server.connStr))
             {
                 conn.Open();
@@ -446,7 +448,39 @@ namespace WindowsFormsApp1.employee.Models
                 return list;
             }
         }
+        public EmployeeDto GetLinqUpdateEmpInfo(int empId)
+        {
+            using (var context = new LinqContext())
+            {
+                // 수정할 사원 정보 가져오기
+                var empInfo = context.Employee
+                                        .Join(context.Department, a => a.departmentId, d => d.departmentId, (a, d) => new { a, d })
+                                        .Join(context.img, ed => ed.a.imgId, i => i.imgId, (ed, i) => new EmployeeDto
+                                        {
+                                            DepartmentCode = ed.d.departmentCode,
+                                            DepartmentName = ed.d.departmentName,
+                                            EmployeeName = ed.a.employeeName,
+                                            EmployeeCode = ed.a.employeeCode,
+                                            ImgName = i.imgName,
+                                            LoginId = ed.a.loginId,
+                                            Passwd = ed.a.passwd,
+                                            EmployeeRank = ed.a.employeeRank,
+                                            ImgId = i.imgId,
+                                            EmployeeType = ed.a.employeeType,
+                                            Phone = ed.a.phone,
+                                            Email = ed.a.email,
+                                            MessId = ed.a.messId,
+                                            Memo = ed.a.memo,
+                                            Gender = (EmployeeDto.GenderType)ed.a.gender,
+                                            DepartmentId = ed.a.departmentId,
+                                            EmployeeId = ed.a.employeeId
 
+                                        })
+                                        .FirstOrDefault(emp => emp.EmployeeId == empId);
+                                       
+                return empInfo;
+            }
+        }
     }
 }
 

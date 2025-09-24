@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DocumentFormat.OpenXml.Spreadsheet;
 using WindowsFormsApp1.department.Models;
 using WindowsFormsApp1.employee.Models;
 using WindowsFormsApp1.Utiliity;
-using static System.Data.Entity.Infrastructure.Design.Executor;
 
 namespace WindowsFormsApp1
 {
@@ -61,77 +53,51 @@ namespace WindowsFormsApp1
         }
         private void UpdateEmployee_Load(object sender, EventArgs e)
         {
-            //var empInfo = EmployeeRepository.empRepo.UpdateEmpInfo(employee.employeeId);// 수정할 사원 정보 가져오기
-            using (var context = new LinqContext())
+            
+            var empInfo = EmployeeRepository.EmpRepo.GetLinqUpdateEmpInfo(employee.EmployeeId);//linq 업데이트할 사원 정보
+
+            deptCodeComboBox.Text = empInfo.DepartmentCode;
+            deptNameBox.Text = empInfo.DepartmentName;
+            empCodeBox.Text = empInfo.EmployeeCode;
+            empNameBox.Text = empInfo.EmployeeName;
+            empRankBox.Text = empInfo.EmployeeRank;
+            empTypeBox.Text = empInfo.EmployeeType;
+            phoneBox.Text = empInfo.Phone;
+            emailBox.Text = empInfo.Email;
+            messageBox.Text = empInfo.MessId;
+            memoBox.Text = empInfo.Memo;
+            employee.DepartmentId = Convert.ToInt32(empInfo.DepartmentId.ToString());
+            myEmpCode = empInfo.EmployeeCode;
+            originImg = empInfo.ImgName;
+            employee.ImgId = Convert.ToInt32(empInfo.ImgId);
+            employee.Gender = (EmployeeDto.GenderType)empInfo.Gender;
+
+            string folderPath = util.ImgFolderPath() + employee.ImgId;
+            string imgPath = folderPath + @"\" + empInfo.ImgName;
+            if (!string.IsNullOrEmpty(empInfo.ImgName) && File.Exists(imgPath))
             {
-                // 수정할 사원 정보 가져오기
-                var empInfo = context.Employee
-                                        .Join(context.Department, a => a.departmentId, d => d.departmentId, (a, d) => new { a, d })
-                                        .Join(context.img, ed => ed.a.imgId, i => i.imgId, (ed, i) => new
-                                        {
-                                            ed.d.departmentCode,
-                                            ed.d.departmentName,
-                                            ed.a.employeeName,
-                                            ed.a.employeeCode,
-                                            i.imgName,
-                                            ed.a.loginId,
-                                            ed.a.passwd,
-                                            ed.a.employeeRank,
-                                            ed.a.imgId,
-                                            ed.a.employeeType,
-                                            ed.a.phone,
-                                            ed.a.email,
-                                            ed.a.messId,
-                                            ed.a.memo,
-                                            ed.a.gender,
-                                            ed.a.departmentId,
-                                            ed.a.employeeId
-
-                                        })
-                                        .FirstOrDefault(emp => emp.employeeId == employee.EmployeeId);
-
-                deptCodeComboBox.Text = empInfo.departmentCode;
-                deptNameBox.Text = empInfo.departmentName;
-                empCodeBox.Text = empInfo.employeeCode;
-                empNameBox.Text = empInfo.employeeName;
-                empRankBox.Text = empInfo.employeeRank;
-                empTypeBox.Text = empInfo.employeeType;
-                phoneBox.Text = empInfo.phone;
-                emailBox.Text = empInfo.email;
-                messageBox.Text = empInfo.messId;
-                memoBox.Text = empInfo.memo;
-                employee.DepartmentId = Convert.ToInt32(empInfo.departmentId.ToString());
-                myEmpCode = empInfo.employeeCode;
-                originImg = empInfo.imgName;
-                employee.ImgId = Convert.ToInt32(empInfo.imgId);
-                employee.Gender = (EmployeeDto.GenderType)empInfo.gender;
-
-                string folderPath = util.ImgFolderPath() + employee.ImgId;
-                string imgPath = folderPath + @"\" + empInfo.imgName;
-                if (!string.IsNullOrEmpty(empInfo.imgName) && File.Exists(imgPath))
-                {
-                    imgUpdateBox.Image = Image.FromFile(imgPath);
-                    imgDelBtn.Visible = true;
-                }
-                else
-                {
-                    imgDelBtn.Visible = false;
-                }
-
-                if (employee.Gender == EmployeeDto.GenderType.Male)
-                {
-                    menCheckBox.Checked = true;
-                }
-                else if (employee.Gender == EmployeeDto.GenderType.Female)
-                {
-                    womenCheckBox.Checked = true;
-                }
-
-                var deptList = DepartmentRepository.DeptRepo.GetDeptListInfo();// 부서 정보  리스트 가져오기
-                deptCodeComboBox.Items.AddRange(deptList.ToArray());// 콤보박스에 부서 코드 리스트 추가
+                imgUpdateBox.Image = Image.FromFile(imgPath);
+                imgDelBtn.Visible = true;
+            }
+            else
+            {
+                imgDelBtn.Visible = false;
             }
 
+            if (employee.Gender == EmployeeDto.GenderType.Male)
+            {
+                menCheckBox.Checked = true;
+            }
+            else if (employee.Gender == EmployeeDto.GenderType.Female)
+            {
+                womenCheckBox.Checked = true;
+            }
+
+            var deptList = DepartmentRepository.DeptRepo.GetDeptListInfo();// 부서 정보  리스트 가져오기
+            deptCodeComboBox.Items.AddRange(deptList.ToArray());// 콤보박스에 부서 코드 리스트 추가
         }
+
+
         private void DepName_Change(object sender, EventArgs e)
         {
             if (SelectDeptDto != null)
@@ -140,8 +106,32 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void Complete_Button(object sender, EventArgs e) 
+        private void Complete_Button(object sender, EventArgs e)
         {
+            string email = emailBox.Text;
+
+            if (string.IsNullOrEmpty(deptCodeComboBox.Text))
+            {
+                MessageBox.Show("부서코드를 선택해주세요.");
+                return;
+            }
+            else if (string.IsNullOrWhiteSpace(empCodeBox.Text))
+            {
+                MessageBox.Show("사원코드를 입력해주세요.");
+                return;
+            }
+            else if (string.IsNullOrWhiteSpace(empNameBox.Text))
+            {
+                MessageBox.Show("사원명을 입력해주세요.");
+                return;
+            }
+            else if (!string.IsNullOrWhiteSpace(email) && !Regex.IsMatch(email, util.Pattern()["email"]))
+            {
+                MessageBox.Show("이메일 형식이 틀립니다.");
+                return;
+            }
+
+
             string empCode = empCodeBox.Text;
             //var checkEmpCode = EmployeeRepository.empRepo.UpdateCheckEmpCode(empCode, myEmpCode);
             using (var context = new LinqContext())
@@ -160,29 +150,7 @@ namespace WindowsFormsApp1
 
             try
             {
-                string email = emailBox.Text;
-
-                if (string.IsNullOrEmpty(deptCodeComboBox.Text))
-                {
-                    MessageBox.Show("부서코드를 선택해주세요.");
-                    return;
-                }
-                else if (string.IsNullOrWhiteSpace(empCodeBox.Text))
-                {
-                    MessageBox.Show("사원코드를 입력해주세요.");
-                    return;
-                }
-                else if (string.IsNullOrWhiteSpace(empNameBox.Text))
-                {
-                    MessageBox.Show("사원명을 입력해주세요.");
-                    return;
-                }
-                else if (!string.IsNullOrWhiteSpace(email) && !Regex.IsMatch(email, util.Pattern()["email"]))
-                {
-                    MessageBox.Show("이메일 형식이 틀립니다.");
-                    return;
-                }
-
+                
                 var saveFile = util.ImgSaveType();// 이미지 저장 공통코드
                 string folderPath = util.ImgFolderPath() + employee.ImgId;
                 string imgPath = folderPath + @"\" + originImg;

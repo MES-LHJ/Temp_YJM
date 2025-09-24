@@ -19,7 +19,7 @@ namespace WindowsFormsApp1
     public partial class DelEmployee : Form
     {
         private readonly int employeeId;
-        private EmployeeDto DelEmpInfo = new EmployeeDto();
+        private EmployeeDto DelEmpInfo = new EmployeeDto();//삭제할 사원 정보
         private readonly Util util = new Util();//공통 코드
 
         public DelEmployee(int empId)
@@ -27,7 +27,7 @@ namespace WindowsFormsApp1
             employeeId = empId;
 
             InitializeComponent();
-            Click_Event();
+            Click_Event();//클릭 이벤트
 
             this.Load += DelEmployee_Load_1;
         }
@@ -60,11 +60,8 @@ namespace WindowsFormsApp1
             {
                 using (var context = new LinqContext())
                 {
-                    var delEmp = context.Employee.FirstOrDefault(a => a.employeeId == DelEmpInfo.EmployeeId);
-                    var imgDel = context.img.FirstOrDefault(i => i.imgId == DelEmpInfo.ImgId);
-
-                    Console.WriteLine(DelEmpInfo.EmployeeId);
-                    Console.WriteLine(DelEmpInfo.ImgId);
+                    var delEmp = context.Employee.FirstOrDefault(a => a.employeeId == DelEmpInfo.EmployeeId);//사원 삭제
+                    var imgDel = context.img.FirstOrDefault(i => i.imgId == DelEmpInfo.ImgId); //사진 삭제
 
                     if (delEmp != null)
                     {

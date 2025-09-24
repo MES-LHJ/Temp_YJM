@@ -161,7 +161,8 @@ namespace WindowsFormsApp1.department.Models
                 {
                     return 1;
                 }
-            }return 0;
+            }
+            return 0;
         }
         public int DelDepartment(int deptId)//부서 삭제
         {
@@ -205,7 +206,7 @@ namespace WindowsFormsApp1.department.Models
         public List<DepartmentDto> GetChart(int deptId)//차트
         {
             var list = new List<DepartmentDto>();
-            string chartSql = "SELECT d.departmentName, count(a.employeeId) AS CNT FROM employee e Right JOIN department d ON e.departmentId = d.departmentId GROUP BY d.departmentName";
+            string chartSql = "SELECT d.departmentName, count(e.employeeId) AS CNT FROM employee e Right JOIN department d ON e.departmentId = d.departmentId GROUP BY d.departmentName";
             using (SqlConnection conn = new SqlConnection(Server.connStr))
             {
                 conn.Open();
@@ -214,7 +215,8 @@ namespace WindowsFormsApp1.department.Models
                 while (reader.Read())
                 {
                     list.Add(new DepartmentDto
-                    {
+                    {   
+                        
                         DepartmentName = reader["departmentName"].ToString(),
                         DepartmentCnt = Convert.ToInt32(reader["CNT"].ToString())
                     });
@@ -222,6 +224,34 @@ namespace WindowsFormsApp1.department.Models
 
             }
             return list;
+        }
+        public List<DepartmentDto> GeChartLinq()
+        {
+            using (var context = new LinqContext())
+            {
+                var list = context.Department
+                                    .GroupJoin(context.Employee, d => d.departmentId, b => b.departmentId, (d, a) => new DepartmentDto { DepartmentName = d.departmentName, Count = a.Count() })
+                                    .OrderByDescending(a => a.Count)
+                                    .ToList();
+                return list;
+            }
+        }
+        public List<DepartmentDto> GetLinqDeptListInfo()
+        {
+            using (var context = new LinqContext())
+            {
+                var deptListInfo = context.Department
+                                            .OrderBy(d => d.departmentId)
+                                            .Select(d => new DepartmentDto
+                                            {
+                                                DepartmentId = d.departmentId,
+                                                DepartmentName = d.departmentName,
+                                                DepartmentCode = d.departmentCode,
+                                                Memo = d.memo
+                                            })
+                                            .ToList();
+                return deptListInfo;
+            }
         }
     }
 }

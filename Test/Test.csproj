@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{79111002-E8D3-4758-B9BC-64EBAA48905F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Test</RootNamespace>
+    <AssemblyName>Test</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="ClosedXML, Version=0.105.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.105.0\lib\netstandard2.0\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML.Parser, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1d5f7376574c51ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.Parser.2.0.0\lib\netstandard2.0\ClosedXML.Parser.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v21.2.Core, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Data.Desktop.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Data.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.DataAccess.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.DataAccess.v21.2.UI, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.DataVisualization.v21.2.Core, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Office.v21.2.Core, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.PivotGrid.v21.2.Core, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v21.2.Core, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v21.2.Core, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Sparkline.v21.2.Core, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Spreadsheet.v21.2.Core, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v21.2.UI, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpo.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraBars.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraCharts.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraCharts.v21.2.UI, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v21.2.Wizard, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraEditors.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGrid.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraLayout.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraNavBar.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraPivotGrid.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraRichEdit.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraSpreadsheet.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraTreeList.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraTreeMap.v21.2, Version=21.2.15.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DocumentFormat.OpenXml, Version=3.1.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.3.1.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml.Framework, Version=3.1.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.Framework.3.1.1\lib\net46\DocumentFormat.OpenXml.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.1.0.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.1.0\lib\net20\ExcelNumberFormat.dll</HintPath>
+    </Reference>
+    <Reference Include="ExCSS, Version=4.2.3.0, Culture=neutral, PublicKeyToken=bdbe16be9b936b9a, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExCSS.4.2.3\lib\netstandard2.0\ExCSS.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="RBush, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c77e27b81f4d0187, processorArchitecture=MSIL">
+      <HintPath>..\packages\RBush.Signed.4.0.0\lib\net47\RBush.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.Fonts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
+      <HintPath>..\packages\SixLabors.Fonts.1.0.0\lib\netstandard2.0\SixLabors.Fonts.dll</HintPath>
+    </Reference>
+    <Reference Include="Svg, Version=3.4.0.0, Culture=neutral, PublicKeyToken=12a0bac221edeae2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Svg.3.4.7\lib\net472\Svg.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Api\Dept\Dtos\DeptListData.cs" />
+    <Compile Include="Api\Dept\Dtos\DeptDto.cs" />
+    <Compile Include="Api\Dept\Dtos\DeptListDto.cs" />
+    <Compile Include="Api\Dept\Dtos\DeptRepository.cs" />
+    <Compile Include="Api\Dept\Forms\ApiDelDept.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Api\Dept\Forms\ApiDelDept.Designer.cs">
+      <DependentUpon>ApiDelDept.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Api\Dept\Forms\ApiDeptList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Api\Dept\Forms\ApiDeptList.Designer.cs">
+      <DependentUpon>ApiDeptList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Api\Dept\Forms\ApiInsertDept.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Api\Dept\Forms\ApiInsertDept.Designer.cs">
+      <DependentUpon>ApiInsertDept.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Api\Dept\Forms\ApiUpdateDept.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Api\Dept\Forms\ApiUpdateDept.Designer.cs">
+      <DependentUpon>ApiUpdateDept.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Api\Emp\Dtos\EmpListDto.cs" />
+    <Compile Include="Api\Emp\Dtos\EmpListData.cs" />
+    <Compile Include="Api\Emp\Dtos\EmpRepository.cs" />
+    <Compile Include="Api\Emp\Froms\ApiDelEmp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Api\Emp\Froms\ApiDelEmp.Designer.cs">
+      <DependentUpon>ApiDelEmp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Api\Emp\Froms\ApiInsertEmp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Api\Emp\Froms\ApiInsertEmp.Designer.cs">
+      <DependentUpon>ApiInsertEmp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Api\Emp\Froms\ApiUdpateEmp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Api\Emp\Froms\ApiUdpateEmp.Designer.cs">
+      <DependentUpon>ApiUdpateEmp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Department.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Departments\Forms\AddMainDept.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Departments\Forms\AddMainDept.Designer.cs">
+      <DependentUpon>AddMainDept.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Departments\Forms\ChartDepartment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Departments\Forms\ChartDepartment.Designer.cs">
+      <DependentUpon>ChartDepartment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Departments\Forms\ChartMainDept.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Departments\Forms\ChartMainDept.Designer.cs">
+      <DependentUpon>ChartMainDept.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Departments\Forms\DelMainDept.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Departments\Forms\DelMainDept.Designer.cs">
+      <DependentUpon>DelMainDept.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Departments\Forms\DelSubDept.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Departments\Forms\DelSubDept.Designer.cs">
+      <DependentUpon>DelSubDept.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Departments\Forms\DepartmentList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Departments\Forms\DepartmentList.Designer.cs">
+      <DependentUpon>DepartmentList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Departments\Forms\MainDeptList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Departments\Forms\MainDeptList.Designer.cs">
+      <DependentUpon>MainDeptList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Departments\Forms\AddSubDept.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Departments\Forms\AddSubDept.Designer.cs">
+      <DependentUpon>AddSubDept.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Departments\Forms\SubDeptList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Departments\Forms\SubDeptList.Designer.cs">
+      <DependentUpon>SubDeptList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Api\Emp\Dtos\LoginEmpDto.cs" />
+    <Compile Include="Api\Emp\Dtos\TokenData.cs" />
+    <Compile Include="Api\Emp\Dtos\TokenDto.cs" />
+    <Compile Include="Employees\Forms\AddEmployee3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\Forms\AddEmployee3.Designer.cs">
+      <DependentUpon>AddEmployee3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Departments\Forms\TreeListDept.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Departments\Forms\TreeListDept.Designer.cs">
+      <DependentUpon>TreeListDept.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Departments\Forms\UpdateMainDept.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Departments\Forms\UpdateMainDept.Designer.cs">
+      <DependentUpon>UpdateMainDept.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Departments\Forms\UpdateSubDept.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Departments\Forms\UpdateSubDept.Designer.cs">
+      <DependentUpon>UpdateSubDept.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Departments\Models\DepartmentDto.cs" />
+    <Compile Include="Departments\Models\DepartmentRepository.cs" />
+    <Compile Include="Departments\Models\TreeListDto.cs" />
+    <Compile Include="Employee.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\Dtos\EmployeeDto.cs" />
+    <Compile Include="Employees\Dtos\EmployeeRepository.cs" />
+    <Compile Include="Employees\Dtos\ImgDto.cs" />
+    <Compile Include="Employees\Forms\AddEmployee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\Forms\AddEmployee.Designer.cs">
+      <DependentUpon>AddEmployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\Forms\AddMultiEmployee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\Forms\AddMultiEmployee.Designer.cs">
+      <DependentUpon>AddMultiEmployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Api\Emp\Froms\CompanyLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Api\Emp\Froms\CompanyLogin.Designer.cs">
+      <DependentUpon>CompanyLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\Forms\DelEmployee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\Forms\DelEmployee.Designer.cs">
+      <DependentUpon>DelEmployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\Forms\EmployeeList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\Forms\EmployeeList.Designer.cs">
+      <DependentUpon>EmployeeList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Api\Emp\Froms\ApIEmpList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Api\Emp\Froms\ApIEmpList.Designer.cs">
+      <DependentUpon>ApIEmpList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Api\Emp\Froms\LoginEmpToken.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Api\Emp\Froms\LoginEmpToken.Designer.cs">
+      <DependentUpon>LoginEmpToken.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\ColorInfo.cs" />
+    <Compile Include="Utility\ImageClass.cs" />
+    <Compile Include="Employees\Forms\Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\Forms\Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\Forms\UpdateEmployee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\Forms\UpdateEmployee.Designer.cs">
+      <DependentUpon>UpdateEmployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employees\Forms\UpdateLoginInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employees\Forms\UpdateLoginInfo.Designer.cs">
+      <DependentUpon>UpdateLoginInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Img.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubDepartment.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\FIleType.cs" />
+    <Compile Include="Utility\PathAddr.cs" />
+    <Compile Include="Utility\Pattern.cs" />
+    <Compile Include="Utility\Server.cs" />
+    <Compile Include="Utility\TokenManager.cs" />
+    <EmbeddedResource Include="Api\Dept\Forms\ApiDelDept.resx">
+      <DependentUpon>ApiDelDept.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Api\Dept\Forms\ApiDeptList.resx">
+      <DependentUpon>ApiDeptList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Api\Dept\Forms\ApiInsertDept.resx">
+      <DependentUpon>ApiInsertDept.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Api\Dept\Forms\ApiUpdateDept.resx">
+      <DependentUpon>ApiUpdateDept.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Api\Emp\Froms\ApiDelEmp.resx">
+      <DependentUpon>ApiDelEmp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Api\Emp\Froms\ApiInsertEmp.resx">
+      <DependentUpon>ApiInsertEmp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Api\Emp\Froms\ApiUdpateEmp.resx">
+      <DependentUpon>ApiUdpateEmp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Departments\Forms\AddMainDept.resx">
+      <DependentUpon>AddMainDept.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Departments\Forms\ChartDepartment.resx">
+      <DependentUpon>ChartDepartment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Departments\Forms\ChartMainDept.resx">
+      <DependentUpon>ChartMainDept.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Departments\Forms\DelMainDept.resx">
+      <DependentUpon>DelMainDept.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Departments\Forms\DelSubDept.resx">
+      <DependentUpon>DelSubDept.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Departments\Forms\DepartmentList.resx">
+      <DependentUpon>DepartmentList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Departments\Forms\MainDeptList.resx">
+      <DependentUpon>MainDeptList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Departments\Forms\AddSubDept.resx">
+      <DependentUpon>AddSubDept.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Departments\Forms\SubDeptList.resx">
+      <DependentUpon>SubDeptList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\Forms\AddEmployee3.resx">
+      <DependentUpon>AddEmployee3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Departments\Forms\TreeListDept.resx">
+      <DependentUpon>TreeListDept.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Departments\Forms\UpdateMainDept.resx">
+      <DependentUpon>UpdateMainDept.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Departments\Forms\UpdateSubDept.resx">
+      <DependentUpon>UpdateSubDept.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\Forms\AddEmployee.resx">
+      <DependentUpon>AddEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\Forms\AddMultiEmployee.resx">
+      <DependentUpon>AddMultiEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Api\Emp\Froms\CompanyLogin.resx">
+      <DependentUpon>CompanyLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\Forms\DelEmployee.resx">
+      <DependentUpon>DelEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\Forms\EmployeeList.resx">
+      <DependentUpon>EmployeeList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\Forms\Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Api\Emp\Froms\ApIEmpList.resx">
+      <DependentUpon>ApIEmpList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\Forms\UpdateEmployee.resx">
+      <DependentUpon>UpdateEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Employees\Forms\UpdateLoginInfo.resx">
+      <DependentUpon>UpdateLoginInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Api\Emp\Froms\LoginEmpToken.resx">
+      <DependentUpon>LoginEmpToken.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EntityDeploy Include="Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
