@@ -2,7 +2,7 @@
 
 namespace Test.Api.Emp.Dtos
 {
-    public class TokenData
+    public class ComTokenData
     {
         [JsonProperty("Data")]
         public TokenDto TokenInfo {  get; set; }

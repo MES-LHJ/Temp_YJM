@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors.Controls;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Svg;
 using Test.Api.Dept.Forms;
 using Test.Api.Emp.Dtos;
@@ -15,10 +14,10 @@ namespace Test.Api.Emp.Forms
 {
     public partial class ApiEmpList : Form
     {
-        private int pageSize = 10;
-        private int pageIdx = 0;
-        private int total = 0;
-        private int totalPage = 0;
+        //private int pageSize = 10;
+        //private int pageIdx = 0;
+        //private int total = 0;
+        //private int totalPage = 0;
         public EmpListDto SelectEmp => gridView1.GetFocusedRow() as EmpListDto; //그리드뷰에서 선택된 사원
         private readonly ImageClass imgClass = new ImageClass();
         public ApiEmpList()
@@ -38,7 +37,7 @@ namespace Test.Api.Emp.Forms
             delBtn.Click += DelBtn_Click;//삭제버튼
         }
 
-        private void ApiEmpList_Load(object sender, System.EventArgs e)
+        private void ApiEmpList_Load(object sender, EventArgs e)
         {
             var svgDoc = SvgDocument.Open(imgClass.MainImg());
             Bitmap bmp = svgDoc.Draw();// svg라 변환 
@@ -61,24 +60,24 @@ namespace Test.Api.Emp.Forms
         {
             var empList = await EmpRepository.EmpRepo.GetEmpList();//사원 리스트 불러오기
             
-            total = empList.Count;
-            totalPage = (int)Math.Ceiling((double)total / pageSize);
+            //total = empList.Count;
+            //totalPage = (int)Math.Ceiling((double)total / pageSize);
 
-            var pageData = empList.OrderBy(x=>x.Id)
-                                    .Skip(pageIdx *  pageSize) // 0페이지면 0-9, 1페이지면 10-19
-                                    .Take(pageSize) // 한페이지당 
-                                    .ToList();
+            //var pageData = empList.OrderBy(x=>x.Id)
+            //                        .Skip(pageIdx *  pageSize) // 0페이지면 0-9, 1페이지면 10-19
+            //                        .Take(pageSize) // 한페이지당 
+            //                        .ToList();
 
             apiEmpGrid.DataSource = empList;
            
         }
 
-        private async void SearchBtn_Click(object sender, System.EventArgs e)
+        private async void SearchBtn_Click(object sender, EventArgs e)
         {
             await EmpList_Refresh();
         }
 
-        private async void InsertBtn_Click(object sender, System.EventArgs e)
+        private async void InsertBtn_Click(object sender, EventArgs e)
         {
             ApiInsertEmp apiInsertEmp = new ApiInsertEmp();
             if (apiInsertEmp.ShowDialog() == DialogResult.OK)
@@ -92,7 +91,7 @@ namespace Test.Api.Emp.Forms
             }
         }
 
-        private async void UpdateBtn_Click(object sender, System.EventArgs e)
+        private async void UpdateBtn_Click(object sender, EventArgs e)
         {
             if (SelectEmp != null)
             {
@@ -107,7 +106,7 @@ namespace Test.Api.Emp.Forms
             }
         }
 
-        private async void DelBtn_Click(object sender, System.EventArgs e)
+        private async void DelBtn_Click(object sender, EventArgs e)
         {
             if (SelectEmp != null)
             {
@@ -119,7 +118,7 @@ namespace Test.Api.Emp.Forms
             }
         }
 
-        private async void DeptListBtn_Click(object sender, System.EventArgs e)
+        private async void DeptListBtn_Click(object sender, EventArgs e)
         {
             ApiDeptList apiDeptList = new ApiDeptList();
             if (apiDeptList.ShowDialog() == DialogResult.OK)

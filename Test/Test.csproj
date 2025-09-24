@@ -253,7 +253,7 @@
       <DependentUpon>SubDeptList.cs</DependentUpon>
     </Compile>
     <Compile Include="Api\Emp\Dtos\LoginEmpDto.cs" />
-    <Compile Include="Api\Emp\Dtos\TokenData.cs" />
+    <Compile Include="Api\Emp\Dtos\ComTokenData.cs" />
     <Compile Include="Api\Emp\Dtos\TokenDto.cs" />
     <Compile Include="Employees\Forms\AddEmployee3.cs">
       <SubType>Form</SubType>
