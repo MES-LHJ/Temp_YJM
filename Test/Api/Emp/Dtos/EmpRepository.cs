@@ -34,7 +34,7 @@ namespace Test.Api.Emp.Dtos
                     if (response.IsSuccessStatusCode)
                     {
                         var result = await response.Content.ReadAsStringAsync();
-                        var loginResult = JsonConvert.DeserializeObject<TokenData>(result);
+                        var loginResult = JsonConvert.DeserializeObject<ComTokenData>(result);
                         // 토큰만 사용
                         TokenManager.TokenInfo.SetCompanyToken(loginResult.TokenInfo.CompanyToken);//업체 토큰 저장
                     }
@@ -113,44 +113,6 @@ namespace Test.Api.Emp.Dtos
                 return empInfo.Any(x => x.DepartmentId == deptId);
             }
         }
-
-        //public async Task<long> InsertEmpApi(EmpDto empDto)
-        //{
-        //    using (var client = new HttpClient())
-        //    {
-        //        try
-        //        {
-        //            // 헤더 설정
-        //            TokenManager.TokenInfo.UseHeaderBearerToken(client, EmpToken);
-
-        //            // JSON
-        //            var json = JsonConvert.SerializeObject(empDto);
-        //            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        //            // API 호출
-        //            var res = await client.PostAsync("http://test.smartqapis.com:5000/api/Employee?FactoryId=1", content);
-        //            if (!res.IsSuccessStatusCode)
-        //            {
-        //                var result = await res.Content.ReadAsStringAsync();
-        //                Console.WriteLine("왜틀리지 :   " + result);
-        //                return 0;
-        //            }
-        //            else
-        //            {
-        //                var result = await res.Content.ReadAsStringAsync();
-        //                dynamic resultData = JsonConvert.DeserializeObject(result);
-        //                long empId = resultData.Data;
-        //                // 성공 여부
-        //                return empId;
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Console.WriteLine(ex);
-        //            return 0;
-        //        }
-        //    }
-        //}
         public async Task<long> InsertEmpApi(EmpListDto empDto)
         {
             using (var client = new HttpClient())

@@ -7,7 +7,7 @@ namespace Test.Api.Emp.Forms
 {
     public partial class CompanyLogin : Form
     {
-        private readonly ColorInfo btnColor =new ColorInfo();
+        private readonly ColorInfo btnColor = new ColorInfo();
         public CompanyLogin()
         {
             InitializeComponent();
@@ -29,10 +29,11 @@ namespace Test.Api.Emp.Forms
 
         private async void LoginBtn_Click(object sender, EventArgs e)
         {
-            var req = new { brn = companyIdBox.Text };//업체 로그인 정보
+            //var req = new {brn = companyIdBox.Text};
+            var req = companyIdBox.Text;//업체 로그인 정보
 
-            var comLoginCheck = await EmpRepository.EmpRepo.GetComToken(req.brn);//업체 토큰 저장  
-            if(comLoginCheck == true)
+            var comLoginCheck = await EmpRepository.EmpRepo.GetComToken(req);//업체 토큰 저장  
+            if (comLoginCheck == true)
             {
                 MessageBox.Show("로그인 성공");
                 this.DialogResult = DialogResult.OK;
