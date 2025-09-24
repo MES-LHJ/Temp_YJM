@@ -17,12 +17,12 @@ namespace WindowsFormsApp1
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            //LoginEmployee login = new LoginEmployee();
-            //if(login.ShowDialog()==DialogResult.OK)// 로그인 폼을 모달로 띄우고 결과를 받음
-            //{
-            //    Application.Run(new EmployeeList());
-            //}
-            Application.Run(new EmployeeList());
+            LoginEmployee login = new LoginEmployee();
+            if (login.ShowDialog() == DialogResult.OK)// 로그인 폼을 모달로 띄우고 결과를 받음
+            {
+                Application.Run(new EmployeeList());
+            }
+            //plication.Run(new EmployeeList());
         }
     }
 }

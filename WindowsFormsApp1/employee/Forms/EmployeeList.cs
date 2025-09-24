@@ -1,21 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
-using WindowsFormsApp1.department.Models;
 using WindowsFormsApp1.employee;
 using WindowsFormsApp1.employee.Models;
 using WindowsFormsApp1.Utiliity;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WindowsFormsApp1
 {
@@ -24,8 +14,13 @@ namespace WindowsFormsApp1
         private int idx;//선택된 행 인덱스
         private Util util = new Util();//공통 코드
         //선택된 행의 사원 정보
-        public EmployeeDto Emp { get => empListView.SelectedRows.Count > 0 ? empListView.SelectedRows[0].DataBoundItem as EmployeeDto : null; }
+        public EmployeeDto Emp => empListView.CurrentRow.DataBoundItem as EmployeeDto;
 
+        public List<EmployeeDto> EmpList
+        {
+            get => empListView.DataSource as List<EmployeeDto>;
+            set => empListView.DataSource = value;
+        }
 
         public EmployeeList()
         {
@@ -33,6 +28,7 @@ namespace WindowsFormsApp1
             Click_Event();
             Design();
         }
+
         private void Click_Event()//버튼 클릭 이벤트
         {
             deptListBtn.Click += Department_Button; //부서 리스트 버튼
@@ -52,9 +48,7 @@ namespace WindowsFormsApp1
 
         private void EmpListRefresh()//사원 리스트 새로고침
         {
-
-            var list = EmployeeRepository.EmpRepo.GetLinqEmpInfo();
-            empListView.DataSource = list;
+            EmpList = EmployeeRepository.EmpRepo.GetLinqEmpInfo();
         }
 
         //private void Cell_Select()//선택된 셀의 사원Id
@@ -67,10 +61,9 @@ namespace WindowsFormsApp1
         //}
 
         private void Search_Button(object sender, EventArgs e) //조회 버튼 클릭
-
         {
             EmpListRefresh();
-            if (Emp == null)
+            if (EmpList == null)
             {
                 MessageBox.Show("등록된 사원 정보가 없습니다.");
                 return;
@@ -97,7 +90,7 @@ namespace WindowsFormsApp1
                 if (updateEmployee.ShowDialog() == DialogResult.OK)
                 {
                     EmpListRefresh();
-                    if (idx > 0) empListView.CurrentCell = empListView.Rows[idx].Cells[0];
+                    //if (idx > 0) empListView.CurrentCell = empListView.Rows[idx].Cells[0];
                 }
             }
             else

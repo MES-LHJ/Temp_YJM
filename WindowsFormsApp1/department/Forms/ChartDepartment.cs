@@ -26,26 +26,20 @@ namespace WindowsFormsApp1.department.Forms
 
         private void ChartDept_Load(object sender, EventArgs e)
         {
-            //var chartInfo = DepartmentRepository.deptRepo.GetChart(deptId);
-            //deptChart.DataSource = chartInfo;
+            var chartInfo = DepartmentRepository.DeptRepo.GetChart(deptId);
+            deptChart.DataSource = chartInfo;
 
-            //foreach(var series in chartInfo)
+            //foreach (var series in chartInfo)
             //{
-            //    deptChart.Series["department"].Points.AddXY(series.departmentName, series.departmentCnt);
+            //    deptChart.Series["department"].Points.AddXY(series.DepartmentName, series.DepartmentCnt);
             //}
 
-            using(var context = new LinqContext())
+            var list = DepartmentRepository.DeptRepo.GeChartLinq();
+            foreach (var item in list)
             {
-                var list = context.Department
-                                    .GroupJoin(context.Employee, d => d.departmentId, b => b.departmentId, (d, a) => new { d.departmentName, Count = a.Count() })
-                                    .OrderByDescending(a=>a.Count)
-                                    .ToList();
-                
-                foreach(var item in list)
-                {
-                    deptChart.Series["department"].Points.AddXY(item.departmentName, item.Count);
-                }
+                deptChart.Series["department"].Points.AddXY(item.DepartmentName, item.Count);
             }
         }
     }
+
 }
